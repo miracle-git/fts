@@ -1,0 +1,89 @@
+@import "./base";
+@import "./mq";
+body {
+  min-width: 320px;
+  .px2rem(width, @width);
+  line-height: 1.5;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f2f2;
+}
+//搜索栏 search-bar
+.search-bar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  .prefix(transform, translateX(-50%));
+  .px2rem(width, @width);
+  .px2rem(height, 88);
+  background: #ffc001;
+  .left {
+    .px2rem(width, 44);
+    .px2rem(height, 70);
+    .px2rem(margin, 10, 25, 6);
+    background: url("../images/cate.png") no-repeat;
+    background-size: cover;
+    order: 1;
+  }
+  .right {
+    .px2rem(width, 75);
+    .px2rem(height, 70);
+    .px2rem(line-height, 70);
+    .px2rem(margin, 10);
+    .px2rem(font-size, 25);
+    text-align: center;
+    color: #fff;
+    order: 3;
+  }
+  .search-box {
+    flex: 1;
+    order: 2;
+    .keyword {
+      width: 100%;
+      .px2rem(height, 64);
+      .px2rem(margin, 12, 0);
+      .px2rem(padding, 0, 24);
+      .px2rem(font-size, 25);
+      .prefix(border-radius, 32, true);
+      border: none;
+      background: #fff2cc;
+    }
+  }
+}  
+.main-container {
+  //轮播图 banner
+  .banner {
+    .px2rem(width, @width);
+    .px2rem(height, 360);
+  }
+  //广告栏 ads
+  .ads {
+    display: flex;
+    .ad-item {
+      flex: 1;
+    }
+  }
+  //导航栏 nav
+  .nav {
+    .px2rem(width, @width);
+    .px2rem(margin, 15, 0);
+    .nav-item {
+      float: left;
+      .px2rem(width, 150);
+      .px2rem(height, 140);
+      .px2rem(margin-top, 10);
+      .px2rem(font-size, 25);
+      text-align: center;
+      color: #333;
+      img {
+        display: block;
+        margin: 0 auto;
+        .px2rem(width, 82);
+        .px2rem(height, 82);
+        .px2rem(margin-top, 10);
+        .px2rem(margin-bottom, 5);
+      }
+    }
+  }
+}
