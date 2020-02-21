@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>浮动布局</title>
+  <style>
+    .container {
+      width: 800px;
+      height: 200px;
+      margin: 20px;
+    }
+    .container2 .left {
+      float: left;
+      background: red;
+      width: 200px;
+      height: 100%;
+    }
+    .container2 .right {
+      background: blue;
+      margin-left: 200px;
+      height: 100%;
+    }
+    .container3 .left {
+      float: left;
+      background: red;
+      width: 200px;
+      height: 100%;
+    }
+    .container3 .right {
+      float: right;
+      background: blue;
+      width: 200px;
+      height: 100%;
+    }
+    .container3 .middle {
+      margin-left: 200px;
+      margin-right: 200px;
+      background: green;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container container2">
+    <div class="left">
+      左
+    </div>
+    <div class="right">
+      右
+    </div>
+  </div>
+  <div class="container container3">
+    <div class="left">
+      左
+    </div>
+    <div class="right">
+      右
+    </div>
+    <div class="middle">
+      中
+    </div>
+  </div>
+</body>
+</html>

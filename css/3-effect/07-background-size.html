@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS背景之尺寸大小</title>
+  <style>
+    .container{
+      width: 400px;
+      height: 300px;
+      border: 1px solid red;
+      background:url(./panda.jpg);
+      background-repeat: no-repeat;
+      background-position: center center;
+      /*background-size: contain;  !*让图片全部显示*!*/
+      background-size: cover; /*覆盖整个容器，防止不被拉伸，多余部分被隐藏*/
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+  </div>
+</body>
+</html>

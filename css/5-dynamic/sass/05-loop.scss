@@ -1,0 +1,10 @@
+@for $i from 1 through 12
+{
+  .item-#{$i}
+  {
+    width: 1000px / 12*$n;
+  }
+}
+
+//方式1：@for $i from 开始值 through 包含结束值
+//方式2：@for $i from 开始值 to 不包含结束值

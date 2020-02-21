@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS背景</title>
+  <style>
+    .c1 {
+      height: 90px;
+      background: rgba(255,0,0, .3);
+      /* background:url(./test.png); */
+    }
+    .c2 {
+      height: 90px;
+       /*background: -webkit-linear-gradient(left, red, green);*/
+       /*background: linear-gradient(to right, red, green);*/
+       /*background: linear-gradient(180deg, red, green);*/
+       /*background: linear-gradient(135deg, red 0, green 10%, yellow 50%, blue 100%); */
+      background: linear-gradient(135deg, transparent 0, transparent 49.5%, green 49.5%, green 50.5%, transparent 50.5%, transparent 100%),
+      linear-gradient(45deg, transparent 0, transparent 49.5%, red 49.5%, red 50.5%, transparent 50.5%, transparent 100%);
+      background-size: 30px 30px;
+    }
+    .checkbox {
+
+    }
+    .checkbox input {
+      display: none;
+    }
+    .checkbox input + label {
+      background:url(./checkbox1.png) left center no-repeat;
+      background-size:20px 20px;
+      padding-left:20px;
+    }
+    .checkbox input:checked + label {
+      background-image:url(./checkbox2.png);
+    }
+  </style>
+</head>
+<body>
+  <div class="c1">
+  </div>
+  <div class="c2">
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" id="handsome"/>
+    <label for="handsome">我很帅</label>
+  </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+:root {
+  --main-color: blue;
+  --danger-theme: {
+    color: white;
+    background: red;
+  }
+}
+
+a {
+  color: var(--main-color);
+}
+
+.danger {
+  @apply --danger-theme;
+}

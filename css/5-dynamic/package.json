@@ -1,0 +1,12 @@
+{
+  "name": "dynamic-css",
+  "version": "1.0.0",
+  "scripts": {
+    "less": "./node_modules/.bin/lessc",
+    "scss": "./node_modules/.bin/node-sass --output-style expanded"
+  },
+  "dependencies": {
+    "less": "^3.9.0",
+    "node-sass": "^4.12.0"
+  }
+}

@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS布局之flex属性</title>
+  <style>
+    .container{
+      width:800px;
+      height:200px;
+      display: flex;
+      border:1px solid black;
+    }
+    .flex{
+      background:red;
+      margin:5px;
+      flex:1
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="flex">
+      flex
+    </div>
+    <div class="flex" style="flex:3">
+      flex
+    </div>
+    <div class="flex">
+      flex
+    </div>
+    <div class="flex" style="width:50px;flex:none;">
+      flex
+    </div>
+    <div class="flex">
+      flex
+    </div>
+  </div>
+</body>
+</html>

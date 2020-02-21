@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS字体</title>
+  <style>
+    body {
+      /* font-family: "monaco"; */
+      /* font-family: "monaco", "PingFang SC"; */
+      font-family: "aaaaa", "monaco", "PingFang SC";
+    }
+    .chinese {
+      font-family: "PingFang SC", "Microsoft Yahei", monospace;
+      /* font-family: "Microsoft Yahei", serif; */
+      /* font-family: "serif"; */
+    }
+    @font-face {
+      font-family: "IF";
+      src: url("./IndieFlower.ttf");
+    }
+    .custom-font {
+      font-family: IF;
+    }
+  </style>
+</head>
+<body class="body" id="body">
+  Hello world 你好，CSS！
+  <div class="chinese">你好</div>
+  <div class="custom-font">你好 Hello World</div>
+  </body>
+</html>

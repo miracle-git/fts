@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS关键字动画</title>
+  <style>
+    .container {
+      width: 100px;
+      height: 100px;
+      background: red;
+      animation: run 1s linear;
+      /* animation-direction: reverse; */
+      /* animation-fill-mode: forwards; */
+      animation-iteration-count: infinite;
+      /* animation-play-state: paused; */
+    }
+    @keyframes run {
+      0% { /*from*/
+        width: 100px;
+      }
+      50% {
+        width: 200px;
+      }
+      100% {
+        /*to*/
+        width: 800px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+  </div>
+</body>
+</html>

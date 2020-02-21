@@ -1,0 +1,22 @@
+/*$blue: #056ef0;*/
+/*$column: 200px;*/
+
+/*.menu-link {*/
+/*  color: $blue;*/
+/*  width: $column;*/
+/*}*/
+
+/*.notice-clear {*/
+/*  @if (3 < 5) {*/
+/*    background: $blue;*/
+/*  }*/
+/*  @else {*/
+/*    background: green;*/
+/*  }*/
+/*}*/
+
+/*@for $i from 1 to 10 {*/
+/*  .col-$i {*/
+/*    width: $(i)px;*/
+/*  }*/
+/*}*/
