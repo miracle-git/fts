@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 数据绑定</title>
+</head>
+<body>
+  <div id="container">
+    <input type="text" v-model="name"/>
+    <p>{{name}}</p>
+    <p v-text="name"></p>
+    <p v-text="user.name"></p>
+    <button v-on:click="update">更新</button>
+  </div>
+  <!--
+    1. 数据绑定
+      * 初始化显示: 页面(表达式/指令)能从data读取数据显示 (编译/解析)
+      * 更新显示: 更新data中的属性数据==>页面更新
+    2. dep: 与data中的属性一一对应
+    3. watcher: 与模板中一般指令/大括号表达式一一对应
+    4. 什么时候一个dep中关联多个watcher? 多个指令或表达式用到了当前同一个属性  {{name}} {{name}}
+    5. 什么时候一个watcher中关联多个dep? 多层表达式的watcher对应多个dep {{a.b.c}}
+  -->
+  <script src="../../js/compile.js"></script>
+  <script src="../../js/mvvm.js"></script>
+  <script src="../../js/observer.js"></script>
+  <script src="../../js/watcher.js"></script>
+  <script>
+    const vm = new MVVM({
+      el: '#container',
+      data: {
+        name: 'Miracle',  // dep0
+        user: { // dep1
+          name: 'Jack', // dep2
+          age: 18 // dep3
+        }
+      },
+      methods: {
+        update () {
+          this.name = 'Miracle He'
+        }
+      }
+    })
+  </script>
+</body>
+</html>

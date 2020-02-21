@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 初体验</title>
+</head>
+<body>
+<div id="container">
+  <!--3. 双向数据绑定：v-model-->
+  <input type="text" v-model="userName"/>
+  <!-- 4. 显示数据：{{}}-->
+  <p>Hello {{userName}}</p>
+</div>
+<!--1. 引入vue.js-->
+<script src="../../js/vue.js"></script>
+<script>
+  // 2. 创建Vue对象vm(指定el和data)
+  const vm = new Vue({
+    el: '#container',
+    data: {
+      userName: 'Miracle'
+    }
+  })
+</script>
+</body>
+</html>

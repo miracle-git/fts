@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 表单数据收集</title>
+</head>
+<body>
+  <div id="container">
+    <form action="/xxx" @submit.prevent="submit">
+      <label for="username">用户名</label><input id="username" type="text" v-model="username"/><br/>
+      <label for="password">密码</label><input id="password" type="password" v-model="password"/><br/>
+      <span>性别</span>
+      <label for="male">男</label><input id="male" type="radio" value="male" v-model="gender"/>
+      <label for="female">女</label><input id="female" type="radio" value="female" v-model="gender"/><br/>
+      <span>爱好</span>
+      <label for="basketball">篮球</label><input id="basketball" type="checkbox" value="basketball" v-model="hobbies"/>
+      <label for="football">足球</label><input id="football" type="checkbox" value="football" v-model="hobbies"/>
+      <label for="tennis">乒乓球</label><input id="tennis" type="checkbox" value="tennis" v-model="hobbies"/><br/>
+      <span>城市</span>
+      <select v-model="city">
+        <option value="">请选择</option>
+        <option v-for="(item, index) in cities" :key="index" :value="item.id">{{item.name}}</option>
+      </select><br/>
+      <label for="comment">评论</label><textarea id="comment" rows="5" v-model="comment"></textarea><br/>
+      <button type="submit">注册</button>
+    </form>
+  </div>
+  <script src="../../js/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#container',
+      data: {
+        username: '',
+        password: '',
+        gender: 'male',
+        hobbies: ['football'],
+        cities: [
+          { id: 1, name: '北京' },
+          { id: 2, name: '上海' },
+          { id: 3, name: '成都'}
+        ],
+        city: '2',
+        comment: ''
+      },
+      methods: {
+        submit() {
+          console.log('提交数据如下', this.username, this.password, this.gender, this.hobbies, this.city, this.comment);
+        }
+      }
+    })
+  </script>
+</body>
+</html>

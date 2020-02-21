@@ -1,0 +1,28 @@
+.todo-item {
+  list-style: none;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 5px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.todo-item label {
+  cursor: pointer;
+}
+.todo-item label > input[type=checkbox]{
+  margin-right: 5px;
+}
+.todo-item button.btn {
+  display: none;
+  margin-top: 3px;
+  padding: 3px 10px;
+}
+.todo-item:before {
+  content: initial;
+}
+.todo-item:last-child {
+  border-bottom: none;
+}

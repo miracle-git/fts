@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 条件渲染</title>
+</head>
+<body>
+  <div id="container">
+    <!--v-if与v-show: 如果需要频繁切换，建议优先选择v-show-->
+    <p v-if="ok">成功了</p>
+    <p v-else>失败</p>
+    <p v-show="ok">表白成功了</p>
+    <p v-show="!ok">表白失败</p>
+    <button @click="ok=!ok">切换</button>
+  </div>
+  <script src="../../js/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#container',
+      data: {
+        ok: true
+      }
+    })
+  </script>
+</body>
+</html>

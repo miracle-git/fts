@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>React入门 - 九宫格布局</title>
+  <style>
+    .box { width: 320px;height: 600px;background: url("../../img/bg.jpg") no-repeat;margin: 30px auto; }
+    .top { height: 60px;display: flex;justify-content: space-around;align-items: center; }
+    .top button { border: none;width: 100px;height: 36px;border-radius: 5px;color: #fff; }
+    .top button[disabled] { background-color: gray!important; }
+    .top button:first-child { background-color: orange; }
+    .top button:last-child { background-color: orangered; }
+    .bottom { display: flex;flex-wrap:wrap;justify-content:space-around;width: 92%;height: 70%;background-color: transparent;position: relative;margin-top: 10px;}
+    .item { display: flex;flex-direction: column;justify-content: center;align-items: center; position: absolute;padding: 10px;}
+    .item > img { width: 80px; height: 80px; }
+    .item > span{ font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <script src="../../js/react.development.js"></script>
+  <script src="../../js/react-dom.development.js"></script>
+  <script src="../../js/babel.min.js"></script>
+  <script type="text/babel">
+    class MyApp extends React.Component {
+      static defaultProps = {
+        items: [
+          { 'id': 1, 'icon': 'f1', 'name': '番茄' },
+          { 'id': 2, 'icon': 'f2', 'name': '苹果' },
+          { 'id': 3, 'icon': 'f3', 'name': '水蜜桃' },
+          { 'id': 4, 'icon': 'f4', 'name': '香蕉' },
+          { 'id': 5, 'icon': 'f5', 'name': '蓝莓' },
+          { 'id': 6, 'icon': 'f6', 'name': '菠萝' },
+          { 'id': 7, 'icon': 'f7', 'name': '草莓' },
+          { 'id': 8, 'icon': 'f8', 'name': '猕猴桃' },
+          { 'id': 9, 'icon': 'f9', 'name': '橙子' }
+        ]
+      };
+
+      state = {
+        displayItems: []
+      };
+
+      handleComputePosition(index) {
+        const cols = 3, width = 320, height = 360, itemWidth = 100, itemHeight = 120;
+        const row = Math.floor(index / cols);
+        const col = Math.floor(index % cols);
+        console.log(row, col);
+        const space = {
+          x: (width - cols * itemWidth) / (cols - 1),
+          y: (height - 3 * itemWidth) / 2
+        };
+        return {
+          left: col * (itemWidth + space.x),
+          top: row * (itemHeight + space.y)
+        };
+      }
+
+      handleAddItem() {
+        const { items } = this.props;
+        const { displayItems } = this.state;
+        if (displayItems.length === items.length) return;
+        const currentIndex = displayItems.length;
+        const currentItem = items[currentIndex];
+        const { left, top } = this.handleComputePosition(currentIndex);
+        displayItems.push((
+          <div className="item" key={currentItem.id} style={{left, top}}>
+            <img src={`../../img/${currentItem.icon}.png`} alt={currentItem.name}/>
+            <span>{currentItem.name}</span>
+          </div>
+        ));
+        this.setState({ displayItems });
+      }
+
+      handleRemoveItem() {
+        const { displayItems } = this.state;
+        if (!displayItems.length) return;
+        displayItems.pop();
+        this.setState({ displayItems });
+      }
+
+      render() {
+        const { items } = this.props;
+        const { displayItems } = this.state;
+        return (
+          <div className="box">
+            <div className="top">
+              <button onClick={()=>this.handleAddItem()} disabled={displayItems.length===items.length}>添加</button>
+              <button onClick={()=>this.handleRemoveItem()} disabled={!displayItems.length}>移除</button>
+            </div>
+            <div className="bottom">
+              {displayItems}
+            </div>
+          </div>
+        );
+      }
+    }
+    ReactDOM.render(<MyApp/>, document.getElementById('container'));
+  </script>
+</body>
+</html>

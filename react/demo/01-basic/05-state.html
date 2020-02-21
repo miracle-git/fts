@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>React入门 - State的常见用法</title>
+</head>
+<body>
+  <ol style="color: red">
+    <li>组件状态的改变，只能通过this.setState()，而不能直接修改state</li>
+    <li>组件状态初始化可在构造函数中或独立在组件中(推荐，如state={})</li>
+    <li>组件事件处理函数建议以handle开头(以便与组件生命周期区分，如：handleUpdate)</li>
+    <li>组件事件调用可采用this.handleUpdate.bind(this)或()=>this.handleUpdate()，推荐后者</li>
+  </ol>
+  <div id="container"></div>
+  <script src="../../js/react.development.js"></script>
+  <script src="../../js/react-dom.development.js"></script>
+  <script src="../../js/babel.min.js"></script>
+  <script type="text/babel">
+    class MyApp extends React.Component {
+      // constructor(props) {
+      //   super(props);
+      //   this.state = {
+      //     name: 'Miracle',
+      //     age: 32
+      //   };
+      // }
+
+      state = {
+        name: 'Miracle',
+        age: 32
+      };
+
+      render() {
+        const { name, age } = this.state;
+        return (
+          <div>
+            <h2>我是{name}, 今年{age}岁</h2>
+            <button onClick={()=>this.handleUpdate()}>更新个人资料</button>
+          </div>
+        )
+      }
+
+      handleUpdate() {
+        this.setState({
+          name: 'Miracle He',
+          age: 35
+        });
+      }
+    }
+    ReactDOM.render(<MyApp/>, document.getElementById('container'));
+  </script>
+</body>
+</html>

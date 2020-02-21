@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 列表搜索和排序</title>
+</head>
+<body>
+  <div id="container">
+    <input type="text" v-model="keyword"/>
+    <ul>
+      <li v-for="(item, index) in filterUsers" :key="index">
+        {{index}} -- {{item.name}} -- {{item.age}}
+      </li>
+    </ul>
+    <button @click="orderType=1">年龄升序</button>
+    <button @click="orderType=-1">年龄降序</button>
+    <button @click="orderType=0">正常顺序</button>
+  </div>
+  <script src="../../js/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#container',
+      data: {
+        keyword: '',
+        orderType: 0, // 0 - 正常顺序，1 - 升序，-1 - 降序
+        users: [
+          { name: 'Miracle', age: 32 },
+          { name: 'Jack', age: 28 },
+          { name: 'Tom', age: 35 },
+          { name: 'Jim', age: 25 }
+        ]
+      },
+      computed: {
+        filterUsers() {
+          const { keyword, users, orderType } = this
+          const result = users.filter(item => item.name.indexOf(keyword.trim()) > -1)
+          if (orderType === 0) return result
+          return result.sort((a, b) => {
+            return orderType > 0 ? a.age - b.age : b.age - a.age
+          })
+        }
+      }
+    })
+  </script>
+</body>
+</html>

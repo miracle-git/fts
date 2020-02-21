@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 指令</title>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <button @click="getContent">获取p标签的内容</button>
+    <p ref="content">这里是文本</p>
+    <!--<p v-text="msg"></p>-->
+    <p v-cloak>{{msg}}</p>
+  </div>
+  <div id="container1">
+    <p v-upper-text="name1"></p>
+    <p v-lower-text="name1"></p>
+  </div>
+  <div id="container2">
+    <p v-upper-text="name2"></p>
+    <!--<p v-lower-text="name2"></p>-->
+  </div>
+  <script src="../../js/vue.js"></script>
+  <script>
+    // 定义全局指令
+    Vue.directive('upper-text', (el, binding) => {
+      el.textContent = binding.value.toUpperCase();
+    });
+    new Vue({
+      el: '#container',
+      data: {
+        msg: 'Miracle'
+      },
+      methods: {
+        getContent() {
+          alert(this.$refs.content.textContent);
+        }
+      }
+    });
+    new Vue({
+      el: '#container1',
+      data: {
+        name1: 'Miracle He'
+      },
+      directives: {
+        // 局部指令：只在当前vm有效
+        'lower-text': (el, binding) => {
+          el.textContent = binding.value.toLowerCase();
+        }
+      }
+    });
+    new Vue({
+      el: '#container2',
+      data: {
+        name2: 'Miracle He'
+      }
+    });
+  </script>
+</body>
+</html>

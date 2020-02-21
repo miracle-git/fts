@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>React入门 - Ref的常见用法</title>
+</head>
+<body>
+  <ol style="color: red">
+    <li>组件内部ref一般作用于非受控元素(不能直接获取对应的值)，使用方式为：ref={el=>this.$elem=el}</li>
+    <li>可通过事件和状态将非受控元素转化为受控元素(推荐)，而不是在内部通过ref来实现</li>
+    <li>ref一般用于父子组件中，父组件调用子组件的内部行为时使用</li>
+  </ol>
+  <div id="container"></div>
+  <script src="../../js/react.development.js"></script>
+  <script src="../../js/react-dom.development.js"></script>
+  <script src="../../js/babel.min.js"></script>
+  <script type="text/html">
+    class MyApp extends React.Component {
+      render() {
+        return (
+          <div>
+            <input type="text" placeholder="请输入内容" ref={el=>this.$input=el}/>
+            <button onClick={()=>this.handleFocus()}>获取焦点</button>
+          </div>
+        );
+      }
+
+      handleFocus() {
+        this.$input.focus();
+      }
+    }
+    ReactDOM.render(<MyApp/>, document.getElementById('container'));
+  </script>
+  <script type="text/babel">
+    class MyApp extends React.Component {
+      state = {
+        username: '',
+        password: ''
+      };
+
+      handleSubmit(e) {
+        e.preventDefault();
+        const { username, password } = this.state;
+        alert(`用户名：${username}，密码：${password}`);
+      }
+
+      handleChange(e, field) {
+        this.setState({
+          [field]: e.target.value
+        });
+      }
+
+      render() {
+        const { username, password } = this.state;
+        return (
+          <form onSubmit={(e)=>this.handleSubmit(e)}>
+            <div>
+              <label htmlFor="username">用户名：</label>
+              <input id="username" type="text" value={username} onChange={e=>this.handleChange(e, 'username')}/>
+            </div>
+            <div>
+              <label htmlFor="password">密码：</label>
+              <input id="password" type="password" value={password} onChange={e=>this.handleChange(e, 'password')}/>
+            </div>
+            <button type="submit">登录</button>
+          </form>
+        )
+      }
+    }
+    ReactDOM.render(<MyApp/>, document.getElementById('container'));
+  </script>
+</body>
+</html>

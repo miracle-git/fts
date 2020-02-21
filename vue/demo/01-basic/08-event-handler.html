@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 事件处理</title>
+  <style>
+    .outer {
+      width: 200px;
+      height: 200px;
+      background: red;
+    }
+    .inner {
+      width: 100px;
+      height: 100px;
+      background: blue;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h2>1. 事件监听</h2>
+    <button @click="test1">test1</button>
+    <button @click="test2('Miracle')">test2</button>
+    <button @click="test3">test3</button>
+    <button @click="test4('Miracle', $event)">test4</button>
+    <h2>2. 事件修饰符</h2>
+    <div class="outer" @click="test5">
+      <div class="inner" @click.stop="test6"></div>
+    </div>
+    <a href="http://www.baidu.com" @click.prevent="test7">去百度</a>
+    <h2>3. 按键修饰符</h2>
+    <input type="text" @keyup.enter="test8"/>
+  </div>
+  <script src="../../js/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#container',
+      data: {
+      },
+      methods: {
+        test1() {
+          alert('test1');
+        },
+        test2(user) {
+          alert(user);
+        },
+        test3(event) {
+          alert(event.target.innerHTML);
+        },
+        test4(user, event) {
+          alert(`${user}--${event.target.innerHTML}`);
+        },
+        test5() {
+          alert('outer');
+        },
+        test6() {
+          // event.stopPropagation();
+          alert('inner');
+        },
+        test7() {
+          // event.preventDefault();
+          alert('不要直接跳转到百度');
+        },
+        test8(event) {
+          // if (event.keyCode === 13) {
+          //   alert(event.target.value);
+          // }
+          alert(event.target.value);
+        }
+      }
+    })
+  </script>
+</body>
+</html>

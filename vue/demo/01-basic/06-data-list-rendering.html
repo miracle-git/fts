@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 列表渲染</title>
+</head>
+<body>
+  <div id="container">
+    <h2>v-for遍历数组</h2>
+    <ul>
+      <li v-for="(item, index) in users" :key="index">
+        {{index}} -- {{item.name}} -- {{item.age}}
+        -- <button @click="deleteUser(index)">删除</button>
+        -- <button @click="updateUser(index, { name: 'Miracle He', age: 35 })">更新</button>
+      </li>
+    </ul>
+    <h2>v-for遍历对象</h2>
+    <ul>
+      <li v-for="(val, key) in users[0]" :key="key">
+        {{key}} -- {{val}}
+      </li>
+    </ul>
+  </div>
+  <script src="../../js/vue.js"></script>
+  <script>
+    // Vue本身只监视了users的改变，没有监视users内部数据的变化
+    // Vue重写了一系列改变数组内部数据的方法(先调用原生方法，然后更新UI)
+    const vm = new Vue({
+      el: '#container',
+      data: {
+        users: [
+          { name: 'Miracle', age: 32 },
+          { name: 'Jack', age: 28 },
+          { name: 'Tom', age: 35 },
+          { name: 'Jim', age: 25 }
+        ]
+      },
+      methods: {
+        deleteUser(index) {
+          // 删除users中指定index的元素
+          this.users.splice(index, 1)
+        },
+        updateUser(index, user) {
+          // 并没有改变users数组本身，数组内部发生变化，并未调用变异方法，Vue不会更新UI
+          // this.users[index] = user
+          this.users.splice(index, 1, user)
+        }
+      }
+    })
+  </script>
+</body>
+</html>

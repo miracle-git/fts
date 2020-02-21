@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 生命周期</title>
+</head>
+<body>
+  <div id="container">
+    <button @click="destroyVM">destroy vm</button>
+    <p v-show="isShow">这里是文本</p>
+  </div>
+  <script src="../../js/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#container',
+      data: {
+        isShow: true
+      },
+      beforeCreate() {
+        console.log('1.beforeCreate()');
+        console.log(this.$el);
+      },
+      created() {
+        console.log('2.created()');
+        console.log(this.$el);
+      },
+      beforeMount() {
+        console.log('3.beforeMount()');
+        console.log(this.$el);
+      },
+      mounted() {
+        console.log('4.mounted()');
+        console.log(this.$el);
+        this.interval = setInterval(() => {
+          console.log('-----------');
+          this.isShow = !this.isShow;
+        }, 1000);
+      },
+      beforeUpdate() {
+        console.log('5.beforeUpdate()');
+      },
+      updated() {
+        console.log('6.updated()');
+      },
+      beforeDestroy() {
+        console.log('7.beforeDestroy()');
+        clearInterval(this.interval);
+      },
+      destroyed() {
+        console.log('8.destroyed()');
+      },
+      methods: {
+        destroyVM() {
+          this.$destroy();
+        }
+      }
+    })
+  </script>
+</body>
+</html>

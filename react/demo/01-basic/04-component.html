@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>React入门 - 定义组件</title>
+</head>
+<body>
+  <ol style="color: red">
+    <li>对于无状态组件(不存在生命周期, 也叫静态/木偶组件)，一般采用构造函数定义，通过props传参</li>
+    <li>对于有状态组件(存在生命周期, 也叫容器/智能组件), 采用class来定义，将参数数据传递到子组件</li>
+  </ol>
+  <div id="container"></div>
+  <script src="../../js/react.development.js"></script>
+  <script src="../../js/react-dom.development.js"></script>
+  <script src="../../js/babel.min.js"></script>
+  <script type="text/html">
+    // 通过构造函数定义
+    function MyApp() {
+      return (
+        <div>
+          <h2>通过构造函数定义组件</h2>
+          <img src="../../img/m2.jpg" alt="React架构" width={200} height={100} />
+        </div>
+      )
+    }
+    ReactDOM.render(<MyApp/>, document.getElementById('container'));
+  </script>
+  <script type="text/html">
+    // 组件传参
+    function MyApp(props) {
+      return (
+        <div>
+          <h2>{props.title}, 即将学习: {props.skills.join(',')}</h2>
+          <img src="../../img/m2.jpg" alt={props.text} width={200} height={100} />
+        </div>
+      )
+    }
+    ReactDOM.render(<MyApp
+      title="通过构造函数定义组件"
+      text="React架构"
+      skills={['react', 'redux', 'router']}
+    />, document.getElementById('container'));
+  </script>
+  <script type="text/html">
+    // 复合组件
+    function AppHeader(props) {
+      return <h2>{props.title}, 即将学习: {props.skills.join(',')}</h2>;
+    }
+    function AppImage(props) {
+      return <img src="../../img/m2.jpg" alt={props.text} width={200} height={100} />;
+    }
+    function MyApp() {
+      return (
+        <div>
+          <AppHeader title="通过构造函数定义组件" skills={['react', 'redux', 'router']}/>
+          <AppImage text="React架构"/>
+        </div>
+      )
+    }
+    ReactDOM.render(<MyApp/>, document.getElementById('container'));
+  </script>
+  <script type="text/babel">
+    // 使用class创建组件
+    class MyApp extends React.Component {
+      render() {
+        return (
+          <div>
+            <h2>{this.props.title}, 即将学习: {this.props.skills.join(',')}</h2>
+            <img src="../../img/m2.jpg" alt={this.props.text} width={200} height={100} />
+          </div>
+        );
+      }
+    }
+    ReactDOM.render(<MyApp
+      title="通过构造函数定义组件"
+      text="React架构"
+      skills={['react', 'redux', 'router']}
+    />, document.getElementById('container'));
+  </script>
+</body>
+</html>

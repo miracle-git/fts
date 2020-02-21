@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 过渡与动画</title>
+  <style>
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity .5s;
+    }
+    .fade-enter,
+    .fade-leave-to {
+      opacity: 0;
+    }
+    .move-enter-active {
+      transition: all .5s;
+    }
+    .move-leave-active {
+      transition: all 1s;
+    }
+    .move-enter,
+    .move-leave-to {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    .bounce-enter-active {
+      animation: bounce-in .5s;
+    }
+    .bounce-leave-active {
+      animation: bounce-in .5s reverse;
+    }
+    @keyframes bounce-in {
+      0% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container1">
+    <button @click="isShow=!isShow">Toggle1</button>
+    <transition name="fade">
+      <p v-show="isShow">这里是文本</p>
+    </transition>
+  </div>
+  <div id="container2">
+    <button @click="isShow=!isShow">Toggle2</button>
+    <transition name="move">
+      <p v-show="isShow">这里是文本</p>
+    </transition>
+  </div>
+  <div id="container3">
+    <button @click="isShow=!isShow">Toggle3</button><br/>
+    <transition name="bounce">
+      <p v-show="isShow" style="display: inline-block">这里是文本</p>
+    </transition>
+  </div>
+  <script src="../../js/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#container1',
+      data: {
+        isShow: true
+      }
+    });
+    new Vue({
+      el: '#container2',
+      data: {
+        isShow: true
+      }
+    });
+    new Vue({
+      el: '#container3',
+      data: {
+        isShow: true
+      }
+    });
+  </script>
+</body>
+</html>

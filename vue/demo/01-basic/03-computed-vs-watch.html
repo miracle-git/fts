@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 计算属性和监视</title>
+</head>
+<body>
+<div id="container">
+  <p>姓：<input type="text" placeholder="First Name" v-model="firstName"/></p>
+  <p>名：<input type="text" placeholder="Last Name" v-model="lastName"/></p>
+  <p>姓名1(单向)：<input type="text" placeholder="Full Name 1" v-model="fullName1"/></p>
+  <p>姓名2(单向)：<input type="text" placeholder="Full Name 2" v-model="fullName2"/></p>
+  <p>姓名3(双向)：<input type="text" placeholder="Full Name 3" v-model="fullName3"/></p>
+  <p>{{fullName1}} -- {{fullName1}}</p>
+</div>
+<script src="../../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    el: '#container',
+    data: {
+      firstName: 'Miracle',
+      lastName: 'He',
+      fullName2: 'Miracle He'
+    },
+    // 计算属性：通过getter和setter实现对数据的显示和监视，计算属性存在缓存，多次读取只执行一次getter计算
+    computed: {
+      fullName1() {
+        // 初始化时或相关data属性值发生变化时执行
+        console.log('fullName1()')
+        return `${this.firstName} ${this.lastName}`
+      },
+      fullName3: {
+        get() {
+          return `${this.firstName} ${this.lastName}`
+        },
+        set(val) {
+          const names = val.split(' ')
+          this.firstName = names[0]
+          this.lastName = names[1]
+        }
+      }
+    },
+    watch: {
+      firstName(val) {
+        this.fullName2 = `${val} ${this.lastName}`
+      }
+    }
+  })
+
+  vm.$watch('lastName', function (val) {
+    this.fullName2 = `${this.firstName} ${val}`
+  })
+</script>
+</body>
+</html>

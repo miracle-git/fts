@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>React入门 - JS与JSX创建元素对比</title>
+</head>
+<body>
+  <div id="js-container"></div>
+  <div id="jsx-container"></div>
+  <script src="../../js/react.development.js"></script>
+  <script src="../../js/react-dom.development.js"></script>
+  <script src="../../js/babel.min.js"></script>
+  <script>
+    const _class = 'react-elem';
+    const _content = 'This is a react element';
+  </script>
+  <script>
+    // JS方式创建(使用className代替class)
+    const virtualDOMByJS = React.createElement('span', { className: _class + '-js' }, _content + ' by js');
+    ReactDOM.render(virtualDOMByJS, document.getElementById('js-container'));
+  </script>
+  <script type="text/babel">
+    // JSX方式创建
+    const virtualDOMByJSX = <span className={_class + '-jsx'}>{_content + ' by jsx'}</span>;
+    ReactDOM.render(virtualDOMByJSX, document.getElementById('jsx-container'));
+  </script>
+</body>
+</html>

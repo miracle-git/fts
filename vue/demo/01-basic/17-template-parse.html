@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue入门 - 模板解析</title>
+  <style>
+    .aClass {
+      color: red;
+    }
+    .bClass {
+      font-size: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <p>{{msg}}</p>
+    <button v-on:click="hello">测试</button>
+    <p v-text="link"></p>
+    <p v-html="link"></p>
+    <p class="aClass" v-class="myClass">测试</p>
+  </div>
+  <script src="../../js/compile.js"></script>
+  <script src="../../js/mvvm.js"></script>
+  <script src="../../js/observer.js"></script>
+  <script src="../../js/watcher.js"></script>
+  <script>
+    new MVVM({
+      el: '#container',
+      data: {
+        msg: 'Hello Miracle',
+        link: '<a href="http://www.baidu.com">百度一下</a>',
+        myClass: 'bClass'
+      },
+      methods: {
+        hello() {
+          alert(this.msg);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

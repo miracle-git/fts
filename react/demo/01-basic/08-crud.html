@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>React入门 - 综合案例</title>
+  <style>
+    #container { margin: 50px auto;width: 600px; }
+    fieldset { border: 1px solid purple;margin-bottom: 20px; }
+    fieldset input { width: 200px;height: 30px;margin: 10px 0; }
+    table { width: 600px;border: 2px solid purple;text-align: center; }
+    thead { background-color: purple;color: #fff; }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <script src="../../js/react.development.js"></script>
+  <script src="../../js/react-dom.development.js"></script>
+  <script src="../../js/prop-types.js"></script>
+  <script src="../../js/babel.min.js"></script>
+  <script type="text/babel">
+    // 1. 父组件
+    class App extends React.Component {
+      state = {
+        users: [
+          { id: 1, name: 'Miracle', gender: '男', age: 32, phone: '13588888888' },
+          { id: 2, name: 'Jack',gender: '女', age: 28, phone: '13688888888' },
+          { id: 3, name: 'Tom', gender: '男', age: 45, phone: '13988888888' }
+        ]
+      };
+
+      handleAddUser(user) {
+        const { users } = this.state;
+        const ids = users.map(item => item.id);
+        users.unshift({ ...user, id: Math.max.apply({}, ids) + 1 });
+        this.setState({ users });
+      }
+
+      handleDeleteUser(userId) {
+        const { users } = this.state;
+        const filterUsers = users.filter(item => item.id !== userId);
+        this.setState({ users: filterUsers });
+      }
+
+      render() {
+        const { users } = this.state;
+
+        return (
+          <div>
+            <Add onAdd={this.handleAddUser.bind(this)} />
+            <List userList={users} onDelete={this.handleDeleteUser.bind(this)}/>
+          </div>
+        )
+      }
+    }
+    // 2. 子组件 - 添加
+    class Add extends React.Component {
+      static propTypes = {
+        onAdd: PropTypes.func.isRequired
+      };
+
+      state = {
+        name: '',
+        age: '',
+        gender: '',
+        phone: ''
+      };
+
+      handleAdd() {
+        const { name, age, gender, phone } = this.state;
+        if (!name || !age || !gender || !phone) {
+          console.log('输入数据不能为空！');
+          return;
+        }
+
+        this.props.onAdd({
+          name,
+          age,
+          gender,
+          phone
+        });
+      }
+
+      handleChange(e, field) {
+        this.setState({
+          [field]: e.target.value
+        });
+      }
+
+      render() {
+        const { name, age, gender, phone } = this.state;
+
+        return (
+          <fieldset>
+            <legend>信息录入表单</legend>
+            <div>
+              <span>姓名: </span>
+              <input type="text" placeholder="请输入姓名" value={name} onChange={e=>this.handleChange(e, 'name')}/>
+            </div>
+            <div>
+              <span>年龄: </span>
+              <input type="text" placeholder="请输入年龄" value={age} onChange={e=>this.handleChange(e, 'age')}/>
+            </div>
+            <div>
+              <span>性别: </span>
+              <select value={gender} onChange={e=>this.handleChange(e, 'gender')}>
+                <option value="男">男</option>
+                <option value="女">女</option>
+              </select>
+            </div>
+            <div>
+              <span>手机: </span>
+              <input type="text" placeholder="请输入手机号码" value={phone} onChange={e=>this.handleChange(e, 'phone')}/>
+            </div>
+            <button onClick={()=>this.handleAdd()}>创建新用户</button>
+          </fieldset>
+        )
+      }
+    }
+    // 3. 子组件 - 列表
+    class List extends React.Component {
+      static propTypes = {
+        userList: PropTypes.array.isRequired,
+        onDelete: PropTypes.func.isRequired
+      };
+
+      render() {
+        const { userList, onDelete } = this.props;
+
+        return (
+          <table>
+            <thead>
+              <tr>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>年龄</td>
+                <td>手机</td>
+                <td>操作</td>
+              </tr>
+            </thead>
+            <tbody>
+            {
+              userList.map(item => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.gender}</td>
+                  <td>{item.age}</td>
+                  <td>{item.phone}</td>
+                  <td>
+                    <button onClick={()=>onDelete(item.id)}>删除</button>
+                  </td>
+                </tr>
+              ))
+            }
+            </tbody>
+          </table>
+        )
+      }
+    }
+    // 4. 渲染
+    ReactDOM.render(<App/>, document.getElementById('container'));
+  </script>
+</body>
+</html>

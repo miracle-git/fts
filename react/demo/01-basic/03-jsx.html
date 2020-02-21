@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>React入门 - JSX的基本用法</title>
+</head>
+<body>
+  <ol style="color: red">
+    <li>JSX标签必须使用className代替class</li>
+    <li>JSX标签必须自闭合(如&lt;img/&gt;)</li>
+    <li>JSX表达式必须放在{}内</li>
+    <li>JSX内联样式必须放在{{}}内</li>
+    <li>JSX注释必须放在{/*注释*/}内</li>
+    <li>JSX遍历数组必须使用key且不建议使用数组索引index作为key</li>
+  </ol>
+  <div id="container"></div>
+  <script src="../../js/react.development.js"></script>
+  <script src="../../js/react-dom.development.js"></script>
+  <script src="../../js/babel.min.js"></script>
+  <script type="text/html">
+    // JSX标签嵌套(标签必须自闭合)
+    ReactDOM.render(
+      <div>
+        <h2>React入门</h2>
+        <img src="../../img/m2.jpg" alt="React架构" width={200} height={100} />
+        <p>JSX标签嵌套</p>
+      </div>,
+    document.getElementById('container'));
+  </script>
+  <script type="text/html">
+    // JSX表达式(必须放在{}内)
+    const _title = 'React入门';
+    ReactDOM.render(
+      <div>
+        <h2>{_title}</h2>
+        <p>JSX表达式计算：10 + 20 = {10 + 20}</p>
+      </div>,
+    document.getElementById('container'));
+  </script>
+  <script type="text/html">
+    // JSX内联样式(必须使用{{}})
+    const _style = {
+      backgroundColor: 'red',
+      color: 'white',
+      fontSize: 18
+    };
+    ReactDOM.render(
+      <div>
+        <h2 style={_style}>React入门</h2>
+        <p style={{backgroundColor: 'blue', color: 'white', fontSize: 14}}>JSX内联样式</p>
+      </div>,
+    document.getElementById('container'));
+  </script>
+  <script type="text/babel">
+    // JSX遍历数据(必须使用key且key不建议使用数组索引index作为key)
+    const _users = [
+      { id: 1, name: 'Miracle', age: 32 },
+      { id: 2, name: 'Jack', age: 28 },
+      { id: 3, name: 'Tom', age: 45 }
+    ];
+    ReactDOM.render(
+      <ul>
+        {
+          _users.map(item => (
+            <li key={item.id}>姓名: {item.name}, 年龄: {item.age}岁</li>
+          ))
+        }
+      </ul>,
+    document.getElementById('container'));
+  </script>
+</body>
+</html>
