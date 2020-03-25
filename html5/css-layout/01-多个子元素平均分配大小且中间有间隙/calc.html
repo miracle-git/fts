@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>浮动动态宽度计算法</title>
+  <link rel="stylesheet" href="./base.css">
+  <style>
+    .item-box {
+      margin-bottom: -20px;
+    }
+    .item {
+      float: left;
+      width: calc((100% - 20px * 3) / 4);
+      height: 200px;
+      margin-right: 20px;
+      margin-bottom: 20px;
+    }
+    .item:nth-child(4n) {
+      margin-right: 0;
+    }
+    .item-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      background-color: antiquewhite;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="item-box clear-fix">
+      <div class="item">
+        <div class="item-inner">
+          <h1>1</h1>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-inner">
+          <h1>2</h1>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-inner">
+          <h1>3</h1>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-inner">
+          <h1>4</h1>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-inner">
+          <h1>5</h1>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-inner">
+          <h1>6</h1>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-inner">
+          <h1>7</h1>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-inner">
+          <h1>8</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
