@@ -38,19 +38,19 @@ module.exports = {
       },
       {
         // 处理图片资源
-        test: /\.(jpg|png|gif)$/,
+        test: /\.(jpe?g|png|gif)$/,
         // 注意：一个loader可直接使用loader选项，多个选项需要使用use: [loader1,loader2]
         loader: 'url-loader', // 处理样式文件中url引入图片的方式(通过background-image)
         options: {
           limit: 8 * 1024, // 当图片小于8kb时会当做base64处理(减少请求数，以减轻服务器压力，但图片体积会增大而影响文件速度)
           esModule: false,  // 默认url-loader采用的是es6的模块化解析方式，而html-loader@0.5.5采用的commonjs规范引入图片，解析后会出现[Object Module]的问题
           // 解决办法(两种)：1）升级html-loader为1.0.0；2）关闭url-loader的es6模块解析方式
-          name: '[hash:8].[ext]' // 修改图片的名称(取图片hash前8位)和对应的后缀名
+          name: '[hash:8].[ext]' // 修改图片资源的名称(取图片hash前8位)和对应的后缀名
         }
       },
       {
         // 处理html中引入图片资源
-        test: /\.(htm|html)$/,
+        test: /\.html?$/,
         loader: 'html-loader' // 处理html中img引入图片的方式(处理完成后交给url-loader)
       }
     ]
@@ -59,7 +59,7 @@ module.exports = {
   plugins: [
     // new HtmlWebpackPlugin() // 在输出目录默认创建一个index.html文件，引入打包的所有资源(js/css)
     new HtmlWebpackPlugin({
-      template: './index.html' // 复制指定template对应的index.html并自动引入所有打包后的资源(js/css)
+      template: './index.htm' // 复制指定template对应的index.html并自动引入所有打包后的资源(js/css)
     })
   ]
 }
