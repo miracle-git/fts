@@ -1,10 +1,11 @@
 const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
   // 模式
-  mode: 'development', // development | production
+  mode: 'production', // development | production
   // 入口配置
   entry: './src/js/index.js',
   // 输出配置
@@ -18,6 +19,22 @@ module.exports = {
   module: {
     // 处理规则
     rules: [
+      {
+        // 利用eslint进行js语法检查
+        test: /\.js$/,
+        loader: 'eslint-loader', // 检查代码是否满足eslint规范
+        exclude: /node_modules/, // 排除对第三方库检查
+        enforce: 'pre', // 优先执行eslint检查
+        options: {
+          fix: true // 出现不满足规则将会自动修复
+        }
+      },
+      {
+        // 利用babel进行js兼容性处理
+        test: /\.js$/,
+        loader: 'babel-loader', // 将es6+格式的代码转化为es5格式
+        exclude: /node_modules/ // 排除对第三方库检查
+      },
       {
         // 处理css资源
         test: /\.css$/,
@@ -78,10 +95,16 @@ module.exports = {
   plugins: [
     // new HtmlWebpackPlugin() // 在输出目录默认创建一个index.html文件，引入打包的所有资源(js/css)
     new HtmlWebpackPlugin({
-      template: './src/index.html' // 复制指定template对应的index.html并自动引入所有打包后的资源(js/css)
+      template: './src/index.html', // 复制指定template对应的index.html并自动引入所有打包后的资源(js/css)
+      // html压缩(html-webpack-plugin@4.0.0后在生产环境下不需要再配置)
+      minify: {
+        collapseWhitespace: true, // 移除空格
+        removeComments: true // 移除注释
+      }
     }),
     new MiniCssExtractPlugin({
       filename: 'css/main.css' // 对输出文件添加独立的目录和重命名(默认为main.css)
-    })
+    }),
+    new OptimizeCssAssetsWebpackPlugin()
   ]
 }

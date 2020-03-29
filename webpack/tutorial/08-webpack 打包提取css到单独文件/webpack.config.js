@@ -77,13 +77,5 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/main.css' // 对输出文件添加独立的目录和重命名(默认为main.css)
     })
-  ],
-  // 开发服务器配置(自动化：自动编译，自动打开浏览器，自动刷新浏览器)
-  // 只会在内存中打包，不会在本地输出，启动指令：npx webpack-dev-server
-  devServer: {
-    contentBase: resolve(__dirname, 'dist'), // devServer启动应用目录(一般为打包后的输出目录)
-    compress: true, // 开启gzip压缩
-    open: true, // 编译完成后自动打开(默认)浏览器
-    port: 8000 // 启动端口号
-  }
+  ]
 }

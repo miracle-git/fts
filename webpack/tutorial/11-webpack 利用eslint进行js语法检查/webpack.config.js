@@ -1,6 +1,7 @@
 const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
   // 模式
@@ -18,6 +19,15 @@ module.exports = {
   module: {
     // 处理规则
     rules: [
+      {
+        // 利用eslint进行js语法检查
+        test: /\.js$/,
+        loader: 'eslint-loader', // 检查代码是否满足eslint规范
+        exclude: /node_modules/, // 排除对第三方库检查
+        options: {
+          fix: true // 出现不满足规则将会自动修复
+        }
+      },
       {
         // 处理css资源
         test: /\.css$/,
@@ -82,6 +92,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'css/main.css' // 对输出文件添加独立的目录和重命名(默认为main.css)
-    })
+    }),
+    new OptimizeCssAssetsWebpackPlugin()
   ]
 }

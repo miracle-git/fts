@@ -1,10 +1,22 @@
 const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const commonCssLoaders = [
+  // 'style-loader', // 创建style标签，将js中的样式资源插入到style标签并添加到head标签
+  { loader: MiniCssExtractPlugin.loader, options: { publicPath: '../'} }, // 取代style-loader, 可提取bundle.js中的css为单独文件并以link标签添加到head标签
+  // 'css-loader', // 将css资源编译成commonjs模块加载到js中，但仍然保持样式字符串的形式
+  { loader: 'css-loader', options: { importLoaders: 1 } },
+  // 解决浏览器兼容性问题
+  'postcss-loader'
+]
+
+// 指定运行环境为生产环境
+process.env.NODE_ENV = 'production'
 
 module.exports = {
   // 模式
-  mode: 'development', // development | production
+  mode: 'production', // development | production
   // 入口配置
   entry: './src/js/index.js',
   // 输出配置
@@ -19,29 +31,33 @@ module.exports = {
     // 处理规则
     rules: [
       {
+        // 利用eslint进行js语法检查
+        test: /\.js$/,
+        loader: 'eslint-loader', // 检查代码是否满足eslint规范
+        exclude: /node_modules/, // 排除对第三方库检查
+        enforce: 'pre',
+        options: {
+          fix: true // 出现不满足规则将会自动修复
+        }
+      },
+      {
+        // 利用babel进行js兼容性处理
+        test: /\.js$/,
+        loader: 'babel-loader', // 将es6+格式的代码转化为es5格式
+        exclude: /node_modules/ // 排除对第三方库检查
+      },
+      {
         // 处理css资源
         test: /\.css$/,
         // 执行顺序：从后向前依次执行（也可说从右往左，从下往上）
-        use: [
-          // 'style-loader', // 创建style标签，将js中的样式资源插入到style标签并添加到head标签
-          MiniCssExtractPlugin.loader, // 取代style-loader, 可提取bundle.js中的css为单独文件并以link标签添加到head标签
-          // 'css-loader', // 将css资源编译成commonjs模块加载到js中，但仍然保持样式字符串的形式
-          { loader: 'css-loader', options: { importLoaders: 1 } },
-          // 解决浏览器兼容性问题
-          'postcss-loader'
-        ]
+        use: [...commonCssLoaders]
       },
       {
         // 处理less资源
         test: /\.less$/,
         // 执行顺序：从后向前依次执行（也可说从右往左，从下往上）
         use: [
-          // 'style-loader', // 创建style标签，将js中的样式资源插入到style标签并添加到head标签
-          MiniCssExtractPlugin.loader, // 取代style-loader, 可提取bundle.js中的css为单独文件并以link标签添加到head标签
-          // 'css-loader', // 将css资源编译成commonjs模块加载到js中，但仍然保持样式字符串的形式
-          { loader: 'css-loader', options: { importLoaders: 1 } },
-          // 解决浏览器兼容性问题
-          'postcss-loader',
+          ...commonCssLoaders,
           'less-loader' // 将less资源编译成css资源
         ]
       },
@@ -78,10 +94,17 @@ module.exports = {
   plugins: [
     // new HtmlWebpackPlugin() // 在输出目录默认创建一个index.html文件，引入打包的所有资源(js/css)
     new HtmlWebpackPlugin({
-      template: './src/index.html' // 复制指定template对应的index.html并自动引入所有打包后的资源(js/css)
+      template: './src/index.html', // 复制指定template对应的index.html并自动引入所有打包后的资源(js/css)
+      // html压缩(html-webpack-plugin@4.0.0后在生产环境下不需要再配置)
+      minify: {
+        collapseWhitespace: true, // 移除空格
+        removeComments: true // 移除注释
+      }
     }),
     new MiniCssExtractPlugin({
       filename: 'css/main.css' // 对输出文件添加独立的目录和重命名(默认为main.css)
-    })
+    }),
+    // 压缩css代码
+    new OptimizeCssAssetsWebpackPlugin()
   ]
 }

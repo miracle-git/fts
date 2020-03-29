@@ -1,6 +1,7 @@
 const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
   // 模式
@@ -82,6 +83,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'css/main.css' // 对输出文件添加独立的目录和重命名(默认为main.css)
-    })
+    }),
+    new OptimizeCssAssetsWebpackPlugin()
   ]
 }
