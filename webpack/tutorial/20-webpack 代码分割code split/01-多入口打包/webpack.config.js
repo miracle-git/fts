@@ -17,14 +17,20 @@ process.env.NODE_ENV = 'production'
 module.exports = {
   // 模式
   mode: 'production', // development | production
-  // 入口配置
-  entry: './src/js/index.js',
+  // 单入口配置
+  // entry: './src/js/index.js',
+  // 多入口配置
+  entry: {
+    main: './src/js/index.js',
+    calc: './src/js/calc.js'
+  },
   // 输出配置
   output: {
     // 输出路径
     path: resolve(__dirname, 'dist'),
     // 输出文件名
-    filename: 'js/bundle.js'
+    // filename: 'js/bundle.[contenthash:8].js'
+    filename: 'js/[name].[contenthash:8].js'
   },
   // loader配置
   module: {
@@ -46,7 +52,10 @@ module.exports = {
             // 利用babel进行js兼容性处理
             test: /\.js$/,
             loader: 'babel-loader', // 将es6+格式的代码转化为es5格式
-            exclude: /node_modules/ // 排除对第三方库检查
+            exclude: /node_modules/, // 排除对第三方库检查
+            options: {
+              cacheDirectory: true // 开启babel缓存, 第二次构建将读取之前的缓存
+            }
           },
           {
             // 处理css资源
@@ -106,7 +115,7 @@ module.exports = {
       }
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/main.css' // 对输出文件添加独立的目录和重命名(默认为main.css)
+      filename: 'css/main.[contenthash:8].css' // 对输出文件添加独立的目录和重命名(默认为main.css)
     }),
     // 压缩css代码
     new OptimizeCssAssetsWebpackPlugin()

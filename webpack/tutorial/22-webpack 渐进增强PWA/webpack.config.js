@@ -2,6 +2,7 @@ const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 const commonCssLoaders = [
   // 'style-loader', // 创建style标签，将js中的样式资源插入到style标签并添加到head标签
   { loader: MiniCssExtractPlugin.loader, options: { publicPath: '../'} }, // 取代style-loader, 可提取bundle.js中的css为单独文件并以link标签添加到head标签
@@ -24,7 +25,7 @@ module.exports = {
     // 输出路径
     path: resolve(__dirname, 'dist'),
     // 输出文件名
-    filename: 'js/bundle.js'
+    filename: 'js/[name].[contenthash:8].js'
   },
   // loader配置
   module: {
@@ -46,7 +47,10 @@ module.exports = {
             // 利用babel进行js兼容性处理
             test: /\.js$/,
             loader: 'babel-loader', // 将es6+格式的代码转化为es5格式
-            exclude: /node_modules/ // 排除对第三方库检查
+            exclude: /node_modules/, // 排除对第三方库检查
+            options: {
+              cacheDirectory: true // 开启babel缓存, 第二次构建将读取之前的缓存
+            }
           },
           {
             // 处理css资源
@@ -106,9 +110,25 @@ module.exports = {
       }
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/main.css' // 对输出文件添加独立的目录和重命名(默认为main.css)
+      filename: 'css/main.[contenthash:8].css' // 对输出文件添加独立的目录和重命名(默认为main.css)
     }),
     // 压缩css代码
-    new OptimizeCssAssetsWebpackPlugin()
-  ]
+    new OptimizeCssAssetsWebpackPlugin(),
+    // 生成ServiceWorker配置文件
+    new WorkboxWebpackPlugin.GenerateSW({
+      // 快速启动ServiceWorker并删除旧版本的ServiceWorker
+      clientsClaim: true,
+      skipWaiting: true
+    })
+  ],
+  // 可将node_modules中的包单独打包输出，同时分析多入口chunk中的公共代码并只会打包一份chunk输出
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    },
+    // 将当前模块中保留其他模块的hash值单独打包一个独立chunk中
+    runtimeChunk: {
+      name: endpoint => `runtime-${endpoint.name}`
+    }
+  }
 }
