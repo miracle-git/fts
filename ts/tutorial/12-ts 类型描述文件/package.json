@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel ./index.html"
+    "start:cdn": "parcel ./cdn/index.html",
+    "start:es6": "parcel ./es6/index.html"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^3.5.0"
+  },
   "devDependencies": {
     "parcel": "^1.12.4",
     "typescript": "^3.8.3"
