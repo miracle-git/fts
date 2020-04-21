@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JS var&let&const异同点</title>
+</head>
+<body>
+  <p>var&let&const异同点</p>
+  <ul>
+    <li>相同点：三者都遵循“先声明后使用”原则, 函数内部优先查找内部是否声明，未声明可访问外部变量</li>
+    <li>不同点：var/let变量可单独声明，之后再某个时刻再赋值(且可多次赋值);const常量必须声明同时并赋值，且之后不可再次赋值(无法改变)</li>
+    <li>推荐点：优先使用const来定义，如果变量值确实可能会发生变化，则考虑使用let(如for循环迭代值), 尽量不使用var来定义变量</li>
+  </ul>
+  <script>
+    // var user = 'Miracle';
+    // let user = 'Miracle';
+    const user = 'Miracle';
+    function getName() {
+      // var user = 'Miracle He';
+      // let user = 'Miracle He';
+      const user = 'Miracle He';
+      console.log(user); // Miracle He
+    }
+    getName();
+    console.log(user); // Miracle
+  </script>
+</body>
+</html>
