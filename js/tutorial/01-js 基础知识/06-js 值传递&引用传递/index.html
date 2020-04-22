@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>值传递&引用传递</title>
+</head>
+<body>
+  <p>值传递&引用传递</p>
+  <ul>
+    <li>值传递：对于基础类型(如string,boolean,number等)，成员之间赋值当改变其中某一成员，其他成员不受影响</li>
+    <li>引用传递：对于引用类型(如object,array等)，成员之间赋值当改变其中某一成员，其他成员也会一起改变</li>
+  </ul>
+  <script>
+    // 值传递
+    let a = 1, b = a;
+    console.log(a, b); // 1,1
+    b = 2;
+    console.log(a, b); // 1,2
+    // 引用传递
+    let x = { a: 1 }, y = x;
+    console.log(x, y); // {a:1},{a:1}
+    y.a = 2;
+    console.log(x, y); // {a:2},{a:2}
+  </script>
+</body>
+</html>
