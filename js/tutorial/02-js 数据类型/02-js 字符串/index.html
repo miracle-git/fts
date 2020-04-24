@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js字符串</title>
+  <style>
+    #template li { padding:10px; list-style: none; }
+    #template li:nth-child(odd) { background-color: #16a085; color: #fff; }
+  </style>
+</head>
+<body>
+  <p>字符串</p>
+  <ul>
+    <li>字符串可采用new String()来定义，采用toString()输出(不推荐)，而推荐使用简写：const name='Miracle'</li>
+    <li>字符串内部如果存在特殊字符(如'，", \等)，需要采用\来进行转义</li>
+    <li>多个字符串采用'+'进行拼接(不推荐)，而推荐采用`(模板字符串)来输出</li>
+    <li>模板字符串内部不仅可为变量，还可为表达式或函数，甚至还支持嵌套</li>
+    <li>使用\t输出制表符，使用\n输出回车符，使用&amp;nbsp;在html中输出空白符</li>
+    <li>"+"和"`"区别：前者有时需加转义字符(如\n),后者直接输出即可(如多行)</li>
+    <li>推荐大多数情况下使用''(单引号)来声明字符串，特殊情况下(如字符串内部，或JSON)才使用""(双引号)</li>
+  </ul>
+  <div id="template"></div>
+  <script>
+    // 正规写法(不推荐)
+    // const name = new String('Miracle')
+    // console.log(name.toString()) // Miracle
+    // 推荐写法
+    const name = 'Miracle'
+    console.log(name)
+    const books = 'Miracle\'s books: Javascript, Vue, React'
+    console.log(books)
+    // 字符串连接
+    const book = 'Javascript'
+    // 不推荐
+    // const todo = name + ' is learning ' + book
+    const todo = `${name} is learning ${book}`
+    console.log(todo)
+    // 支持函数和表达式
+    const showFullName = () => `${name} He`
+    const age = 30
+    const desc = `${showFullName()} is ${age + 5} years old`
+    console.log(desc)
+    // 支持多行和嵌套
+    const skills = ['ts', 'js', 'es', 'vue', 'react']
+    const html = `
+      <ul>
+        ${skills.map(item =>
+          `<li>${item}</li>`
+        ).join('')}
+      <ul>
+    `
+    console.log(html)
+    document.getElementById('template').innerHTML = html
+    // 制表符，回车符，空白符
+    const note = `${name}\tis learning:\n${book}`
+    console.log(note)
+    const text = `${name}&nbsp;is&nbsp;learning:<br>${book}`
+    document.write(text)
+  </script>
+</body>
+</html>
