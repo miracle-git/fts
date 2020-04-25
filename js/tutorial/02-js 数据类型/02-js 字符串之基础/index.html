@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js字符串之基础</title>
+</head>
+<body>
+  <p>字符串之基础</p>
+  <ul>
+    <li>字符串可采用new String()来定义，采用toString()输出(不推荐)，而推荐使用简写：const name='Miracle'</li>
+    <li>字符串内部如果存在特殊字符(如'，", \等)，需要采用\来进行转义</li>
+    <li>使用\t输出制表符，使用\n输出回车符，使用&amp;nbsp;在html中输出空白符</li>
+    <li>推荐大多数情况下使用''(单引号)来声明字符串，特殊情况下(如字符串内部，或JSON)才使用""(双引号)</li>
+  </ul>
+  <script>
+    // 正规写法(不推荐)
+    // const name = new String('Miracle')
+    // console.log(name.toString()) // Miracle
+    // 推荐写法
+    const name = 'Miracle'
+    console.log(name)
+    const books = 'Miracle\'s books: Javascript, Vue, React'
+    console.log(books)
+    // 制表符，回车符，空白符
+    const book = 'Javascript'
+    const note = `${name}\tis learning:\n${book}`
+    console.log(note)
+    const text = `${name}&nbsp;is&nbsp;learning:<br>${book}`
+    document.write(text)
+  </script>
+</body>
+</html>
