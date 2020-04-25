@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js日期之类型转换</title>
+</head>
+<body>
+  <p>日期之类型转换</p>
+  <ul>
+    <li>日期和时间戳时间可相互转换，可使用*1,Number(),valueOf(),getTime将日期转化为时间戳，可使用new Date()将时间戳转化为日期</li>
+  </ul>
+  <script>
+    // 日期转化为时间戳
+    const date1 = new Date('2020-04-20 12:20:20')
+    console.log(date1 * 1)
+    console.log(Number(date1))
+    console.log(date1.valueOf())
+    console.log(date1.getTime())
+    // 时间戳转化为日期
+    const timestamp = date1.valueOf()
+    const date2 = new Date(timestamp)
+    console.log(date2)
+  </script>
+</body>
+</html>

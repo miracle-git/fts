@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js日期之格式化处理</title>
+  <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
+</head>
+<body>
+  <p>日期之格式化处理</p>
+  <ul>
+    <li>获取年份使用getFullYear(),获取月份使用getMonth()但需加1，获取日期使用getDate()</li>
+    <li>获取小时数使用getHours(),获取分钟数使用getMinutes()，获取秒数使用getSeconds()</li>
+    <li>封装日期格式化函数formatDate(date, format)</li>
+    <li>推荐使用第三方库moment.js来对日期进行处理(如格式化等)</li>
+  </ul>
+  <script>
+    const date1 = new Date('2020-04-20 12:20:20')
+    console.log(date1)
+    console.log(date1.getFullYear())
+    console.log(date1.getMonth() + 1)
+    console.log(date1.getDate())
+    console.log(date1.getHours())
+    console.log(date1.getMinutes())
+    console.log(date1.getSeconds())
+    // 封装函数
+    function formatDate(date, format = 'YYYY-MM-DD HH:mm:ss') {
+      const config = {
+        YYYY: date.getFullYear(),
+        MM: date.getMonth() + 1,
+        DD: date.getDate(),
+        HH: date.getHours(),
+        mm: date.getMinutes(),
+        ss: date.getSeconds()
+      }
+      for (let key in config) {
+        if (`${config[key]}`.length === 1) {
+          config[key] = `0${config[key]}`
+        }
+        format = format.replace(key, config[key])
+      }
+      return format
+    }
+    // 调用
+    const format = 'YYYY年MM月DD日 HH:mm:ss'
+    console.log(formatDate(date1))
+    console.log(formatDate(date1, format))
+    // 使用moment.js来格式化
+    const date2 = moment('2020-04-20 12:20:20')
+    console.log(date2.format(format))
+    console.log(date2.add(10, 'days').format(format))
+  </script>
+</body>
+</html>

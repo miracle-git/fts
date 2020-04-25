@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js日期之基础</title>
+</head>
+<body>
+  <p>日期之基础</p>
+  <ul>
+    <li>使用new Date()或Date()来定义日期，Date.now()返回当前时刻的毫秒数</li>
+    <li>可在运算逻辑前后添加start,end或console.time,console.timeEnd来计算花费的时间差</li>
+    <li>可根据具体的时间维度参数(字符串，数字，数组均可)来定义日期</li>
+  </ul>
+  <script>
+    const date1 = new Date()
+    console.log(typeof date1, date1)            // object
+    console.log(date1 * 1)                      // 1587823372589
+    const date2 = Date()
+    console.log(typeof date2, date2)            // string
+    console.log(date2 * 1)                      // NaN
+    // 返回当前时刻的毫秒数
+    const now = Date.now()
+    console.log(now)                            // 1587823372589
+    // 计算时间差
+    const loops = 20000000
+    // const start = Date.now()
+    // for (let i = 0;i < loops; i++) {}
+    // const end = Date.now()
+    // console.log(`${loops}次循环花费${(end - start) / 1000}秒`)
+    console.time('for')
+    for (let i = 0;i < loops; i++) {}
+    console.timeEnd('for')
+    // 根据具体时间返回
+    const date3 = new Date('2020-04-20 12:20:20')
+    console.log(date3)
+    const date4 = new Date(2020, 3, 20, 12, 20, 20)
+    console.log(date4)
+    const date5 = new Date(...[2020, 3, 20, 12, 20, 20])
+    console.log(date5)
+  </script>
+</body>
+</html>
