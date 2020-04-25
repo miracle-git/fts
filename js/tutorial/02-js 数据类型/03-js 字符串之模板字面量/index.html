@@ -5,14 +5,20 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>js字符串之模板</title>
+  <title>js字符串之模板字面量</title>
   <style>
-    #template li { padding:10px; list-style: none; }
-    #template li:nth-child(odd) { background-color: #16a085; color: #fff; }
+    #template li {
+      padding:10px;
+      list-style: none;
+    }
+    #template li:nth-child(odd) {
+      background-color: #16a085;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
-  <p>字符串之模板</p>
+  <p>字符串之模板字面量</p>
   <ul>
     <li>多个字符串采用'+'进行拼接(不推荐)，而推荐采用`(模板字符串)来输出</li>
     <li>模板字符串内部不仅可为变量，还可为表达式或函数，甚至还支持嵌套</li>
@@ -37,8 +43,8 @@
     const html = `
       <ul>
         ${skills.map(item =>
-        `<li>${item}</li>`
-    ).join('')}
+          `<li>${item}</li>`
+        ).join('')}
       <ul>
     `
     document.getElementById('template').innerHTML = html

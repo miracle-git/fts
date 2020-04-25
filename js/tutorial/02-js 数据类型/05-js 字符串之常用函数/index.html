@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js字符串之常用函数</title>
+  <style>
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <p>字符串之常用函数</p>
+  <ul>
+    <li>对字符串操作(如toUpperCase,toLowerCase,trim等)都不会改变原来字符串的值(除非重新赋值)</li>
+  </ul>
+  <label for="username">
+    <input type="text" name="username" id="username">
+    <span name="error" class="error"></span>
+  </label>
+  <div id="template"></div>
+  <script>
+    // 常用函数
+    const name = '  Miracle  '
+    console.log(name)
+    console.log(name.length)
+    console.log(name.charAt(5))
+    console.log(name[5])
+    console.log(name.toUpperCase())
+    console.log(name.toLowerCase())
+    console.log(name.trim().length)
+    console.log(name) // 仍然保持不变
+    // 实例
+    const username = document.getElementById('username')
+    username.addEventListener('keyup', function () {
+      this.value = this.value.trim()
+      const minLength = 5
+      const error = document.getElementsByClassName('error')[0]
+      // console.log(this.value.length)
+      if (this.value.length < minLength) {
+        error.style.display = 'block'
+        error.innerHTML = `用户名不能少于${minLength}位！`
+      } else {
+        error.style.display = 'none'
+        error.innerHTML = ''
+      }
+    })
+    // 特效
+    const fullName = 'MiracleHe'
+    const template = document.getElementById('template')
+    for (let i = 0, len = fullName.length; i < len; i++) {
+      const span = document.createElement('span')
+      span.style.fontSize = `${(i + 1) * 16}px`
+      span.innerHTML = fullName[i]
+      template.append(span)
+    }
+  </script>
+</body>
+</html>
