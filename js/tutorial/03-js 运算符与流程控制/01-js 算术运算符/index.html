@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js算术运算符</title>
+  <script src="safe-float.js"></script>
+  <script src="to-fixed.js"></script>
+</head>
+<body>
+  <script>
+    const a = 1, b = 2
+    console.log(a + b)
+    console.log(a - b)
+    console.log(a * b)
+    console.log(a / b)
+    console.log(a % b)
+    // 大整数越界问题
+    console.log(9999999999999999 == 10000000000000001)     // true
+    console.log(9007199254740992 + 1 == 9007199254740992)  // true
+    console.log(Number.MAX_VALUE)                          // 1.7976931348623157e+308
+    console.log(Number.MIN_VALUE)                          // 5e-324
+    console.log(Number.MAX_SAFE_INTEGER)                   // 9007199254740991
+    console.log(Number.MIN_SAFE_INTEGER)                   // -9007199254740991
+    // 浮点数误差问题
+    console.log(0.1 + 0.2 == 0.3)    // false
+    console.log(0.1 * 0.2 == 0.02)   // false
+    console.log(1.335.toFixed(2))    // 1.33
+    // 修正错误
+    console.log((0.1 * 10 + 0.2 * 10) / 10 == 0.3) // true
+    console.log(safeFloat.add(0.1, 0.2))           // 0.3
+    console.log(safeFloat.mul(0.1, 0.2))           // 0.02
+    console.log(toFixed(1.335, 2))                 // 1.34
+  </script>
+</body>
+</html>
