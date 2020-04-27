@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js三元运算符</title>
+</head>
+<body>
+  <script>
+    function createDiv(options = {}) {
+      const div = document.createElement('div')
+      div.style.width = options.width ? options.width : '100px'
+      div.style.height = options.height ? options.height : '100px'
+      div.style.backgroundColor = options.bgColor ? options.bgColor : 'red'
+      document.body.appendChild(div)
+    }
+    createDiv()
+    createDiv({ width: '300px', height: '100px', bgColor: 'green' })
+  </script>
+</body>
+</html>
