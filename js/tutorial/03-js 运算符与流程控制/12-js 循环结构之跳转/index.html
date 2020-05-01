@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js循环结构之跳转</title>
+</head>
+<body>
+  <script>
+    // continue: 跳出本次循环，继续下一次循环
+    for (let i = 0; i < 10; i++) {
+      if (i % 2) {
+        console.log(i)
+      }
+    }
+    // break: 跳出整个循环
+    let count = 0
+    for (let i = 0; i < 10; i++) {
+      if (i % 2) {
+        if (++count <= 3) {
+          console.log(i)
+        }
+      }
+    }
+    // label: 跳出多层循环
+    loop: for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        console.log(i, j)
+        if (i + j > 18) {
+          break loop
+        }
+      }
+    }
+  </script>
+</body>
+</html>
