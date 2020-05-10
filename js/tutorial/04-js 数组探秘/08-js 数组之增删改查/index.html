@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之增删改查</title>
+</head>
+<body>
+  <ul>
+    <li>利用slice对数组部分元素截取(包含开始不包含结束索引位)，但不改变原数组</li>
+    <li>slice不指定参数将复制一份原数组，指定开始不指定结束索引，则截取从开始到结尾的所有元素</li>
+    <li>也可利用splice来对数组部分元素截取(从开始索引截取多少个)，将改变原数组(只留下剩下的元素)</li>
+    <li>利用splice可实现在中间位置插入多个元素，替换元素，删除元素，将改变原数组</li>
+    <li>建议利用slice截取元素,unshift/push在头尾插入元素,利用splice在中间位置插入元素</li>
+  </ul>
+  <script>
+    // 利用slice对数组部分元素截取(包含开始不包含结束索引位)，但不改变原数组
+    const arr = [1, 2, 3, 4, 5, 6]
+    console.log(arr.slice(1, 3))     // [2, 3]
+    console.log(arr.slice())         // [1, 2, 3, 4, 5, 6]
+    console.log(arr.slice(1))        // [2, 3, 4, 5, 6]
+    console.log(arr)                 // 原数组没发生变化
+    // 也可利用splice来对数组部分元素截取(从开始索引截取多少个)，将改变原数组
+    console.log(arr.splice(1, 3))    // [2, 3, 4], 第2个参数为截取个数，不传则截取到结尾
+    console.log(arr)                 // [1, 5, 6], 原数组发生变化，只留下剩下的部分
+    // 利用splice可实现在中间位置插入多个元素，替换元素，删除元素，将改变原数组
+    arr.splice(1, 0, 2, 3, 4)        // 从第二个元素开始，新增2,3,4
+    console.log(arr)                 // [1, 2, 3, 4, 5, 6]
+    arr.splice(1, 2)                 // 从第二个元素开始，删除2, 3
+    console.log(arr)                 // [1, 4, 5, 6]
+    arr.splice(1, 3, 2, 3, 4)        // 从第二个元素开始，替换3个元素2,3,4
+    console.log(arr)                 // [1, 2, 3, 4]
+    arr.splice(arr.length, 0, 5, 6)  // 在数组结尾新增5,6,相当于push
+    console.log(arr)                 // [1, 2, 3, 4, 5, 6]
+    arr.splice(0, 0, 0)              // 在数组开头新增0,相当于unshift
+    console.log(arr)                 // [0, 1, 2, 3, 4, 5, 6]
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之出入栈及填充</title>
+</head>
+<body>
+  <li>除之前可利用push追加元素(入栈)，还可利用pop弹出元素(出栈)，出栈后数组长度减小</li>
+  <li>也可利用unshift在数组头部插入多个元素(入栈)，利用shift从头部移除元素(出栈)</li>
+  <li>unshift的返回结果与push一样，也是返回插入元素后的数组长度</li>
+  <li>可利用fill对已有数组进行填充，可指定填充位的索引范围</li>
+  <script>
+    const arr = [1, 2, 3, 4]
+    arr.push(...[5, 6])
+    console.log(arr)          // [1, 2, 3, 4, 5, 6]
+    console.log(arr.pop())    // 6
+    console.log(arr)          // [1, 2, 3, 4, 5]
+    console.log(arr.unshift('Miracle', 'He')) // 7
+    console.log(arr)          // ["Miracle", "He", 1, 2, 3, 4, 5]
+    console.log(arr.shift())  // Miracle
+    console.log(Array(5).fill('Miracle'))           // ["Miracle", "Miracle", "Miracle", "Miracle", "Miracle"]
+    console.log([1, 2, 3, 4].fill('Miracle', 1, 3)) // [1, "Miracle", "Miracle", 4]
+  </script>
+</body>
+</html>
