@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之累积</title>
+</head>
+<body>
+  <ul>
+    <li>可利用reduce()/reduceRight对数组进行累积操作，即将上一次对数组项的操作结果累积到作为下一次循环的初始值</li>
+    <li>如果存在第二个参数，则循环次数为数组长度，初始值为第二个参数的值</li>
+    <li>如果不存在第二个参数，则循环次数为数组长度-1，初始值为第一个元素的值</li>
+  </ul>
+  <script>
+    // 求和
+    const nums1 = [1, 2, 3, 4, 5]
+    const sum = nums1.reduce((pre, cur) => pre += cur, 0)
+    console.log(sum)   // 15
+    // 获取数组中指定元素1的重复次数
+    const nums2 = [1, 2, 3, 1, 1]
+    function getRepeatCount(arr, item) {
+      return nums2.reduce((pre, cur) => {
+        if (cur === item) {
+          pre += 1
+        }
+        return pre
+      }, 0)
+    }
+    const count = getRepeatCount(nums2, 1)
+    console.log(count)  // 3
+    // 获取数组中元素的最大值
+    const nums3 = [1, 4, 2, 6, 3]
+    const max = nums3.reduce((pre, cur) => {
+      return pre > cur ? pre : cur
+    })
+    console.log(max)   // 6
+    // 去除数组中重复的元素
+    const nums4 = [1, 2, 3, 1, 1, 2]
+    const arr = nums4.reduce((pre, cur) => {
+      if (!pre.includes(cur)) {
+        pre.push(cur)
+      }
+      return pre
+    }, [])
+    console.log(arr)  // 1,2,3
+  </script>
+</body>
+</html>

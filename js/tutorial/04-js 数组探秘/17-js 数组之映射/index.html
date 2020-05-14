@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之映射</title>
+</head>
+<body>
+  <ul>
+    <li>可利用map()对已有数组进行二次加工，返回结果为加工后的新数组</li>
+    <li>当原数组的成员为基础类型(如number,string)时,加工后原数组仍然保持不变</li>
+    <li>当原数组的成员为引用类型时，加工后原数组也发生变化了，如果不希望改变原数组，可采用Object.assign,扩展运算符(...)生成新成员</li>
+  </ul>
+  <script>
+    // 基础类型
+    const nums = [1, 2, 3, 4]
+    const mapNums = nums.map(item => item *= 10)
+    console.table(nums)
+    console.table(mapNums)
+    // 引用类型
+    const blogs = [
+      { url: 'https://github.com/miracle-git/vue', title: 'Vue学习' },
+      { url: 'https://github.com/miracle-git/react', title: 'React学习' },
+      { url: 'https://github.com/miracle-git/angular', title: 'Angular学习' }
+    ]
+    // blogs.map(item => {
+    //   item.author = 'Miracle'
+    //   return item
+    // })
+    // console.table(blogs)
+    const mapBlogs = blogs.map(item => Object.assign({ author: 'Miracle' }, item))
+    // const mapBlogs = blogs.map(item => ({ ...item, author: 'Miracle' }))
+    console.table(blogs)
+    console.table(mapBlogs)
+  </script>
+</body>
+</html>
