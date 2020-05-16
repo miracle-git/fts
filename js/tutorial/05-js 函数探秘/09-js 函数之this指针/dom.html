@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之this指针在DOM事件中的应用</title>
+</head>
+<body>
+  <button name="js">JS学习</button>
+  <button name="ts">TS学习</button>
+  <ul>
+    <li>在对象中定义DOM事件回调函数，可使用function或箭头函数</li>
+    <li>如果是function，当前this则是指向当前DOM元素</li>
+    <li>如果是箭头函数，当前this则是指向当前对象本身</li>
+    <li>如果同时需要获取当前DOM对象和对象本身，对function而言使用常量解决，对箭头函数而言使用event</li>
+    <li>如果同时对多个DOM元素定义事件回调函数，建议保持纯净性：要么都使用function,要么都使用箭头函数</li>
+  </ul>
+  <script>
+    const user = {
+      name: 'Miracle',
+      show() {
+        const js = document.querySelector('[name="js"]')
+        const ts = document.querySelector('[name="ts"]')
+        const _this = this
+        js.addEventListener('click', function() {
+          console.log(this)   // <button name="js">JS学习</button>
+          console.log(`${_this.name}-${this.innerHTML}`)    // Miracle-JS学习
+        })
+        ts.addEventListener('click', (e) => {
+          console.log(this)   // {name: "Miracle", show: ƒ}
+          console.log(`${this.name}-${e.target.innerHTML}`)  // Miracle-TS学习
+        })
+      },
+      bind() {
+        const buttons = document.querySelectorAll('button')
+        // 使用function
+        // const _this = this
+        // buttons.forEach(function(item) {
+        //   console.log(this)   // window
+        //   item.addEventListener('click', function() {
+        //     console.log(this) // <button name="js">JS学习</button> | <button name="ts">TS学习</button>
+        //     console.log(`${_this.name}-${this.innerHTML}`)
+        //   })
+        // })
+        // 使用箭头函数
+        buttons.forEach((item) => {
+          console.log(this)   // {name: "Miracle", show: ƒ, bind: ƒ}
+          item.addEventListener('click', (e) => {
+            console.log(this) // {name: "Miracle", show: ƒ, bind: ƒ}
+            console.log(`${this.name}-${e.target.innerHTML}`)
+          })
+        })
+      }
+    }
+    // user.show()
+    user.bind()
+  </script>
+</body>
+</html>

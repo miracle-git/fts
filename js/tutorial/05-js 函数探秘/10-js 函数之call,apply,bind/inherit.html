@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之call,apply继承</title>
+</head>
+<body>
+  <ul>
+    <li>使用call,apply实现类的继承，对已有的功能执行复用</li>
+  </ul>
+  <script>
+    function Request() {
+      this.get = (params) => {
+        const query = Object.keys(params).map(item => `${item}=${params[item]}`).join('&')
+        const url = `https://github.com/miracle-git/${this.url}?${query}`
+        console.log(url)
+      }
+    }
+    // 继承
+    function Article() {
+      this.url = 'article/list'
+      Request.call(this)
+      // Request.apply(this)
+    }
+    function User() {
+      this.url = 'user/list'
+      Request.call(this)
+      // Request.apply(this)
+    }
+    const article = new Article()
+    const user = new User()
+    article.get({ id: '1', cat: 'js' })             // https://github.com/miracle-git/article/list?id=1&cat=js
+    user.get({ name: 'miracle', role: 'admin' })    // https://github.com/miracle-git/user/list?name=miracle&role=admin
+  </script>
+</body>
+</html>

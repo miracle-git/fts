@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之参数</title>
+</head>
+<body>
+  <ul>
+    <li>函数参数分为形参和实参，建议两者数量尽量保持一致</li>
+    <li>如果形参数量大于实参数量，那未传递的形参将赋值为undefined(常用于实现函数重载)</li>
+    <li>如果实参数量大于形参数量，那多余的实参将被忽略(无意义)</li>
+    <li>使用短路运算符或默认参数对某些参数赋默认值，默认参数必须放在函数声明的最后</li>
+    <li>使用函数参数arguments声明可变参数,但arguments不是数组，需要通过[...arguments]或Array.from(arguments)来转化</li>
+    <li>使用...args来替换arguments声明可变参数，可直接使用数组的相关方法</li>
+    <li>使用...展开语法声明参数，但必须放到函数声明的最后，甚至是默认参数的最后</li>
+  </ul>
+  <script>
+    // 形参&实参
+    function sum(a, b) {
+      console.log(a, b)
+    }
+    sum(1)        // 1, undefined
+    sum(1, 2, 3)  // 1, 2
+    // 默认参数
+    function avg(total, year = 1) {
+      // year = year || 1
+      return Math.round(total / year)
+    }
+    console.log(avg(3000))      // 3000
+    console.log(avg(3000, 2))   // 1500
+
+    function sort(arr, type = 'asc') {
+      return arr.sort(function(a, b) {
+        return type === 'asc' ? a - b : b - a
+      })
+    }
+    console.log(sort([1, 3, 4, 2, 5]))        // [1, 2, 3, 4, 5]
+    console.log(sort([1, 3, 4, 2, 5], 'dec')) // [5, 4, 3, 2, 1]
+
+    function discount(price, dis1 = 0, dis2 = 0) {
+      return price * (1 - dis1) * (1 - dis2)
+    }
+    console.log(discount(1000))               // 1000
+    console.log(discount(1000, .1))           // 900
+    console.log(discount(1000, .1, .25))      // 675
+    // 函数参数
+    function sum() {
+      // return [...arguments].reduce(function(a, b) {
+      //   return a + b
+      // })
+      // return Array.from(arguments).reduce(function(a, b) {
+      //   return a + b
+      // })
+      return [...arguments].reduce((a, b) => a + b)
+    }
+    console.log(sum(1, 2, 3, 4, 5))           // 15
+    // 展开语法
+    function total(discount = 0, ...prices) {
+      return prices.reduce((a, b) => a + b) * (1 - discount)
+    }
+    console.log(total(.1, 2000, 3500, 2400, 4500, 3200))   // 14040
+  </script>
+</body>
+</html>

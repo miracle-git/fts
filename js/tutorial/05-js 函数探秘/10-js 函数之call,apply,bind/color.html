@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之bind示例</title>
+  <style>
+    * { padding:0; margin: 0; }
+    body {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+    }
+    div {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 5em;
+      font-weight: bold;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div>背景色随机改变</div>
+  <script>
+    function Color(elem) {
+      this.elem = elem
+      this.colors = ['#9b59b6', '#1abc9c', '#34495e', '#e74c3c', '#f39c12']
+      this.run = function() {
+        setInterval(function() {
+          const index = Math.floor(Math.random() * this.colors.length)
+          this.elem.style.backgroundColor = this.colors[index]
+        }.bind(this), 1000)
+      }
+    }
+    const color = new Color(document.body)
+    color.run()
+  </script>
+</body>
+</html>
