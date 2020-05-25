@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js闭包之应用场景示例(this历史遗留问题)</title>
+</head>
+<body>
+  <script>
+    const user = {
+      userName: 'Miracle',
+      getName() {
+        // undefined
+        // return function() {
+        //   return this.userName
+        // }
+        // 保存this指针
+        const _this = this
+        return function () {
+          return _this.userName
+        }
+        // 箭头函数
+        // return () => this.userName
+      }
+    }
+    console.log(user.getName()())
+  </script>
+</body>
+</html>

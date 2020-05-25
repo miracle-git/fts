@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js闭包之函数作用域延展生命周期</title>
+</head>
+<body>
+  <ul>
+    <li>之前提到过，每次函数调用都会产生一套新的运行环境(内存空间)，那如何才能保存上一次的运行结果呢？当然可以</li>
+    <li>在主函数内部返回新函数(匿名)，让新函数来保存主函数的运行结果</li>
+    <li>多次执行新函数则不会重新开辟内存空间，但将主函数再次调用又将产生另一个新函数(匿名)，与上次新函数彼此不相关</li>
+    <li></li>
+  </ul>
+  <script>
+    // 主函数
+    function sum1() {
+      let i = 1
+      // 新函数(匿名)
+      return function() {
+        let j = 1
+        // 此时show仍然会每次开辟新空间，导致j始终为2
+        function show() {
+          console.log(`i:${++i},j:${++j}`)
+        }
+        show()
+      }
+    }
+    const a1 = sum1()
+    a1()      // i:2,j:2
+    a1()      // i:3,j:2
+    const b1 = sum1()
+    b1()      // i:2,j:2
+    b1()      // i:3,j:2
+    const c1 = sum1()
+    c1()      // i:2,j:2
+    // 主函数
+    function sum2() {
+      let i = 1
+      // 新函数(匿名)
+      return function() {
+        let j = 1
+        // 内部新函数(匿名)
+        return function() {
+          console.log(`i:${++i},j:${++j}`)
+        }
+      }
+    }
+    const a2 = sum2()()
+    a2()      // i:2,j:2
+    a2()      // i:3,j:3
+    const b2 = sum2()()
+    b2()      // i:2,j:2
+    b2()      // i:3,j:3
+    const c2 = sum2()()
+    c2()      // i:2,j:2
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js闭包之块级作用域</title>
+</head>
+<body>
+<script>
+  let arr
+  function print() {
+    for(const key in arr) {
+      console.log(arr[key]())
+    }
+  }
+  // 使用var
+  arr = []
+  for(var i = 1;i <= 5;i++) {
+    arr.push(function() {
+      return i
+    })
+  }
+  print()
+  // 使用let
+  arr = []
+  for(let j = 1;j <= 5;j++) {
+    arr.push(function() {
+      return j
+    })
+  }
+  print()
+  // 伪块级作用域
+  arr = []
+  for(var i = 1;i <= 5;i++) {
+    (function (i) {
+      arr.push(function() {
+        return i
+      })
+    })(i)
+  }
+  print()
+</script>
+</body>
+</html>
