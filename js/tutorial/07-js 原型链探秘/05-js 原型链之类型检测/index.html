@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js原型链之类型检测</title>
+</head>
+<body>
+  <ul>
+    <li>可使用instanceof检测当前对象是否为指定的类型，如果原型发生改变形成"继承"关系，则子实例也是其父类或祖先类的类型</li>
+    <li>可使用isPrototypeOf检测当前对象是否为指定类型的原型, 类型检测会按原型链依次上溯直到Object为止</li>
+    <li>可结合in与hasOwnProperty来检测当前对象是否包含指定的属性, in将检测所有属性(含原型), hasOwnProperty仅检测自有属性</li>
+  </ul>
+  <script>
+    // instanceof
+    function Child() {}
+    function Parent() {}
+    function Grandpa() {}
+    // 修改原型
+    const g = new Grandpa()
+    Parent.prototype = g
+    const p = new Parent()
+    Child.prototype = p
+    const c = new Child()
+    console.log(c instanceof Child)   // true
+    console.log(c instanceof Parent)  // true
+    console.log(c instanceof Grandpa) // true
+    console.log(p instanceof Parent)  // true
+    console.log(p instanceof Grandpa) // true
+    console.log(g instanceof Grandpa) // true
+    // isPrototypeOf
+    const member = {}
+    const admin = {}
+    const user = {}
+    console.log(admin.isPrototypeOf(member))                // false
+    console.log(admin.__proto__.isPrototypeOf(member))      // true
+    console.log(admin.__proto__ === Object.prototype)       // true
+    Object.setPrototypeOf(member, admin)
+    console.log(admin.isPrototypeOf(member))                // true
+    Object.setPrototypeOf(admin, user)
+    console.log(user.isPrototypeOf(admin))                  // true
+    console.log(user.isPrototypeOf(member))                 // true
+    // in & hasOwnProperty
+    const a = { name: 'Miracle' }
+    const b = { url: 'https://github.com/miracle-git' }
+    console.log('name' in a)                                // true
+    console.log('url' in a)                                 // false
+    Object.setPrototypeOf(a, b)
+    console.log('name' in a)                                // true
+    console.log('url' in a)                                 // true
+    console.log(a.hasOwnProperty('name'))                   // true
+    console.log(a.hasOwnProperty('url'))                    // false
+    // 遍历属性
+    for(const key in a) {
+      console.log(`in: ${key}`)
+      if(a.hasOwnProperty(key)) {
+        console.log(`hasOwnProperty: ${key}`)
+      }
+    }
+  </script>
+</body>
+</html>

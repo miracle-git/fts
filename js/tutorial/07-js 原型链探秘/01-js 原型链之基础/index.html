@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js原型链之基础</title>
+</head>
+<body>
+  <ul>
+    <li>对于数组，对象而言，都存在一个__proto__的私有属性(对象)，称之为原型，可为数组或对象附加更多的能力</li>
+    <li>对数组而言，__proto__依次上溯到Array,Object；对对象而言, __proto__只上溯到Object</li>
+    <li>可使用Object.getPrototypeOf()或__proto__获取当前成员的原型, 使用hasOwnProperty()检测原型成员</li>
+    <li>可使用Object.create(null)创建无原型的对象(极少使用，完全字面量对象)，不可使用hasOwnProperty()检测原型成员</li>
+  </ul>
+  <script>
+    const nums = [1, 2, 3, 4, 5]
+    const user = { name: 'Miracle' }
+    console.log(nums)
+    console.log(user)
+    console.log(nums.__proto__)
+    console.log(user.__proto__)
+    console.log(Object.getPrototypeOf(nums))
+    console.log(Object.getPrototypeOf(user))
+    console.log(user.hasOwnProperty('name'))         // true
+    const userInfo = Object.create(null, { name: { value: 'Miracle He' } })
+    console.log(userInfo)
+    // console.log(userInfo.hasOwnProperty('name'))  // 报错
+  </script>
+</body>
+</html>

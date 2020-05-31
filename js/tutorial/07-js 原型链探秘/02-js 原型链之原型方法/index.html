@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js原型链之原型方法</title>
+</head>
+<body>
+  <ul>
+    <li>对象包含属性和方法，同时也继承其原型(__proto__)上对应的成员</li>
+    <li>如果对象和其原型同时拥有相同的成员，优先使用对象自身的成员</li>
+  </ul>
+  <script>
+    const user = {
+      name: 'Miracle',
+      age: 35,
+      show() {
+        console.log(`I'm ${this.name}, ${this.age} years old.`)
+      },
+      render() {
+        console.log('user.render')
+      }
+    }
+    user.__proto__.render = function () {
+      console.log('__proto__.render')
+    }
+    user.show()    // I'm Miracle, 35 years old.
+    user.render()  // user.render
+  </script>
+</body>
+</html>
