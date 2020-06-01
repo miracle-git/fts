@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js原型链之原型多态</title>
+</head>
+<body>
+  <ul>
+    <li>多态：在父类中定义"模板"方法，具体实现延迟到子类中，子类实例可调用父类的"模板"方法</li>
+  </ul>
+  <script>
+    function User() {}
+    User.prototype.show = function() {
+      console.log(this.desc())
+    }
+    function Admin() {}
+    // Admin.prototype.__proto__ = User.prototype
+    // 通过Object.create()实现继承的顺序至关重要，必须保证定义原型方法或新建对象在Object.create()之后进行, 同时回填constructor
+    Admin.prototype = Object.create(User.prototype)
+    // Admin.prototype.constructor = Admin
+    Object.defineProperty(Admin.prototype, 'constructor', {
+      value: Admin,
+      enumerable: false
+    })
+    Admin.prototype.desc = function() {
+      return 'admin.desc'
+    }
+
+    function Member() {}
+    // Member.prototype.__proto__ = User.prototype
+    // 通过Object.create()实现继承的顺序至关重要，必须保证定义原型方法或新建对象在Object.create()之后进行, 同时回填constructor
+    Member.prototype = Object.create(User.prototype)
+    // Member.prototype.constructor = Member
+    Object.defineProperty(Member.prototype, 'constructor', {
+      value: Member,
+      enumerable: false
+    })
+    Member.prototype.desc = function() {
+      return 'member.desc'
+    }
+
+    // const admin = new Admin()
+    // admin.show()  // admin.desc
+    // const member = new Member()
+    // member.show() // member.desc
+
+    for(const inst of [new Admin(), new Member()]) {
+      inst.show()
+    }
+  </script>
+</body>
+</html>
