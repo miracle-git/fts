@@ -14,7 +14,8 @@
     <li>通过Object.create()实现继承的顺序至关重要，必须保证定义原型方法或新建对象在Object.create()之后进行</li>
     <li>构造函数被回填之后，但正常来说不需要被遍历，可使用Object.defineProperty修改enumerable属性</li>
     <li>在父类带参构造函数中初始化属性，子类带参构造函数中使用call或apply完成属性初始化</li>
-    <li>可利用原型工厂或对象工厂来实现继承, 使用mixin来实现多继承</li>
+    <li>可利用原型工厂或对象工厂来实现继承, 使用mixin来实现多继承"功能"类(以对象形式存在)</li>
+    <li>mixin"功能"类之间也可使用__proto__继承，在"子功能"类中使用this.__proto__或super访问"父功能"类的成员</li>
   </ul>
   <!--改变构造函数的原型不能实现继承-->
   <!--<script src="constructor.js"></script>-->
