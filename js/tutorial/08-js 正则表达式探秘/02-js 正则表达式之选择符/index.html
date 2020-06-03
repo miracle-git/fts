@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js正则表达式之选择符</title>
+</head>
+<body>
+  <ul>
+    <li>可使用竖线(|)来检测字符串左右任意一侧是否匹配</li>
+    <li>可使用中括号([])来检测字符串是否包含其中的任一字符</li>
+  </ul>
+  <script>
+    // 匹配是否为北京或成都的电话号码
+    const reg1 = /(010|028)\-\d{7,8}/
+    console.log(reg1.test('010-12345678'))  // true
+    console.log(reg1.test('028-1234567'))   // true
+    console.log(reg1.test('020-12345678'))  // false
+    console.log(reg1.test('01012345678'))   // false
+    // 匹配是否包含1,2,3,4其中任意一个
+    const reg2 = /[1234]/
+    console.log(reg2.test('1256784'))       // true
+    console.log(reg2.test('567890'))        // false
+  </script>
+</body>
+</html>
