@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js正则表达式之元字符</title>
+</head>
+<body>
+  <ul>
+    <li>\d代表匹配所有的0-9的数字，\D代表匹配所有非数字字符</li>
+    <li>\s代表匹配所有的空白字符(空格，换行符，制表符)，\S代表匹配所有的非空白字符</li>
+    <li>\w代表匹配所有的字母，数字，下划线(不含特殊字符，如%&$)，\W代表匹配所有的非字母，非数字，非下划线</li>
+    <li>.代表除换行符之外的所有字符，使用转义符\.可只匹配小数点</li>
+    <li>使用[\d\D]+,[\s\S]+,[\w\W]+,/.+/gs匹配所有的字符</li>
+  </ul>
+  <script>
+    // \d代表匹配所有的0-9的数字，\D代表匹配所有非数字字符
+    const str1 = 'Miracle1984He08'
+    console.log(str1.match(/\d+/g))             // ["1984", "08"]
+    console.log(str1.match(/\D+/g))             // ["Miracle", "He"]
+    // 匹配所有的电话号码
+    const str2 = 'Miracle:010-66666666,Miracle He:028-88888888'
+    console.log(str2.match(/\d{3}-\d{7,8}/g))   // ["010-66666666", "028-88888888"]
+    console.log(str2.match(/[^-:,\d]+/g))       // ["Miracle", "Miracle He"]
+    // \s代表匹配所有的空白字符(空格，换行符，制表符)，\S代表匹配所有的非空白字符
+    console.log(/\s/.test('Miracle He'))        // true
+    console.log(/\s/.test('\nMiracle'))         // true
+    console.log(/\s/.test('Miracle\t'))         // true
+    console.log(/\S/.test('Miracle He'))        // true
+    console.log(/\S/.test(' '))                 // false
+    // \w代表匹配所有的字母，数字，下划线(_)，\W代表匹配所有的非字母，非数字，非下划线(_)
+    const str3 = 'Miracle_1984#He08&10'
+    console.log(str3.match(/\w+/g))             // ["Miracle_1984", "He08", "10"]
+    console.log(str3.match(/\W+/g))             // ["#", "&"]
+    const str4 = 'hmiinyu@sina.com'
+    console.log(str4.match(/^\w+@\w+\.\w+$/g))  // ["hmiinyu@sina.com"]
+    // 检测用户名(5~10位，以字母开头)
+    const reg1 = /^[a-zA-Z]\w{4,9}$/
+    console.log(reg1.test('1Miracle'))          // false
+    console.log(reg1.test('@$Miracle'))         // false
+    console.log(reg1.test('He'))                // false
+    console.log(reg1.test('Miracle_He'))        // true
+    // .代表除换行符之外的所有字符，使用转义符\.可只匹配小数点
+    console.log(str3.match(/.+/g))              // ["Miracle_1984#He08&10"]
+    const str5 = 'https://github.com/miracle-git'
+    console.log(str5.match(/^https?:\/\/\w+\.\w+\/\w+-\w+/g))  // ["https://github.com/miracle-git"]
+    // 使用[\d\D]+,[\s\S]+,[\w\W]+匹配所有的字符
+    const str6 = `
+      <span>
+        $Miracle$
+        Miracle_He@
+      </span>
+    `
+    console.log(str6.match(/<span>[\d\D]+<\/span>/g))          // ["<span>↵        $Miracle$↵        Miracle_He@↵      </span>"]
+    console.log(str6.match(/<span>[\s\S]+<\/span>/g))          // ["<span>↵        $Miracle$↵        Miracle_He@↵      </span>"]
+    console.log(str6.match(/<span>[\w\W]+<\/span>/g))          // ["<span>↵        $Miracle$↵        Miracle_He@↵      </span>"]
+    console.log(str6.match(/<span>.+<\/span>/gs))              // ["<span>↵        $Miracle$↵        Miracle_He@↵      </span>"]
+  </script>
+</body>
+</html>

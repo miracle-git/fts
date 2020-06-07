@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js表达式之原子组</title>
+  <style>
+    span[name=message].ok {
+      color: green;
+    }
+    span[name=message].error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>原子组，即使用小括号()来匹配其中的任意字符，可在正则中配置多个原子组，编号为1开始(依次是1,2,3...)</li>
+    <li>原子组可利用字符串的match获取详情，其中包含[0,1,2...,index,groups,input]等信息，0代表匹配结果,1,2...代表原子组,index代表匹配的索引位，groups可为原子组配置别名，input为原字符串</li>
+    <li>原子组可用来验证表单数据(如电话，邮箱，用户名等)</li>
+    <li>原子组可用来替换满足条件的字符串(使用$1,$2获取原子组的内容)</li>
+    <li>原子组可使用(?:)不记录分组，即忽略该分组的内容，保证match不再正则详情中出现, 也不能使用之前的$1获取分组信息或替换操作</li>
+  </ul>
+  <div name="content">
+    <h1>https://github.com/miracle-git</h1>
+    <H2>http://www.baidu.com</H2>
+    <h3>https://www.google.com</h3>
+  </div>
+  <button name="button">将h标签替换为p标签</button>
+  <br>
+  <input type="text" name="email" placeholder="请输入邮箱地址">
+  <span name="message"></span>
+  <script>
+    // 匹配所有的标题
+    const content = document.querySelector('[name="content"]')
+    const reg1 = /<(h[1-6])>([\s\S]*)<\/\1>/i
+    console.log(content.innerHTML.match(reg1))
+    // 利用原子组进行邮箱验证
+    const email = document.querySelector('[name="email"]')
+    const message = document.querySelector('[name="message"]')
+    const reg2 = /^[\w-]+@(\w+\.)+(com|org|net|cn)$/i
+    email.addEventListener('keyup', function () {
+      const res = this.value.match(reg2)
+      message.innerHTML = res ? '正确' : '格式错误'
+      message.classList.remove('ok', 'error')
+      message.classList.add(res ? 'ok' : 'error')
+    })
+    // 利用原子组将h标签替换为p标签
+    const button = document.querySelector('[name="button"]')
+    const reg3 = /<(h[1-6])>([\s\S]*)<\/\1>/gi
+    button.addEventListener('click', function () {
+      content.innerHTML = content.innerHTML.replace(reg3, `<p>$2</p>`)
+      // content.innerHTML = content.innerHTML.replace(reg3, (p0, p1, p2) => `<p>${p2}</p>`)
+    })
+    // 不记录分组(只获取域名部分)
+    const reg4 = /https?:\/\/((?:\w+\.)?\w+\.(?:com|org|net|cn))/gi
+    const urls = []
+    let res
+    while ((res = reg4.exec(content.innerHTML))) {
+      urls.push(res[1])
+    }
+    console.log(urls)        // ["github.com", "www.baidu.com", "www.google.com"]
+  </script>
+</body>
+</html>
