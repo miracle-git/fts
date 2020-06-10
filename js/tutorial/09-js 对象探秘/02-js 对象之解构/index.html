@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js对象之解构</title>
+</head>
+<body>
+  <ul>
+    <li>对象也具备与数组类似的展开语法，常用于扩展新成员，参数合并等</li>
+    <li>可从已知对象中解构所需的成员，与顺序无关，可使用展开语法(必须放最后)解构剩下的成员(仍然是对象)</li>
+    <li>可对解构成员使用别名({name:username}), 使用别名后原变量将失效</li>
+    <li>可对函数(部分)参数进行对象解构，外部传入参数将一一对应(键名一致)</li>
+    <li>可将单值成员组合成对象，键名一致可省略名称({name:name}相当于{name})</li>
+    <li>可对复杂(多层)对象进行解构, 与单层对象解构类似</li>
+    <li>可对已知对象成员做解构，也可对未知成员(不包含在对象中)解构(默认值undefined)并同时指定默认值，也可用于参数合并</li>
+  </ul>
+  <script>
+    // 展开语法
+    const arr = [1, 2, 3]
+    console.log([...arr, 4, 5])                                         // [1, 2, 3, 4, 5]
+    const user1 = { name: 'Miracle', age: 35 }
+    console.log({ ...user1, web: 'https://github.com/miracle-git' })    // {name: "Miracle", age: 35, web: "https://github.com/miracle-git"}
+    function upload(params) {
+      const config = { type: '.jpg,.png', size: 2000 }
+      console.log({ ...config, ...params })
+    }
+    upload()                                                            // {type: ".jpg,.png", size: 2000}
+    upload({ type: '.gif' })                                            // {type: ".gif", size: 2000}
+    // 对象解构
+    const user2 = { name2: 'Miracle', age: 35, web: 'https://github.com/miracle-git' }
+    const { name2: username, ...rest } = user2
+    console.log(username, rest)                                         // Miracle {age: 35, web: "https://github.com/miracle-git"}
+    // 函数参数解构
+    function show(name, { age, url }) {
+      console.log(`${name} is ${age} years old, visit git: ${url}.`)
+    }
+    show('Miracle', { age: 35, url: 'https://github.com/miracle-git' }) // Miracle is 35 years old, visit git: https://github.com/miracle-git.
+    // 将单值变量转化为对象
+    const name = 'Miracle', age = 35
+    console.log({ name, age })                                          // {name: "Miracle", age: 35}
+    // 复杂对象解构
+    const user3 = { name3: 'Miracle', age: 35, web: { url: 'https://github.com/miracle-git' } }
+    const { name3, web: { url } } = user3
+    console.log(name3, url)                                             // Miracle https://github.com/miracle-git
+    // 对象解构默认值
+    const user4 = { name4: 'Miracle', age: 35 }
+    const { name4, web = 'https://github.com/miracle-git' } = user4
+    console.log(name4, web)                                             // Miracle https://github.com/miracle-git
+    // 参数合并
+    function createElement(options = {}) {
+      const { width = 300, height = 100, bgColor = 'red' } = options
+      const elem = document.createElement('div')
+      elem.style.width = `${width}px`
+      elem.style.height = `${height}px`
+      elem.style.backgroundColor = `${bgColor}`
+      document.body.appendChild(elem)
+    }
+    createElement()
+    createElement({ bgColor: 'green' })
+    createElement({ width: 400, height: 200 })
+  </script>
+</body>
+</html>
