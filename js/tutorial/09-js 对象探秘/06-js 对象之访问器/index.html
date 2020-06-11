@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js对象之访问器</title>
+</head>
+<body>
+  <ul>
+    <li>为了更细粒度的控制对象的属性，可为对象属性配置getter和setter，以达到对属性合法性的进一步检测</li>
+    <li>使用访问器为对象扩展新的属性，以满足业务需求，可以封装复杂的业务逻辑，提供统一简洁的接口</li>
+    <li>使用访问器可批量为属性赋值，可同时处理多个属性，提供更快捷的属性读写方式</li>
+    <li>使用访问器可配置上下文请求的token值，以更优雅的方式实现token的存储</li>
+    <li>当对象中同时存在和访问器和同名属性时，访问器的优先级高于同名属性(严格模式下不能定义同名属性)，建议将同名属性移到Symbol标记属性中</li>
+    <li>使用Object.defineProperties()在构造函数中使用访问器(getter,setter)</li>
+    <li>ES6中的类(class)其实只是一堆访问器的"语法糖"而已</li>
+  </ul>
+  <script>
+    'use strict'
+    const user1 = {
+      data: { name: 'Miracle', age: 35 },
+      get name() {
+        return this.data.name
+      },
+      set name(val) {
+        val = val.trim()
+        if (!val) {
+          throw new Error('用户名不能为空!')
+        }
+        if (val.length < 3 || val.length > 8) {
+          throw new Error('用户名只能至少3个字符，最多8个字符!')
+        }
+        this.data.name = val
+      },
+      get age() {
+        return this.data.age + '岁'
+      },
+      set age(val) {
+        if (typeof val !== 'number') {
+          throw new Error('年龄必须为数字!')
+        }
+        if (val < 0 || val > 100) {
+          throw new Error('年龄只能在0-100岁之间!')
+        }
+        this.data.age = val
+      }
+    }
+    console.log(user1.name, user1.age)         // Miracle 35岁
+    // user1.name = 'Miracle He'
+    // user1.age = '长命百岁'
+    // user1.age = 120
+    // 扩展新属性
+    const blogs = {
+      list: [
+        { title: 'vue', count: 200 },
+        { title: 'react', count: 400 },
+        { title: 'angular', count: 100 }
+      ],
+      get total() {
+        return this.list.reduce((res, item) => res + item.count, 0)
+      }
+    }
+    console.log(blogs.total)                  // 700
+    // blogs.total = 1000                     // 严格模式下报错，非严格模式忽略
+    // 批量为属性赋值
+    const user2 = {
+      firstName: 'Miracle',
+      lastName: 'He',
+      get name() {
+        return `${this.firstName} ${this.lastName}`
+      },
+      set name(val) {
+        [this.firstName, this.lastName] = val.split(' ')
+      }
+    }
+    console.log(user2.name)                   // Miracle He
+    user2.name = 'Jack Li'
+    console.log(user2.firstName)              // Jack
+    console.log(user2.lastName)               // Li
+    // Token处理
+    const request = {
+      get token() {
+        const token = localStorage.getItem('TOKEN')
+        if (!token) {
+          alert('请登录!')
+        }
+        return token
+      },
+      set token(val) {
+        localStorage.setItem('TOKEN', val)
+      }
+    }
+    request.token = 'fl234kpau0osaegnd91srm'
+    // request.token = ''
+    console.log(request.token)               // fl234kpau0osaegnd91srm
+    // 访问器优先级
+    const DATA = Symbol('data')
+    const user3 = {
+      [DATA]: { name: 'Miracle' },
+      get name() {
+        return this[DATA].name
+      },
+      set name(val) {
+        this[DATA].name = val
+      }
+    }
+    console.log(user3.name)                  // Miracle
+    user3.name = 'Miracle He'
+    console.log(user3.name)                  // Miracle He
+    console.log(user3[Symbol('data')])       // undefined
+    // 在构造函数中使用访问器
+    // function User(name, age) {
+    //   const item = { name, age }
+    //   Object.defineProperties(this, {
+    //     name: {
+    //       get() {
+    //         return item.name
+    //       },
+    //       set(val) {
+    //         if (!val) {
+    //           throw new Error('用户名不能为空!')
+    //         }
+    //         if (val.length < 3 || val.length > 8) {
+    //           throw new Error('用户名只能至少3个字符，最多8个字符!')
+    //         }
+    //         item.name = val
+    //       }
+    //     },
+    //     age: {
+    //       get() {
+    //         return item.age
+    //       },
+    //       set(val) {
+    //         if (typeof val !== 'number') {
+    //           throw new Error('年龄必须为数字!')
+    //         }
+    //         if (val < 0 || val > 100) {
+    //           throw new Error('年龄只能在0-100岁之间!')
+    //         }
+    //         item.age = val
+    //       }
+    //     }
+    //   })
+    // }
+    // 在类中使用访问器
+    class User {
+      constructor(name, age) {
+        this.data = { name, age }
+      }
+      get name() {
+        return this.data.name
+      }
+      set name(val) {
+        if (!val) {
+          throw new Error('用户名不能为空!')
+        }
+        if (val.length < 3 || val.length > 8) {
+          throw new Error('用户名只能至少3个字符，最多8个字符!')
+        }
+        this.data.name = val
+      }
+      get age() {
+        return this.data.age
+      }
+      set age(val) {
+        if (typeof val !== 'number') {
+          throw new Error('年龄必须为数字!')
+        }
+        if (val < 0 || val > 100) {
+          throw new Error('年龄只能在0-100岁之间!')
+        }
+        this.data.age = val
+      }
+    }
+    const user4 = new User('Miracle', 35)
+    console.log(user4.name, user4.age)       // Miracle 35
+    // user4.name = 'Miracle He'
+    // user4.age = '长命百岁'
+    // user4.age = 120
+  </script>
+</body>
+</html>

@@ -5,13 +5,14 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>js对象之封装</title>
+  <title>js对象之封装抽象</title>
 </head>
 <body>
   <ul>
     <li>可通过闭包和作用域概念，定制内部私有的属性和方法，仅暴露必要的成员给外部</li>
   </ul>
   <script>
+    // 对象封装
     function User(name, age) {
       // 私有属性
       const item = { name, age }
