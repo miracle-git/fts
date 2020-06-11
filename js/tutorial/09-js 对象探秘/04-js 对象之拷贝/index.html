@@ -121,10 +121,10 @@
         }
       }
     }
-    function cloneByRecursive(obj) {
+    function cloneUserByRecursive(obj) {
       const res = obj instanceof Array ? [] : {}
       for (const [key, val] of Object.entries(obj)) {
-        res[key] = typeof val === 'object' ? cloneByRecursive(val) : val
+        res[key] = typeof val === 'object' ? cloneUserByRecursive(val) : val
       }
       return res
     }
@@ -143,7 +143,7 @@
     //   }
     // }
     // clone: {
-    //   "name": "Miracle",
+    //   "name": "Miracle He",
     //   "age": 35,
     //   "skills": [
     //     "js",
@@ -169,7 +169,7 @@
     // }
     // visit Miracle He's git: https://github.com/miracle-git, learning js,es,ts
     // visit Miracle's git: https://github.com/miracle-git
-    printUser('cloneByRecursive', userInfo, cloneByRecursive, {
+    printUser('cloneByRecursive', userInfo, cloneUserByRecursive, {
       before: (obj) => {
         obj.git.show()
       },

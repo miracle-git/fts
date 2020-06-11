@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js对象之属性特征</title>
+</head>
+<body>
+  <ul>
+    <li>可通过Object.getOwnPropertyDescriptor(s)查看对象的(所有)属性特征(值，可修改，可遍历，可配置)</li>
+  </ul>
+  <script>
+    const user = { name: 'Miracle', age: 35, web: 'https://github.com/miracle-git' }
+    console.log(Object.getOwnPropertyDescriptor(user, 'name'))    // {value: "Miracle", writable: true, enumerable: true, configurable: true}
+    // {
+    //   "name": {
+    //     "value": "Miracle",
+    //     "writable": true,
+    //     "enumerable": true,
+    //     "configurable": true
+    //   },
+    //   "age": {
+    //     "value": 35,
+    //     "writable": true,
+    //     "enumerable": true,
+    //     "configurable": true
+    //   },
+    //   "web": {
+    //     "value": "https://github.com/miracle-git",
+    //     "writable": true,
+    //     "enumerable": true,
+    //     "configurable": true
+    //   }
+    // }
+    console.log(JSON.stringify(Object.getOwnPropertyDescriptors(user), null, 2))
+  </script>
+</body>
+</html>
