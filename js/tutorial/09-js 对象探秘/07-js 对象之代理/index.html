@@ -9,10 +9,53 @@
 </head>
 <body>
   <ul>
-    <li></li>
+    <li>可通过Proxy对整个对象实现代理，通过代理与对象本身进行通信</li>
+    <li>可通过Proxy对函数进行代理，以完成与函数相关的赋值功能(如日志，异常，耗时)</li>
+    <li>可通过Proxy对数组进行代理，以完成对数组相关的数据处理</li>
   </ul>
   <script>
-
+    // 代理对象
+    const user = { name: 'Miracle', age: 35 }
+    const proxy1 = new Proxy(user, {
+      get(obj, prop) {
+        return obj[prop]
+      },
+      set(obj, prop, val) {
+        obj[prop] = val
+      }
+    })
+    console.log(proxy1)    // Proxy {name: "Miracle", age: 35}
+    // 代理函数
+    function factorial(num) {
+      return num === 1 ? 1 : num * factorial(num - 1)
+    }
+    const proxy2 = new Proxy(factorial, {
+      apply(func, obj, args) {
+        console.time('run')
+        func.apply(this, args)
+        console.timeEnd('run')
+      }
+    })
+    proxy2.apply(null, [100])
+    proxy2.apply(null, [1000])
+    proxy2.apply(null, [10000])
+    // 代理数组
+    const arr = [
+      { title: 'vue', url: 'https://github.com/miracle-git/vue' },
+      { title: 'react', url: 'https://github.com/miracle-git/react' },
+      { title: 'angular', url: 'https://github.com/miracle-git/angular' }
+    ]
+    const proxy3 = new Proxy(arr, {
+      get(arr, key) {
+        const { title } = arr[key]
+        const len = 5
+        arr[key].title = title.length > len ? title.substr(0, len) + '.'.repeat(3): title
+        return arr[key]
+      }
+    })
+    for (const key in proxy3) {
+      console.log(proxy3[key])
+    }
   </script>
 </body>
 </html>
