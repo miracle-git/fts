@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js类之基础</title>
+</head>
+<body>
+  <ul>
+    <li>使用class定义类，其实类的本质就是函数(只不过是语法糖而已，typeof返回function)</li>
+    <li>类可使用constructor完成初始化，多个方法之间直接书写，不需要用","分隔</li>
+    <li>使用new来实例化类的对象，跟函数类似，因此类其实就是对象的实例化工厂而已</li>
+    <li>class自动将属性挂载到实例上，将方法挂载到原型上，与function保持一致</li>
+    <li>使用class定义的对象只可遍历属性，不可遍历方法，本质是class修改了方法的属性特征(不可遍历)</li>
+    <li>使用function定义的对象都可遍历属性和方法，除非使用hasOwnProperty做限制</li>
+    <li>可使用Object.getOwnPropertyNames()查看实例或原型各自的成员</li>
+  </ul>
+  <script>
+    console.log('****************用class定义类****************')
+    {
+      class User {
+        constructor(name, age) {
+          this.name = name
+          this.age = age
+        }
+        show() {
+          console.log(`${this.name} is ${this.age} years old.`)
+        }
+      }
+      const user = new User('Miracle', 35)
+      console.log(typeof User)                                             // function
+      console.dir(User)
+      console.log(User === User.prototype.constructor)                     // true
+      console.dir(user)
+      console.log(Object.getOwnPropertyNames(user))                        // ["name", "age"]
+      console.log(Object.getOwnPropertyNames(User.prototype))              // ["constructor", "show"]
+      console.log(Object.getOwnPropertyDescriptor(User.prototype, 'show')) // {writable: true, enumerable: false, configurable: true, value: ƒ}
+      user.show()                                                          // Miracle is 35 years old.
+      for (const key in user) {
+        console.log(key)                                                   // name age
+      }
+    }
+    console.log('****************用function定义类****************')
+    {
+      function User(name, age) {
+        this.name = name
+        this.age = age
+      }
+      User.prototype.show = function () {
+        console.log(`${this.name} is ${this.age} years old.`)
+      }
+      const user = new User('Miracle', 35)
+      console.log(typeof User)                                             // function
+      console.dir(User)
+      console.log(User === User.prototype.constructor)                     // true
+      console.dir(user)
+      console.log(Object.getOwnPropertyNames(user))                        // ["name", "age"]
+      console.log(Object.getOwnPropertyNames(User.prototype))              // ["constructor", "show"]
+      console.log(Object.getOwnPropertyDescriptor(User.prototype, 'show')) // {writable: true, enumerable: true, configurable: true, value: ƒ}
+      user.show()                                                          // Miracle is 35 years old.
+      for (const key in user) {
+        if (user.hasOwnProperty(key)) {
+          console.log(key)                                                 // name age
+        }
+      }
+    }
+  </script>
+</body>
+</html>
