@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js类之属性保护</title>
+</head>
+<body>
+  <ul>
+    <li>可使用命名规则(一般使用_标记私有属性)进行属性保护，但仅限于约定，外部仍然可以修改</li>
+    <li>可使用Symbol(标记，不作为类的属性)进行属性保护，虽然也能修改但一般会将Symbol在模块化中声明并不会导出，外界无法使用</li>
+    <li>可使用WeakMap(将this作为key)进行属性保护，虽然也能修改但一般会将WeakMap在模块化中声明并不会导出，外界无法使用</li>
+    <li>经过属性保护之后的属性，可在当前类和其子类中使用，只是外部无法使用</li>
+  </ul>
+  <script>
+    console.log('****************使用命名规则进行属性保护****************')
+    {
+      class Request {
+        constructor(host) {
+          this._data = {}
+          this.host = host
+        }
+        get host() {
+          return this._data.host
+        }
+        set host(val) {
+          if (!/^https?:\/\//.test(val)) {
+            throw new Error('host必须以http(s)://开头')
+          }
+          this._data.host = val
+        }
+      }
+      const req = new Request('https://github.com/miracle-git')
+      console.log(req.host)       // https://github.com/miracle-git'
+      console.log(req)            // Request {_data: {…}}
+      // 仍然可修改(不建议)
+      req._data.host = 'https://github.com/miracle-git/fts'
+      console.log(req.host)       // https://github.com/miracle-git/fts'
+    }
+    console.log('****************使用Symbol进行属性保护****************')
+    {
+      const DATA = Symbol()       // 一般会将Symbol放在模块内部且不导出，外界无法访问
+      class Request {
+        constructor(host) {
+          this[DATA] = {}
+          this[DATA].host = host
+        }
+        get host() {
+          return this[DATA].host
+        }
+        set host(val) {
+          if (!/^https?:\/\//.test(val)) {
+            throw new Error('host必须以http(s)://开头')
+          }
+          this[DATA].host = val
+        }
+      }
+      const req = new Request('https://github.com/miracle-git')
+      console.log(req.host)       // https://github.com/miracle-git'
+      console.log(req)            // Request {Symbol(): {…}}
+      console.log(req[Symbol()])  // undefined
+      // 仍然可修改(不建议)，但一般会将Symbol在模块化中声明并不会导出，外界无法使用
+      req[DATA].host = 'https://github.com/miracle-git/fts'
+      console.log(req.host)       // https://github.com/miracle-git/fts'
+    }
+    console.log('****************使用WeakMap进行属性保护****************')
+    {
+      const map = new WeakMap()   // 一般会将WeakMap放在模块内部且不导出，外界无法访问
+      class Request {
+        constructor(host) {
+          map.set(this, { host })
+        }
+        get host() {
+          return map.get(this).host
+        }
+        set host(val) {
+          if (!/^https?:\/\//.test(val)) {
+            throw new Error('host必须以http(s)://开头')
+          }
+          map.set(this, { ...map.get(this), host: val })
+        }
+      }
+      const req = new Request('https://github.com/miracle-git')
+      console.log(req.host)       // https://github.com/miracle-git'
+      console.log(req)            // Request {}
+      // 仍然可修改(不建议)，但一般会将WeakMap在模块化中声明并不会导出，外界无法使用
+      map.set(req, { host: 'https://github.com/miracle-git/fts' })
+      console.log(req.host)       // https://github.com/miracle-git/fts'
+    }
+  </script>
+</body>
+</html>

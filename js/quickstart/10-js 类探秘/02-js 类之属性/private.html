@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js类之私有属性</title>
+</head>
+<body>
+  <ul>
+    <li>可使用#为class添加私有属性和方法，只能在当前类中使用，无法在子类及其外部使用</li>
+  </ul>
+  <script>
+    class Request {
+      #data = {}
+      constructor(host, key) {
+        this.#check(key)
+        this.host = host
+      }
+      get host() {
+        return this.#data.host
+      }
+      set host(val) {
+        if (!/^https?:\/\//.test(val)) {
+          throw new Error('host必须以http(s)://开头')
+        }
+        this.#data.host = `${val}/${this.key}`
+      }
+      #check = (val) => {
+        if (!val) {
+          throw new Error('key不能为空')
+        }
+        this.key = val
+      }
+    }
+    const req = new Request('https://github.com/miracle-git', 'fts')
+    console.log(req.host)                  // https://github.com/miracle-git/fts'
+    console.log(req)                       // Request {key: "fts", #data: {…}, #check: ƒ}
+    // console.log(req.#data)              // 报错
+    // console.log(req.#check('fts'))      // 报错
+  </script>
+</body>
+</html>
