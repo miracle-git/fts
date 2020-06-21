@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js类之静态继承</title>
+</head>
+<body>
+  <ul>
+    <li>使用class定义的类只需要通过extends就可以完成静态继承关系</li>
+    <li>使用function定义的类只需要通过修改子类的__proto__为父类就可以完成静态继承关系</li>
+  </ul>
+  <script>
+    console.log('****************用class定义类****************')
+    {
+      class User {
+        static web = 'https://github.com/miracle-git'
+        static show() {
+          console.log(`Welcome to visit ${User.web}`)
+        }
+      }
+      class Admin extends User {}
+      console.dir(Admin)            // class Admin
+      console.log(Admin.web)        // https://github.com/miracle-git
+      Admin.show()                  // Welcome to visit https://github.com/miracle-git
+    }
+    console.log('****************用function定义类****************')
+    {
+      function User() {}
+      User.web = 'https://github.com/miracle-git'
+      User.show = function() {
+        console.log(`Welcome to visit ${User.web}`)
+      }
+      function Admin() {}
+      Admin.__proto__ = User
+      console.dir(Admin)            // ƒ Admin()
+      console.log(Admin.web)        // https://github.com/miracle-git
+      Admin.show()                  // Welcome to visit https://github.com/miracle-git
+    }
+  </script>
+</body>
+</html>

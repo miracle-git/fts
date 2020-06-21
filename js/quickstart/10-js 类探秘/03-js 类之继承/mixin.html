@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js类之扩展</title>
+</head>
+<body>
+  <ul>
+    <li>有时可能当前类已有继承类，需要扩展新的功能类，但与功能类没有直接继承可能性，因此可采用mixin机制</li>
+  </ul>
+  <script>
+    const tool = {
+      max(key) {
+        return this.data.sort((a, b) => b[key] - a[key])[0]
+      }
+    }
+    const count = {
+      total(key) {
+        return this.data.reduce((res, item) => res += item[key], 0)
+      }
+    }
+    class User {
+      constructor(name, age, blogs) {
+        this.name = name
+        this.age = age
+        this.blogs = blogs
+        // 混入mixin
+        Object.assign(User.prototype, tool, count)
+      }
+      get data() {
+        return this.blogs
+      }
+    }
+    const user = new User('Miracle', 35, [
+      { name: 'js', click: 480 },
+      { name: 'ts', click: 320 },
+      { name: 'es', click: 600 }
+    ])
+    console.dir(User)
+    // 查看当前用户点击数最高的文章
+    console.log(user.max('click'))   // {name: "es", click: 600}
+    // 查看当前用户所有文章的点击数
+    console.log(user.total('click')) // 1400
+  </script>
+</body>
+</html>

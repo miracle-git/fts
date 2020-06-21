@@ -12,7 +12,7 @@
     function extend(sub, sup) {
       sub.prototype = Object.create(sup.prototype)
       Object.defineProperty(sub.prototype, 'constructor', {
-        value: sup,
+        value: sub,
         enumerable: false
       })
     }

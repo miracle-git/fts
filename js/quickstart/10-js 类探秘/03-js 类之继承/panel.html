@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js类之继承示例</title>
+  <style>
+    dl {
+      width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    dl > dt {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      background-color: #9b59b6;
+      border-bottom: 1px solid #ddd;
+      color: #fff;
+      cursor: pointer;
+    }
+    dl > dd {
+      display: flex;
+      overflow: hidden;
+      justify-content: center;
+      align-items: center;
+      height: 0;
+      background-color: #ddd;
+      margin: 0;
+      font-size: 36px;
+      font-weight: bold;
+    }
+    dl > dd:first-of-type {
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <dl>
+    <dt>Vue</dt>
+    <dd>1</dd>
+    <dt>React</dt>
+    <dd>2</dd>
+    <dt>Angular</dt>
+    <dd>3</dd>
+  </dl>
+  <script>
+    // 动画类
+    class Animation {
+      constructor(el) {
+        this.el = el.nodeType === 1 ? el : document.querySelector(el)
+        this.timeout = 5
+        this.defaultHeight = 100
+      }
+      get height() {
+        return window.getComputedStyle(this.el).height.slice(0, -2) * 1
+      }
+      set height(val) {
+        this.el.style.height = `${val}px`
+      }
+      show(callback) {
+        const interval = setInterval(() => {
+          if (this.height >= this.defaultHeight) {
+            clearInterval(interval)
+            callback && callback()
+            return
+          }
+          this.height = this.height + 1
+        }, this.timeout)
+      }
+      hide(callback) {
+        const interval = setInterval(() => {
+          if (this.height <= 0) {
+            clearInterval(interval)
+            callback && callback()
+            return
+          }
+          this.height = this.height - 1
+        }, this.timeout)
+      }
+    }
+    // 面板类
+    class Panel extends Animation {
+      static count = 0
+      static hideAll(items, callback) {
+        if (Panel.count > 0) return
+        items.forEach(item => {
+          Panel.count++
+          item.hide(() => Panel.count--)
+        })
+        callback && callback()
+      }
+      static filter(items, index) {
+        return items.filter((item, i) => index !== i)
+      }
+    }
+    // 切换类
+    class Slide {
+      constructor(el) {
+        this.el = document.querySelector(el)
+        this.links = this.el.querySelectorAll('dt')
+        this.panels = [...this.el.querySelectorAll('dd')].map(item => new Panel(item))
+        this.bind()
+      }
+      bind() {
+        this.links.forEach((item, index) => {
+          item.addEventListener('click', () => this.action(index))
+        })
+      }
+      action(index) {
+        Panel.hideAll(Panel.filter(this.panels, index), () => this.panels[index].show())
+      }
+    }
+    // 测试
+    new Slide('dl')
+  </script>
+</body>
+</html>
