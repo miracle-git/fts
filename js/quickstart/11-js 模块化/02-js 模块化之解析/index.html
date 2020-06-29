@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js模块化之解析</title>
+  <script type="module">
+    // 模块延迟解析
+    console.log(document.querySelector('ul'))
+  </script>
+</head>
+<body>
+  <ul>
+    <li>可将模块单独定义到一个JS文件中，并使用export导出部分需要暴露的接口</li>
+    <li>可使用import { xx } from './module.js'导入模块的成员，但需要将当前的script的type设置为module</li>
+    <li>在不使用别名的前提下，导入和导出的成员名称必须一致</li>
+    <li>JS脚本从上到下顺序执行，但添加了type="module"的脚本则会延迟解析，直到DOM加载完毕才解析</li>
+    <li>模块化脚本默认运行在"严格模式"下，如定义变量必须加let或const</li>
+    <li>模块化脚本拥有独立的作用域，除已export的成员，其他成员在外部均不可访问</li>
+    <li>模块预解析，即模块第一次导入时内部代码才执行一次，之后无论多少次导入都不会执行</li>
+  </ul>
+  <script type="module">
+    import { name, show } from './user.js'
+    console.log(name)  // Miracle
+    show()             // welcome to visit Miracle's git: https://github.com/miracle-git
+  </script>
+</body>
+</html>
