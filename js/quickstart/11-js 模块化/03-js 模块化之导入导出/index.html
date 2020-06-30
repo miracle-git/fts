@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js模块化之导入导出</title>
+</head>
+<body>
+  <ul>
+    <li>使用import对模块进行导入，使用export将模块的部分成员导出</li>
+    <li>具名导入，即指定导入的成员名称，该名称必须在导入模块中具名导出</li>
+    <li>可使用import * as xxx from 'xxx'来批量导入模块中所有的成员(不建议)</li>
+    <li>可对导入的成员使用别名，以解决同时导入多模块中命名冲突的问题</li>
+    <li>有时模块中可能只有一个导出成员，可使用export default进行默认导出</li>
+    <li>默认导入与具名导入可混合使用，默认导入也可批量导入，只是使用时需添加.default</li>
+    <li>建议默认导入的名称与当前导入的模块名称保持一致，如模块含有"-"则模块遵守pascal或camel规则</li>
+  </ul>
+  <script type="module">
+    // 具名导入
+    import { name, show } from './user.js'
+    // 批量导入
+    import * as user from './user.js'
+    // 别名
+    import { name as userName, show as showInfo } from './user.js'
+    // 默认导入(混合具名导入)
+    import User, { web } from './data.js'
+    // 默认导入(批量导入)
+    import * as data from './data.js'
+    console.log(name)      // Miracle
+    show()                 // welcome to visit Miracle's git: https://github.com/miracle-git
+    console.log(user.name) // Miracle
+    user.show()            // welcome to visit Miracle's git: https://github.com/miracle-git
+    console.log(userName)  // Miracle
+    showInfo()             // welcome to visit Miracle's git: https://github.com/miracle-git
+    const user1 = new User('Miracle', 35)
+    user1.show()           // Miracle is 35 years old.
+    console.log(web)       // https://github.com/miracle-git
+    const user2 = new data.default('Miracle', 35)
+    user2.show()           // Miracle is 35 years old.
+    console.log(data.web)  // https://github.com/miracle-git
+  </script>
+</body>
+</html>
