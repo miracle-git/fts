@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js任务之事件循环</title>
+</head>
+  <body>
+    <ul>
+      <li>之前也讲过，JS是单线程执行的，为了防止JS主线程不阻塞，而协调事件、用户交互、脚本、UI 渲染和网络处理等行为，事件循环(event-loop)应运而生</li>
+      <li>事件循环分为两大类：基于浏览器上下文和基于Web Worker，两者的运行是相互独立的</li>
+      <li>事件循环是通过任务队列(task queue)来进行协调处理，在一次事件循环中可包含多个任务队列，每个任务队列仅包含来自同一个任务源(如setTimeout/Promise等)的执行任务</li>
+      <li>事件循环中，将每次循环操作称为tick, 关键流程如下：1.检查tick中优先进入队列的任务并执行(如果存在)，2.检查是否存在微任务，如果有则不停执行直至清空队列，3.更新render并重复执行以上流程</li>
+      <li>JS任务可分为同步任务和异步任务，同步任务在主线程的调用栈中执行，在主线程之外管理着一个任务队列，一旦主线程上的同步任务执行完毕，将读取任务队列并将异步任务加入到调用栈</li>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js任务之宏微任务</title>
+</head>
+<body>
+  <ul>
+    <li>宏任务(macrotask)，即JS调用栈中执行的代码，包含从任务队列中读取事件回调并放入调用栈，JS为保证宏任务与DOM有序执行，在每一个宏任务执行结束后下一个宏任务执行前，对页面重新渲染</li>
+    <li>微任务(microtask)，即当前宏任务执行完成后，下一个宏任务执行前甚至页面重新渲染前执行的任务，因此相应速度更快，无需等待页面重新渲染</li>
+    <li>宏任务和微任务都属于异步任务，而微任务伴随宏任务或同步任务执行过程中应运而生，而执行也是伴随宏任务执行完后立即执行对应的微任务</li>
+    <li>宏任务包含：script(整块代码),setTimeout,setInterval,I/O,UI交互事件,postMessage,MessageChannel,setImmediate(Node)</li>
+    <li>微任务包含：Promise.then,Promise.catch,Object.observe,MutationObserver,process.nextTick(Node)</li>
+  </ul>
+  <button onclick="executeTask1()">执行任务1</button>
+  <button onclick="executeTask2()">执行任务2</button>
+  <script>
+    // promise -> main -> success -> setTimeout
+    function executeTask1() {
+      // 宏任务
+      setTimeout(() => {
+        console.log('setTimeout')
+      }, 0)
+      // Promise
+      new Promise(resolve => {
+        resolve('success')      // 将resolve回调加入到微任务队列
+        console.log('promise')  // 同步任务
+      }).then(res => console.log(res))
+      // 同步任务
+      console.log('main')
+    }
+    // promise -> main -> setTimeout -> success
+    function executeTask2() {
+      // Promise
+      new Promise(resolve => {
+        // 宏任务
+        setTimeout(() => {
+          resolve('success')    // 将resolve回调加入到微任务队列
+          console.log('setTimeout')
+        }, 0)
+        console.log('promise')  // 同步任务
+      }).then(res => console.log(res))
+      // 同步任务
+      console.log('main')
+    }
+  </script>
+</body>
+</html>

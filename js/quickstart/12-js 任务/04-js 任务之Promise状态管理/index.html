@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js任务之Promise状态管理</title>
+</head>
+<body>
+  <ul>
+    <li>熟悉了异步任务，事件循环，宏微任务概念后，也提到过为何引入Promise(解决回调地狱,callback hell)</li>
+    <li>每个Promise都包含三种状态: pending(准备阶段)，resolved(成功处理阶段)，rejected(失败处理阶段)</li>
+    <li>每个Promise都可以创建多个微任务(即多个then回调，每个回调中都可包含成功和失败处理)并加入微任务队列中</li>
+    <li>每个Promise创建完后都可以通过resolve或reject修改状态，但状态转化是不可逆且单向的，resolve和reject并列处理(一般不这样做)时谁优先谁有效</li>
+  </ul>
+  <script>
+    {
+      // pending
+      new Promise((resolve, reject) => {
+        // resolved
+        // resolve('success')
+        // rejected
+        reject('fail')
+      }).then(res => {
+        console.log('成功处理微任务1')
+      }, err => {
+        console.log('失败处理微任务1')
+      }).then(res => {
+        console.log('成功处理微任务2')
+      }, err => {
+        console.log('失败处理微任务2')
+      })
+    }
+    {
+      const promise = new Promise((resolve, reject) => {
+        resolve('success')
+      })
+      new Promise((resolve, reject) => {
+        resolve(promise)
+      }).then(res => {
+        console.log(res)
+      }, err => {
+        console.log(err)
+      })
+    }
+  </script>
+</body>
+</html>
