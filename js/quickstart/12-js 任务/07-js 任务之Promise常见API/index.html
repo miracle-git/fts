@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js任务之Promise常见API</title>
+  <style>
+    li {
+      margin-bottom: 10px;
+    }
+    li button {
+      cursor: pointer;
+    }
+  </style>
+  <script src="./ajax.js"></script>
+</head>
+<body>
+  <ul>
+    <li><button onclick="promise.resolve()">测试</button> Promise.resolve只处理成功回调，即默认将Promise的状态更新为resolved</li>
+    <li><button onclick="promise.reject()">测试</button> Promise.reject只处理失败回调，即默认将Promise的状态更新为rejected</li>
+    <li><button onclick="promise.all()">测试</button> Promise.all可同时处理多个请求，必须保证所有请求都成功才会更新为resolved，任意一个失败都会更新为rejected</li>
+    <li><button onclick="promise.allSettled()">测试</button> Promise.allSettled可同时处理多个请求，不管请求是否有失败的都会更新为resolved, 可根据返回状态过滤请求成功(fulfilled)的结果</li>
+    <li><button onclick="promise.race()">测试</button> Promise.race可同时处理多个请求，但只处理返回最快的请求，而忽略其他的请求</li>
+  </ul>
+  <script>
+    const promise = { resolve: null, reject: null, all: null, allSettled: null, race: null }
+    // Promise.resolve
+    function queryByName(name) {
+      const cache = queryByName.cache || (queryByName.cache = new Map())
+      if (cache.has(name)) {
+        console.log('cache')
+        return Promise.resolve(cache.get(name))
+      }
+      return ajax(`${location.href.replace('index.html', 'user.json')}?name=${name}`).then(res => {
+        cache.set(name, res)
+        console.log('request')
+        return Promise.resolve(res)
+      })
+    }
+    promise.resolve = function() {
+      console.log('****************Promise.resolve****************')
+      queryByName('miracle').then(res => console.log(res))
+      setTimeout(() => queryByName('miracle').then(res => console.log(res)), 500)
+      setTimeout(() => queryByName('miracle').then(res => console.log(res)), 500)
+    }
+    // Promise.reject
+    promise.reject = function() {
+      console.log('****************Promise.reject****************')
+      new Promise((resolve, reject) => {
+        resolve(0)
+      }).then(res => {
+        if (res !== 'success') {
+          return Promise.reject('请求失败')
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+    // Promise.all
+    function getAllUsers(names) {
+      const promises = names.map(item => ajax(`${location.href.replace('index.html', item.data)}?name=${item.name}`))
+      return Promise.all(promises)
+    }
+    promise.all = function() {
+      console.log('****************Promise.all****************')
+      getAllUsers([
+        { name: 'miracle', data: 'user.json' },
+        { name: 'jack', data: 'user.json' }
+      ]).then(res => {
+        console.log('success:', res)
+      })
+      getAllUsers([
+        { name: 'miracle', data: 'user.json' },
+        { name: 'jack', data: 'user.json1' }
+      ]).then(res => {
+        console.log('success:', res)
+      }).catch(err => {
+        console.log('fail:', err.message)
+      })
+    }
+    // Promise.allSettled
+    function getAllSettledUsers(names) {
+      const promises = names.map(item => ajax(`${location.href.replace('index.html', item.data)}?name=${item.name}`))
+      return Promise.allSettled(promises).then(res => res.filter(item => item.status === 'fulfilled').map(item => item.value))
+    }
+    promise.allSettled = function() {
+      console.log('****************Promise.allSettled****************')
+      getAllSettledUsers([
+        { name: 'miracle', data: 'user.json' },
+        { name: 'jack', data: 'user.json' }
+      ]).then(res => {
+        console.log('success:', res)
+      })
+      getAllSettledUsers([
+        { name: 'miracle', data: 'user.json' },
+        { name: 'jack', data: 'user.json1' }
+      ]).then(res => {
+        console.log('success:', res)
+      }).catch(err => {
+        console.log('fail:', err.message)
+      })
+    }
+    // Promise.race
+    function queryByTimeout(url, delay = 2000) {
+      const promises = [
+        ajax(url),
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            reject('请求超时')
+          }, delay)
+        })
+      ]
+      return Promise.race(promises)
+    }
+    promise.race = function() {
+      console.log('****************Promise.race****************')
+      queryByTimeout(`${location.href.replace('index.html', 'user.json')}?name=miracle}`).then(res => {
+        console.log(res)
+      })
+      queryByTimeout(`${location.href.replace('index.html', 'user.json')}?name=miracle}`, 10).then(res => {
+        console.log(res)
+      }).catch(err => console.log(err))
+    }
+  </script>
+</body>
+</html>
