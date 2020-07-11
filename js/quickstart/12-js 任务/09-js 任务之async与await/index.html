@@ -6,13 +6,168 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>js任务之async与await</title>
+  <style>
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 0;
+      height: 40px;
+      background-color: #9b59b6;
+      color: #fff;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    li button {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    li button:last-child {
+      margin-right: 0;
+    }
+  </style>
+  <script src="./ajax.js"></script>
 </head>
 <body>
   <ul>
-    <li></li>
+    <li><button onclick="asyncSugar()">async测试</button><button onclick="awaitSugar()"> await测试</button> async和await其实就是Promise的"语法糖"，await必须与async配套使用(async可单用)，async相当于new Promise，await相当于then，后面可跟Promise或数据</li>
+    <li><button onclick="asyncRequest()">测试</button> async和await跟Promise一样，也可完成异步请求，相对之前的嵌套(callback hell)和链式(then)，await变成了"串行"调用更便捷</li>
+    <li><button onclick="progressBar()">测试</button> async可定义延时函数，即在指定的时间内才会执行异步函数，如可用于进度条加载效果</li>
+    <li><button onclick="asyncClass()">测试</button> 只要包含了then方法的class相当于Promise，可通过await+实例对象来获取异步结果</li>
+    <li>async和await可单独定义函数，可内置在对象或类方法中</li>
+    <li><button onclick="errorHandle1()">测试</button> async和await通过Promise异步错误，throw抛出错误，或代码本身有错误都会进入错误处理回调</li>
+    <li><button onclick="errorHandle2()">测试</button> await异步错误可通过catch捕获，也可在async函数内部通过try...catch捕获</li>
+    <li><button onclick="multipleRequest()">测试</button> 默认情况下，多个await异步请求是串行执行的(用于请求之间有依赖关系)，但有时需要并行执行，可通过Promise.all来完成</li>
   </ul>
+  <div class="loading"></div>
   <script>
-
+    // 语法糖
+    function asyncSugar() {
+      async function request() {
+        // return 'miracle'
+        return new Promise(resolve => resolve('miracle'))
+      }
+      request().then(res => console.log(res))
+    }
+    function awaitSugar() {
+      async function request() {
+        // const name = await 'miracle'
+        const name = await new Promise(resolve => resolve('miracle'))
+        console.log(name)
+      }
+      request()
+    }
+    // 异步请求
+    function asyncRequest() {
+      async function get(name) {
+        const user = await ajax(`${location.href.replace('index.html', 'user.json')}?name=${name}`)
+        console.log(user)
+        const blogs = await ajax(`${location.href.replace('index.html', 'blogs.json')}?id=${user.id}`)
+        console.log(blogs)
+      }
+      get('miracle')
+    }
+    // 延时函数，进度条
+    function progressBar() {
+      async function sleep(delay = 2000) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve()
+          }, delay)
+        })
+      }
+      async function get() {
+        for (const user of ['miracle', 'jack']) {
+          await sleep()
+          console.log(user)
+        }
+      }
+      get()
+      async function query(names) {
+        const loading = document.querySelector('.loading')
+        for (let i = 0; i < names.length; i++) {
+          await ajax(`${location.href.replace('index.html', 'user.json')}?name=${names[i]}`)
+          await sleep(1000)
+          const progress = ((i + 1)/names.length) * 100
+          loading.style.width = progress + '%'
+          loading.innerHTML = Math.round(progress) + '%'
+        }
+      }
+      query(['miracle', 'jack', 'tom'])
+    }
+    // class与async结合
+    function asyncClass() {
+      class User {
+        constructor(name) {
+          this.name = name
+        }
+        then(resolve, reject) {
+          const user = ajax(`${location.href.replace('index.html', 'user.json')}?name=${this.name}`)
+          resolve(user)
+        }
+        // 也可定义在内部
+        async get() {
+          const user = await ajax(`${location.href.replace('index.html', 'user.json')}?name=${this.name}`)
+          console.log(user)
+        }
+      }
+      // 定义在外部
+      async function get() {
+        const user = await new User('miracle')
+        console.log(user)
+      }
+      get()
+      new User('miracle').get()
+    }
+    // 错误处理
+    function errorHandle1() {
+      async function get() {
+        return ajax(`${location.href.replace('index.html', 'user.json1')}?name=miracle`)
+        // throw new Error('fail')
+        // console.log(a)
+      }
+      get().catch(err => console.log(err.message || err))
+    }
+    function errorHandle2() {
+      async function get() {
+        try {
+          const user = await ajax(`${location.href.replace('index.html', 'user.json')}?name=miracle`)
+          console.log(user)
+        } catch(err) {
+          console.log(err.message || err)
+        }
+      }
+      get()
+    }
+    // 并行执行
+    function promise1() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve('p1')
+        }, 1000)
+      })
+    }
+    function promise2() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve('p2')
+        }, 1000)
+      })
+    }
+    async function multipleRequest() {
+      // 串行执行
+      // const p1 = await promise1()
+      // console.log(p1)
+      // const p2 = await promise2()
+      // console.log(p2)
+      // 并行执行
+      const p1 = promise1()
+      const p2 = promise2()
+      // console.log(await p1, await p2)
+      const res = await Promise.all([p1, p2])
+      console.log(res)
+    }
   </script>
 </body>
 </html>
