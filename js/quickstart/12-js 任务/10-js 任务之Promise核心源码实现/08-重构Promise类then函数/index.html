@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>重构Promise类then函数</title>
+  <script src="./promise.js"></script>
+</head>
+<body>
+  <ul>
+    <li>消除then函数中重复代码，然后统一三种状态的逻辑处理(定义私有函数)</li>
+    <li>Promise具有静态方法resolve,reject,all,race,需要完善(未解决)</li>
+  </ul>
+  <script>
+    const promise = new MyPromise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('success')
+        // reject('fail')
+      }, 1000)
+    }).then(res => {
+      console.log(res)
+      // return 'miracle'
+      return new MyPromise((resolve, reject) => {
+        resolve('miracle')
+      })
+    }, err => console.log(err))
+      .then(res => console.log(res), err => console.log(err))
+  </script>
+</body>
+</html>
