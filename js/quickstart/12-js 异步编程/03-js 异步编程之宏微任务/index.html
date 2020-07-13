@@ -12,7 +12,7 @@
     <li>宏任务(macrotask)，即JS调用栈中执行的代码，包含从任务队列中读取事件回调并放入调用栈，JS为保证宏任务与DOM有序执行，在每一个宏任务执行结束后下一个宏任务执行前，对页面重新渲染</li>
     <li>微任务(microtask)，即当前宏任务执行完成后，下一个宏任务执行前甚至页面重新渲染前执行的任务，因此相应速度更快，无需等待页面重新渲染</li>
     <li>宏任务和微任务都属于异步任务，而微任务伴随宏任务或同步任务执行过程中应运而生，而执行也是伴随宏任务执行完后立即执行对应的微任务</li>
-    <li>宏任务包含：script(整块代码),setTimeout,setInterval,I/O,UI交互事件,postMessage,MessageChannel,setImmediate(Node)</li>
+    <li>宏任务包含：script(整块代码),setTimeout,setInterval,I/O,UI交互事件,DOM渲染,postMessage,MessageChannel,setImmediate(Node)</li>
     <li>微任务包含：Promise.then,Promise.catch,Object.observe,MutationObserver,process.nextTick(Node)</li>
   </ul>
   <button onclick="executeTask1()">执行任务1</button>
