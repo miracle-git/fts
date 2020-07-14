@@ -8,5 +8,112 @@
   <title>js标记之Symbol</title>
 </head>
 <body>
+  <ul>
+    <li>Symbol，即唯一标识符(可理解为不重复的字符串或数字),可使用Symbol()或Symbol.for()来定义</li>
+    <li>使用Symbol()和Symbol.for()区别1：虽都可以传入描述，但前者即使传入相同描述都不可能相等，后者只要传入相同描述则相等(也即可多次使用)</li>
+    <li>使用Symbol()和Symbol.for()区别2：前者可使用.description来获得描述，后者可使用.description或Symbol.keyFor()来获得描述</li>
+    <li>使用Symbol可解决字符串解耦，即可当存在相同的字符串作为key时存在覆盖问题</li>
+    <li>使用Symbol可用于缓存存在相同key值而无法区分的对象</li>
+    <li>使用Symbol可用于扩展私有属性(保护)，使用for...in/of将无法遍历Symbol，使用Object.getOwnPropertySymbols()可遍历Symbol，使用Reflect.ownKeys()可遍历属性和Symbol</li>
+  </ul>
+  <script>
+    // Symbol
+    {
+      const miracle = Symbol('user')
+      const jack = Symbol('user')
+      const tom = Symbol('member')
+      console.log(miracle === jack)    // false
+      console.log(miracle === tom)     // false
+      console.log(typeof miracle)      // symbol
+      console.log(miracle.description) // user
+    }
+    // Symbol.for
+    {
+      const miracle = Symbol.for('user')
+      const jack = Symbol.for('user')
+      const tom = Symbol.for('member')
+      console.log(miracle === jack)      // true
+      console.log(miracle === tom)       // false
+      console.log(miracle.description)   // user
+      console.log(Symbol.keyFor(miracle))// user
+    }
+    // 解耦字符串
+    {
+      const user1 = {
+        name: 'miracle',
+        key: Symbol()
+      }
+      const user2 = {
+        name: 'miracle',
+        key: Symbol()
+      }
+      const blogs = {
+        [user1.name]: 'https://github.com/miracle-git/fts/js',
+        [user2.name]: 'https://github.com/miracle-git/fts/css',
+        [user1.key]: 'https://github.com/miracle-git/fts/js',
+        [user2.key]: 'https://github.com/miracle-git/fts/css'
+      }
+      console.log(blogs[user1.name])  // 'https://github.com/miracle-git/fts/css'
+      console.log(blogs[user2.name])  // 'https://github.com/miracle-git/fts/css'
+      console.log(blogs[user1.key])   // 'https://github.com/miracle-git/fts/js'
+      console.log(blogs[user2.key])   // 'https://github.com/miracle-git/fts/css'
+    }
+    // 用于缓存同key对象
+    {
+      class UserCache {
+        static data = {}
+        static get(name) {
+          return UserCache.data[name]
+        }
+        static set(name, val) {
+          UserCache.data[name] = val
+        }
+      }
+      const user1 = {
+        name: 'miracle',
+        key: Symbol('user1')
+      }
+      const user2 = {
+        name: 'miracle',
+        age: 35,
+        key: Symbol('user2')
+      }
+      UserCache.set(user1.name, user1)
+      UserCache.set(user2.name, user2)
+      console.log(UserCache.get(user1.name)) // {name: "miracle", age: 35, key: Symbol(user2)}
+      console.log(UserCache.get(user2.name)) // {name: "miracle", age: 35, key: Symbol(user2)}
+      UserCache.set(user1.key, user1)
+      UserCache.set(user2.key, user2)
+      console.log(UserCache.get(user1.key)) // {name: "miracle", key: Symbol(user1)}
+      console.log(UserCache.get(user2.key)) // {name: "miracle", age: 35, key: Symbol(user2)}
+    }
+    // 属性保护
+    {
+      const web = Symbol('git')
+      class User {
+        constructor(name) {
+          this.name = name
+          this[web] = 'https://github.com/miracle-git'
+        }
+        show() {
+          console.log(`Welcome to ${this.name}'s github: ${this[web]}`)
+        }
+      }
+      const user = new User('miracle')
+      user.show()  // Welcome to miracle's github: https://github.com/miracle-git
+      for (const key in user) {
+        console.log(key)   // name
+      }
+      for (const key of Object.keys(user)) {
+        console.log(key)   // name
+      }
+      for (const key of Object.getOwnPropertySymbols(user)) {
+        console.log(key)   // Symbol(git)
+      }
+      for (const key of Reflect.ownKeys(user)) {
+        console.log(key)   // name,Symbol(git)
+      }
+    }
+  </script>
 </body>
 </html>
