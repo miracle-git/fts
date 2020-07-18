@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js集合之WeakSet弱应用</title>
+</head>
+<body>
+  <ul>
+    <li>引用类型每次被引用将使引用计数器加1，反之删除引用将使引用计数器减1，如果引用计数器为0将会启用垃圾回收</li>
+    <li>每次往WeakSet中添加引用类型时将不会改变引用计数器，反之如被添加的元素被删除也不会通知WeakSet启用垃圾回收，因此WeakSet是动态的，无法完成size,clear,key(),values(),entries(),遍历等操作</li>
+    <li>WeakSet常用于保存数据，而不需要关心何时删除，遍历等操作</li>
+  </ul>
+  <script>
+    // 垃圾回收
+    {
+      // 引用计数器加1，变成1
+      let user = { name: 'miracle' }
+      // 引用计数器加1，变成2
+      let obj = user
+      // 引用计数器减1，变成1
+      user = null
+      console.log(obj)  // {name: "miracle"}
+      // 引用计数器减1，变成0
+      obj = null
+      // 将启用垃圾回收{ name: 'miracle' }
+    }
+    // 弱引用
+    {
+      // 引用计数器加1，变成1
+      let user = { name: 'miracle' }
+      // 引用计数器加1，变成2
+      let obj = user
+      let set = new WeakSet()
+      // 引用计数器不变
+      set.add(user)
+      console.log(set.has(user))    // true
+      // 引用计数器减1，变成1
+      obj = null
+      console.log(set.has(user))    // true
+      // 引用计数器减1，变成0，将启用垃圾回收但不会通知WeakSet
+      user = null
+      console.log(set.has(user))    // false
+    }
+  </script>
+</body>
+</html>
