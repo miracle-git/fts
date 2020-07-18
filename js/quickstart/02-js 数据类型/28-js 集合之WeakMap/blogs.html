@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js集合之WeakMap示例</title>
+  <style>
+    .blogs {
+      display: flex;
+      width: 400px;
+      border: 1px solid #ddd;
+      padding: 0 15px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      position: relative;
+      width: 150px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 2px solid #e74c3c;
+      transition: all .3s;
+    }
+    ul li:last-child {
+      margin-bottom: 0;
+    }
+    ul li a {
+      display: inline-block;
+      position: absolute;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      background-color: #16a085;
+      color: #fff;
+      font-size: 12px;
+      text-decoration: none;
+      text-align: center;
+      vertical-align: middle;
+    }
+    ul li.remove a {
+      background-color: #e74c3c;
+    }
+    .result {
+      padding-left: 15px;
+    }
+    .result .count {
+      font-size: 16px;
+    }
+    .result .list span {
+      display: inline-block;
+      min-width: 50px;
+      margin-right: 10px;
+      padding: 4px;
+      border-radius: 4px;
+      text-align: center;
+      background: #16a085;
+      color: #fff;
+    }
+    .result .list span:last-child {
+      margin-right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="blogs">
+    <ul>
+      <li><span>Vue</span><a href="javascript:void(0)">+</a></li>
+      <li><span>React</span><a href="javascript:void(0)">+</a></li>
+      <li><span>Angular</span><a href="javascript:void(0)">+</a></li>
+    </ul>
+    <div class="result">
+      <h2 class="count"></h2>
+      <p class="list"></p>
+    </div>
+  </div>
+  <script>
+    class Blogs {
+      constructor() {
+        this.items = document.querySelectorAll('li')
+        this.count = document.querySelector('.count')
+        this.list = document.querySelector('.list')
+        this.map = new WeakMap()
+      }
+      run() {
+        this.items.forEach(item => {
+          item.querySelector('a').addEventListener('click', e => {
+            if (item.getAttribute('selected')) {
+              item.removeAttribute('selected')
+              item.classList.remove('remove')
+              e.target.innerHTML = '+'
+              this.map.delete(item)
+            } else {
+              item.setAttribute('selected', true)
+              item.classList.add('remove')
+              e.target.innerHTML = '-'
+              this.map.set(item)
+            }
+            this.render()
+          })
+        })
+      }
+      render() {
+        const count = [...this.items].reduce((res, item) => res += this.map.has(item) ? 1 : 0, 0)
+        const list = [...this.items].filter(item => this.map.has(item))
+            .map(item => `<span>${item.querySelector('span').innerHTML}</span>`).join('')
+        this.count.innerHTML = count ? `共选择${count}门课程学习` : ''
+        this.list.innerHTML = list
+      }
+    }
+    new Blogs().run()
+  </script>
+</body>
+</html>

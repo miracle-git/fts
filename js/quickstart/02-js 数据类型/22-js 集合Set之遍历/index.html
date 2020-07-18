@@ -17,7 +17,7 @@
     console.log(set.keys())    // SetIterator {"miracle", "jack"}
     console.log(set.values())  // SetIterator {"miracle", "jack"}
     console.log(set.entries()) // SetIterator {"miracle" => "miracle", "jack" => "jack"}
-    set.forEach((val, key) => console.log(val, key))
+    set.forEach((val, key) => console.log(key, val))
     for (const item of set) {
       console.log(item)
     }

@@ -10,8 +10,8 @@
 <body>
   <ul>
     <li>引用类型每次被引用将使引用计数器加1，反之删除引用将使引用计数器减1，如果引用计数器为0将会启用垃圾回收</li>
-    <li>每次往WeakSet中添加引用类型时将不会改变引用计数器，反之如元素被删除也不会通知WeakSet启用垃圾回收，因此WeakSet是动态的，无法完成size,clear,key(),values(),entries(),遍历等操作</li>
-    <li>WeakSet常用于保存数据，而不需要关心何时删除，遍历等操作</li>
+    <li>每次往WeakMap中添加引用类型键值时将不会改变引用计数器，反之如元素被删除也不会通知WeakMap启用垃圾回收，因此WeakMap是动态的，无法完成size,clear,key(),values(),entries(),遍历等操作</li>
+    <li>WeakMap常用于保存数据，而不需要关心何时删除，遍历等操作</li>
   </ul>
   <script>
     // 垃圾回收
@@ -33,16 +33,16 @@
       let user = { name: 'miracle' }
       // 引用计数器加1，变成2
       let obj = user
-      let set = new WeakSet()
+      let map = new WeakMap()
       // 引用计数器不变
-      set.add(user)
-      console.log(set.has(user))    // true
+      map.set(user, 'user')
+      console.log(map.has(user))    // true
       // 引用计数器减1，变成1
       obj = null
-      console.log(set.has(user))    // true
+      console.log(map.has(user))    // true
       // 引用计数器减1，变成0，将启用垃圾回收但不会通知WeakSet
       user = null
-      console.log(set.has(user))    // false
+      console.log(map.has(user))    // false
     }
   </script>
 </body>

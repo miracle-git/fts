@@ -24,6 +24,9 @@
       background-color: #eee;
       color: #ddd;
     }
+    ul li:last-child {
+      margin-bottom: 0;
+    }
     ul li a {
       display: inline-block;
       position: absolute;
@@ -57,14 +60,12 @@
       }
       run() {
         this.items.forEach(item => {
-          const icon = item.querySelector('a')
-          icon.addEventListener('click', e => {
-            const { parentElement } = e.target
+          item.querySelector('a').addEventListener('click', () => {
             if (this.list.has(item)) {
-              parentElement.classList.add('remove')
+              item.classList.add('remove')
               this.list.delete(item)
             } else {
-              parentElement.classList.remove('remove')
+              item.classList.remove('remove')
               this.list.add(item)
             }
           })
