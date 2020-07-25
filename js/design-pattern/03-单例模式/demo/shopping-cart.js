@@ -2,8 +2,8 @@ class Cart {
   constructor() {
     this.list = []
   }
-  add(data) {
-    this.list.push(data)
+  add(item) {
+    this.list.push(item)
   }
   del(id) {
     this.list = this.list.filter(item => item.id !== id)
@@ -19,7 +19,7 @@ const ShoppingCart = {
     let cart
     return function () {
       if (!cart) {
-        cart = new Cart();
+        cart = new Cart()
       }
       return cart
     }
