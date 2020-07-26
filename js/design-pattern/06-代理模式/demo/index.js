@@ -1,3 +1,4 @@
+// webpack-dev-server --config webpack.demo.config.js
 import { agent } from './es6-proxy'
 
 console.log(agent.name)

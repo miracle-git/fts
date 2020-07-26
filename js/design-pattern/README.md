@@ -7,7 +7,8 @@ npm install
 ```
 - 打开每一个设计模式示例
 ```bash
-webpack-dev-server
+webpack              // 打包示例
+webpack-dev-server   // 本地运行
 ```
 - 如果有些示例包含webpack.demo.config.js
 ```bash
