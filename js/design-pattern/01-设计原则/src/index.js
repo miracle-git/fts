@@ -1,3 +1,4 @@
+// webpack-dev-server
 const loadImg = (src) => {
   return new Promise((resolve, reject) => {
     const img = new Image()

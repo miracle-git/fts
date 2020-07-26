@@ -1,3 +1,4 @@
+// webpack-dev-server
 class Adaptee {
   specificRequest() {
     return '美式插孔'

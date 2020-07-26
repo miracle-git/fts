@@ -1,3 +1,4 @@
+// webpack-dev-server
 import Singleton from './singleton'
 
 const user1 = Singleton.getInstance('miracle')

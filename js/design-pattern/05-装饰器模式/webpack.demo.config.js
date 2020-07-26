@@ -4,7 +4,7 @@ const resolve = (dir) => path.resolve(__dirname, dir)
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: './demo/index.js',
   output: {
     path: resolve('./dist'),
     filename: 'bundle.js'
