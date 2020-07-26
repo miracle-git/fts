@@ -1,4 +1,4 @@
 {
   "presets": ["es2015", "latest"],
-  "plugins": ["transform-decorators-legacy"]
+  "plugins": ["transform-decorators-legacy", "transform-class-properties"]
 }

@@ -1,4 +1,4 @@
-> [前端设计模式集锦](https://github.com/miracle-git/fts/js/design-pattern)。
+> [前端设计模式集锦](https://github.com/miracle-git/fts/tree/master/js/design-pattern)。
 
 ## 运行步骤
 - 打开design-pattern项目安装依赖包

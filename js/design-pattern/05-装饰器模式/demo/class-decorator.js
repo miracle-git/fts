@@ -12,4 +12,4 @@ const service = {
 }
 
 @mixins(service)
-export default class User {}
+export class User {}
