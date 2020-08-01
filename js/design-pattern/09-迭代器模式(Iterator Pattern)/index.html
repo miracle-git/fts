@@ -5,22 +5,14 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>jQuery Callbacks</title>
+  <title>迭代器模式</title>
+  <link href="./favicon.ico" rel="shortcut icon">
 </head>
 <body>
+  <ul>
+    <li>迭代器适合顺序访问的数据结构(集合类)</li>
+    <li>使用者无需关心集合的内部结构封装</li>
+  </ul>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-    const callbacks = $.Callbacks()
-    callbacks.add(function (data) {
-      console.log('fn1', data)
-    })
-    callbacks.add(function (data) {
-      console.log('fn2', data)
-    })
-    callbacks.add(function (data) {
-      console.log('fn3', data)
-    })
-    callbacks.fire('miracle')
-  </script>
 </body>
 </html>
