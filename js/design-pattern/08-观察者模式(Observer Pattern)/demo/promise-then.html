@@ -14,7 +14,10 @@
         const img = new Image()
         img.src = src
         img.style.width = '100%'
-        img.onload = () => resolve(img)
+        img.onload = () => {
+          console.log('11', img)
+          resolve(img)
+        }
         img.onerror = reject
       })
     }
