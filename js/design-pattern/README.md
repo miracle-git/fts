@@ -14,4 +14,8 @@ webpack-dev-server   // 本地运行
 ```bash
 webpack-dev-server --config webpack.demo.config.js
 ```
+- 如果有些示例包含node脚本, 进入脚本当前目录
+```bash
+node xxx.js
+```
 - 接下来，就开始学习前端设计模式把!

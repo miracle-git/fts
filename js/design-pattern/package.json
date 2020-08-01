@@ -10,7 +10,8 @@
   "author": "Miracle He",
   "license": "ISC",
   "dependencies": {
-    "core-decorators": "^0.20.0"
+    "core-decorators": "^0.20.0",
+    "events": "^3.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
