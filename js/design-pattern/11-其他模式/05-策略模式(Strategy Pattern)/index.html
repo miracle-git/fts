@@ -5,14 +5,14 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>桥接模式</title>
+  <title>策略模式</title>
   <link href="./favicon.ico" rel="shortcut icon">
 </head>
 <body>
-  <ul>
-    <li>将抽象化和实现化两者分离，两者可独立发生变化</li>
-    <li>使用者可以通过多重组合完成"桥接"实现最终目标</li>
-    <li>将抽象和实现解耦，符合开放封闭原则(OCP)</li>
+  <ul class="list">
+    <li>不同策略(执行方式)分开处理</li>
+    <li>避免大量的if...else或switch...case</li>
+    <li>不同策略分开处理而不是混合在一起，符合开放封闭原则(OCP)</li>
   </ul>
 </body>
 </html>
