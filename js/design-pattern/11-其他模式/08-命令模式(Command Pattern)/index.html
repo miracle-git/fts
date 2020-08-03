@@ -5,14 +5,14 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>职责链模式</title>
+  <title>命令模式</title>
   <link href="./favicon.ico" rel="shortcut icon">
 </head>
 <body>
   <ul>
-    <li>某一操作可能分配由多个职责角色来完成</li>
-    <li>将这些角色进行分开，并最终通过"操作链"串联起来</li>
-    <li>将发起者(使用者)和各个处理者(角色)进行隔离</li>
+    <li>执行某一操作，发起者发布命令，执行者执行命令，不会直接通信</li>
+    <li>通过命令者将发起者的名称传递给执行者，承担"中间人"角色</li>
+    <li>将发起者和执行者解耦，符合开放封闭原则(OCP)</li>
   </ul>
 </body>
 </html>
