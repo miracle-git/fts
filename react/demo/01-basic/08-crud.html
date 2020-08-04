@@ -61,7 +61,7 @@
       state = {
         name: '',
         age: '',
-        gender: '',
+        gender: '保密',
         phone: ''
       };
 
@@ -103,6 +103,7 @@
             <div>
               <span>性别: </span>
               <select value={gender} onChange={e=>this.handleChange(e, 'gender')}>
+                <option value="保密">保密</option>
                 <option value="男">男</option>
                 <option value="女">女</option>
               </select>
