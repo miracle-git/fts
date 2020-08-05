@@ -18,4 +18,9 @@ webpack-dev-server --config webpack.demo.config.js
 ```bash
 node xxx.js
 ```
+- 如果运行综合案例, 进入案例目录并启动服务器和客户端
+```bash
+http-server -p 9000 (启动服务器，需全局安装http-server: npm install http-server -g)
+webpack-dev-server (启动客户端，运行案例)
+```
 - 接下来，就开始学习前端设计模式把!
