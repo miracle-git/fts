@@ -1,7 +1,9 @@
+import createGoodsItem from './goods-factory'
+
 export default class GoodsList {
   constructor(app) {
     this.app = app
-    this.$el = $('div')
+    this.$el = $('<div>')
   }
 
   init() {
@@ -13,7 +15,10 @@ export default class GoodsList {
   }
 
   initItemList(items) {
-    items.map(item => {})
+    items.forEach(item => {
+      const goodsItem = createGoodsItem(this, item)
+      goodsItem.init()
+    })
   }
 
   render() {
