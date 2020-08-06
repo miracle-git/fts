@@ -11,6 +11,7 @@ export default class GoodsList {
     this.loadData().then(res => this.initItemList(res)).then(() => this.render())
   }
 
+  // 观察者模式
   loadData() {
     return fetch('/api/goods.json').then(res => res.json())
   }

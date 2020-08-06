@@ -16,6 +16,7 @@ export default class ShoppingCart {
     this.render()
   }
 
+  // 观察者模式
   initAction() {
     const $btn = $('<button>购物车</button>').css('cursor', 'pointer')
     $btn.click(() => this.showCart())

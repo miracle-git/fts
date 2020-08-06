@@ -29,6 +29,7 @@ export default class GoodsItem {
     this.machine = createStateMachine(this)
     this.$btn = $('<button>').css('cursor', 'pointer')
     this.updateText()
+    // 观察者模式
     this.$btn.click(() => {
       if (this.machine.is(actions.add.state)) {
         this.machine.addToCart()
