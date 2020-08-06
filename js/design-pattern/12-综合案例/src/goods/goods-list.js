@@ -6,6 +6,7 @@ export default class GoodsList {
     this.$el = $('<div>')
   }
 
+  // 模板方法模式
   init() {
     this.loadData().then(res => this.initItemList(res)).then(() => this.render())
   }

@@ -10,6 +10,7 @@ export default class GoodsItem {
     this.cart = CartItem.getInstance()
   }
 
+  // 模板方法模式
   init() {
     this.initContent()
     this.initAction()

@@ -10,6 +10,7 @@ export default class ShoppingCart {
     this.cart = CartItem.getInstance()
   }
 
+  // 模板方法模式
   init() {
     this.initAction()
     this.render()

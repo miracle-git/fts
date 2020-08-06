@@ -6,6 +6,7 @@ export default class App {
     this.$el = $(selector)
   }
 
+  // 模板方法模式
   init() {
     this.initShoppingCart()
     this.initGoodsList()
