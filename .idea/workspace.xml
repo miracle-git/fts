@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a4cbf34-95aa-49ff-939c-0c284dfc7662" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/js/tutorial/03-js 运算符与流程控制/11-js 循环结构之for/for-in.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/js/tutorial/03-js 运算符与流程控制/11-js 循环结构之for/for-of.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="6a4cbf34-95aa-49ff-939c-0c284dfc7662" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,10 +13,10 @@
   <component name="ProjectId" id="1bZPTqacejUMsjiSP8YZctkickF" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -45,11 +40,46 @@
       <option name="presentableId" value="Default" />
       <updated>1588836652629</updated>
       <workItem from="1588836654318" duration="1987000" />
+      <workItem from="1597327845748" duration="628000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/ts/tutorial/08-ts 联合类型和类型保护/in.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/08-ts 联合类型和类型保护/typeof.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/08-ts 联合类型和类型保护/as.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/08-ts 联合类型和类型保护/type.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/03-ts 基础类型和对象类型/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/02-ts 类型注解和类型推断/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/05-ts 数组和元组/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/09-ts 枚举类型/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/01-ts 静态类型/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/01-ts 静态类型/point.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/13-ts 装饰器/property/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/13-ts 装饰器/accessor/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/13-ts 装饰器/method/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/13-ts 装饰器/param/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/13-ts 装饰器/class/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/13-ts 装饰器/class/advanced.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/13-ts 装饰器/class/factory.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/13-ts 装饰器/demo/catch.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/13-ts 装饰器/demo/metadata.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/10-ts 泛型/class.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/10-ts 泛型/function.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/10-ts 泛型/keyof.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/06-ts 接口/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/04-ts 函数/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/07-ts 类/index.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/07-ts 类/abstract.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/07-ts 类/modifier.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/07-ts 类/singleton.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/07-ts 类/accessor.js" />
+        <option value="$PROJECT_DIR$/ts/tutorial/07-ts 类/constructor.js" />
+      </list>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="148" y="0" key="SettingsEditor" timestamp="1588837054199">
