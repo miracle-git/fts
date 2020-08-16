@@ -18,10 +18,6 @@ export default class Set {
   has(item) {
     return this.items.hasOwnProperty(item)
   }
-  // 清除集合中所有的项
-  clear() {
-    this.items = {}
-  }
   // 返回集合中元素的数量
   size() {
     return this.values().length
@@ -29,6 +25,10 @@ export default class Set {
   // 返回集合中所有的元素
   values() {
     return Object.keys(this.items)
+  }
+  // 清除集合中所有的项
+  clear() {
+    this.items = {}
   }
   // 返回集合之间的并集
   union(set) {
