@@ -20,11 +20,15 @@ export default class Set {
   }
   // 返回集合中元素的数量
   size() {
-    return this.values().length
+    return this.keys().length
+  }
+  // 返回集合中所有的元素
+  keys() {
+    return Object.keys(this.items)
   }
   // 返回集合中所有的元素
   values() {
-    return Object.keys(this.items)
+    return Object.values(this.items)
   }
   // 清除集合中所有的项
   clear() {
