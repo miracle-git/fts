@@ -1,41 +1,31 @@
+const ht = Symbol('hashtable')
+
 export default class HashTable {
-  constructor() {
-    this.items = {}
+  constructor(capacity = 7) {
+    this.items = []
+    this.length = 0
+    this.capacity = capacity
   }
-  // 在字典中添加键值对
-  set(key, val) {
-    if (this.has(key)) return false
-    this.items[key] = val
-    return true
+
+  static [ht] = {
+    isPrime(num) {
+      const res = parseInt(Math.sqrt(num))
+      for (let i = 2; i <= res; i++) {
+        if (num % i === 0) return false
+      }
+      return true
+    },
+    getPrime(num) {
+      while(!HashTable[ht].isPrime(num)) {
+        num++
+      }
+      return num
+    }
   }
-  // 删除字典中指定键的元素
-  remove(key) {
-    if (!this.has(key)) return false
-    delete this.items[key]
-    return true
-  }
-  // 返回字典指定键对应的元素
-  get(key) {
-    return this.has(key) ? this.items[key] : null
-  }
-  // 返回字典中是否包含指定的键
-  has(key) {
-    return this.items.hasOwnProperty(key)
-  }
-  // 返回字典中元素的数量
-  size() {
-    return this.keys().length
-  }
-  // 返回字典所有的键
-  keys() {
-    return Object.keys(this.items)
-  }
-  // 返回字典所有的值
-  values() {
-    return Object.values(this.items)
-  }
-  // 清除字典中所有的项
-  clear() {
-    this.items = {}
+
+  put(key, val) {
+    const res = HashTable[ht].isPrime(35)
+    console.log(res)
+    console.log(HashTable[ht].getPrime(32))
   }
 }
