@@ -1,9 +1,9 @@
-export default class Dictionary {
+export default class HashTable {
   constructor() {
     this.items = {}
   }
   // 在字典中添加键值对
-  put(key, val) {
+  set(key, val) {
     if (this.has(key)) return false
     this.items[key] = val
     return true
