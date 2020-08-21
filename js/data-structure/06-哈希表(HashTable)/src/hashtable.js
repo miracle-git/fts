@@ -1,5 +1,5 @@
-const hts = Symbol('hashtable static methods')
-const hti = Symbol('hashtable instance methods')
+const hts = Symbol('hashtable static members')
+const hti = Symbol('hashtable instance members')
 
 export default class HashTable {
   constructor(capacity = 7) {
@@ -9,7 +9,7 @@ export default class HashTable {
     this.length = 0
     // 哈希表的总容量
     this.capacity = HashTable[hts].getPrime(capacity)
-     // 私有示例方法
+    // 私有示例成员
     this[hti] = {
       // 获取哈希桶
       getBucket: (key, init = false)  => {
@@ -28,7 +28,7 @@ export default class HashTable {
       }
     }
   }
-  // 静态私有函数
+  // 静态私有成员
   static [hts] = {
     // 判断当前数字是否为质数
     isPrime(num) {
