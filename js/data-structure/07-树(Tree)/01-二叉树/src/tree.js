@@ -7,32 +7,35 @@ class Node {
   }
 }
 
-const bst = Symbol('BST')
+const bsts = Symbol('bst static methods')
+const bsti = Symbol('bst instance methods')
 
 export default class BinarySearchTree {
   constructor() {
     this.root = null // 根节点
-  }
-  // 私有示例函数
-  [bst] = {
-    insertNode: (node, newNode) => {
-      // 判断新节点应该插入node的左子树还是右子树
-      if (newNode.key < node.key) {
-        // 判断左子树是否存在
-        if (!node.left) {
-          node.left = newNode
+    this[bsti] = {
+      insertNode: (node, newNode) => {
+        // 判断新节点应该插入node的左子树还是右子树
+        if (newNode.key < node.key) {
+          // 判断左子树是否存在
+          if (!node.left) {
+            node.left = newNode
+          } else {
+            this[bsti].insertNode(node.left, newNode)
+          }
         } else {
-          this[bst].insertNode(node.left, newNode)
-        }
-      } else {
-        // 判断右子树是否存在
-        if (!node.right) {
-          node.right = newNode
-        } else {
-          this[bst].insertNode(node.right, newNode)
+          // 判断右子树是否存在
+          if (!node.right) {
+            node.right = newNode
+          } else {
+            this[bsti].insertNode(node.right, newNode)
+          }ß
         }
       }
     }
+  }
+  // 私有静态成员
+  static [bsts] = {
   }
   // 插入节点
   insert(key) {
@@ -42,7 +45,7 @@ export default class BinarySearchTree {
     if (!this.root) {
       this.root = newNode
     } else {
-      this[bst].insertNode(this.root, newNode)
+      this[bsti].insertNode(this.root, newNode)
     }
   }
 }

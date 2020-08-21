@@ -1,4 +1,5 @@
-const ht = Symbol('hashtable')
+const hts = Symbol('hashtable static methods')
+const hti = Symbol('hashtable instance methods')
 
 export default class HashTable {
   constructor(capacity = 7) {
@@ -7,10 +8,28 @@ export default class HashTable {
     // 哈希表实际的数据项长度
     this.length = 0
     // 哈希表的总容量
-    this.capacity = HashTable[ht].getPrime(capacity)
+    this.capacity = HashTable[hts].getPrime(capacity)
+     // 私有示例方法
+    this[hti] = {
+      // 获取哈希桶
+      getBucket: (key, init = false)  => {
+        // 获取下标
+        const index = HashTable[hts].getHashCode(key, this.capacity)
+        // 获取哈希桶
+        let bucket = this.items[index]
+        // 如果哈希桶不存在则新创建
+        if (init) {
+          if (!bucket) {
+            bucket = []
+            this.items[index] = bucket
+          }
+        }
+        return bucket || null
+      }
+    }
   }
   // 静态私有函数
-  static [ht] = {
+  static [hts] = {
     // 判断当前数字是否为质数
     isPrime(num) {
       const res = parseInt(Math.sqrt(num))
@@ -21,7 +40,7 @@ export default class HashTable {
     },
     // 获取离当前数字最近的质数
     getPrime(num) {
-      while(!HashTable[ht].isPrime(num)) {
+      while(!HashTable[hts].isPrime(num)) {
         num++
       }
       return num
@@ -38,21 +57,6 @@ export default class HashTable {
       return hashCode
     }
   }
-  // 获取哈希桶
-  getBucket(key, init = false) {
-    // 获取下标
-    const index = HashTable[ht].getHashCode(key, this.capacity)
-    // 获取哈希桶
-    let bucket = this.items[index]
-    // 如果哈希桶不存在则新创建
-    if (init) {
-      if (!bucket) {
-        bucket = []
-        this.items[index] = bucket
-      }
-    }
-    return bucket || null
-  }
   // 对哈希表进行扩容(缩容)
   resize(capacity) {
     // 保存哈希表的存储空间
@@ -60,7 +64,7 @@ export default class HashTable {
     // 重置存储空间
     this.items = []
     this.length = 0
-    this.capacity = HashTable[ht].getPrime(capacity)
+    this.capacity = HashTable[hts].getPrime(capacity)
     // 遍历所有的哈希桶
     for (let i = 0; i < items.length; i++) {
       const bucket = items[i]
@@ -76,7 +80,7 @@ export default class HashTable {
   // 向哈希表中填充或更新数据
   put(key, val) {
     // 获取哈希桶
-    const bucket = this.getBucket(key, true)
+    const bucket = this[hti].getBucket(key, true)
     // 判断是否是修改数据
     for (let i = 0; i < bucket.length; i++) {
       const tuple = bucket[i]
@@ -97,7 +101,7 @@ export default class HashTable {
   // 根据key删除对应的数据
   remove(key) {
     // 获取哈希桶
-    let bucket = this.getBucket(key)
+    let bucket = this[hti].getBucket(key)
     if (!bucket) return null
     // 如果在哈希桶中存在对应的key则删除
     for (let i = 0; i < bucket.length; i++) {
@@ -119,7 +123,7 @@ export default class HashTable {
   // 根据key获取对应的数据
   get(key) {
     // 获取哈希桶
-    let bucket = this.getBucket(key)
+    let bucket = this[hti].getBucket(key)
     if (!bucket) return null
     // 如果在哈希桶中存在对应的key则返回
     for (let i = 0; i < bucket.length; i++) {
