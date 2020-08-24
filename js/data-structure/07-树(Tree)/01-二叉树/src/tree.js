@@ -1,5 +1,4 @@
 // 私有标记Symbol
-const _bst_s = Symbol('bst static methods')
 const _bst_i = Symbol('bst instance methods')
 // 二叉搜索树节点
 class TreeNode {
@@ -62,9 +61,6 @@ export default class BinarySearchTree {
       }
     }
   }
-  // 私有静态成员
-  static [_bst_s] = {
-  }
   // 插入节点
   insert(key) {
     // 初始化新节点
@@ -76,16 +72,71 @@ export default class BinarySearchTree {
       this[_bst_i].insertNode(this.root, newNode)
     }
   }
+  // 删除节点
+  remove(key) {
+    let current = this.root
+    let parent = null // 当前节点的父节点
+    let isLeft = true // 是否向左查找
+    // 寻找删除的节点
+    while (current && current.key !== key) {
+      parent = current
+      if (key < current.key) {
+        // 向左子树查找
+        isLeft = true
+        current = current.left
+      } else {
+        // 向右子树查找
+        isLeft = false
+        current = current.right
+      }
+    }
+    // 如果未查找到节点直接返回false
+    if (!current) return false
+    // 如果当前删除的节点为叶子节点
+    if (!current.left && !current.right) {
+      // 如果当前删除节点是根节点
+      if (current === this.root) {
+        this.root = null
+      } else {
+        isLeft ? parent.left = null : parent.right = null
+      }
+    } else if (!current.left) {
+      // 如果当前删除的节点只有一右子节点
+      if (current === this.root) {
+        this.root = current.right
+      } else {
+        isLeft ? parent.left = current.right : parent.right = current.right
+      }
+    } else if (!current.right) {
+      // 如果当前删除的节点只有一左子节点
+      if (current === this.root) {
+        this.root = current.left
+      } else {
+        isLeft ? parent.left = current.left : parent.right = current.left
+      }
+    } else {
+      // 如果当前删除的节点有两个子节点
+      const successor = this.successor(current)
+      // 如果当前删除节点是根节点
+      if (current === this.root) {
+        this.root = successor
+      } else {
+        isLeft ? parent.left = successor : parent.right = successor
+      }
+      // 将后继节点的左子树指向原来删除节点的左子树
+      successor.left = current.left
+    }
+  }
   // 先序遍历
-  preOrder() {
+  preorder() {
     return this[_bst_i].traverseOrder('pre')
   }
   // 中序遍历
-  midOrder() {
+  midorder() {
     return this[_bst_i].traverseOrder('mid')
   }
   // 后序遍历
-  postOrder() {
+  postorder() {
     return this[_bst_i].traverseOrder('post')
   }
   // 最小值
@@ -104,8 +155,44 @@ export default class BinarySearchTree {
     }
     return node.key || ''
   }
-  // 搜索特定的key
+  // 搜索节点
   search(key) {
     return this[_bst_i].searchNode(this.root, key)
+  }
+  // 获取节点的前驱
+  predecessor(node) {
+    let predecessor = node
+    let parent = node
+    // 在左子树中找到最大的节点(前驱)
+    let current = predecessor.left
+    while (current) {
+      parent = predecessor
+      predecessor = current
+      current = current.right
+    }
+    // 判断前驱节点不是当前删除节点的直接左子树的节点
+    if (predecessor !== node.left) {
+      parent.right = predecessor.left
+      predecessor.left = node.left
+    }
+    return predecessor
+  }
+  // 获取节点的后继
+  successor(node) {
+    let successor = node
+    let parent = node
+    // 在右子树中找到最小的节点(后继)
+    let current = successor.right
+    while (current) {
+      parent = successor
+      successor = current
+      current = current.left
+    }
+    // 判断后继节点不是当前删除节点的直接右子树的节点
+    if (successor !== node.right) {
+      parent.left = successor.right
+      successor.right = node.right
+    }
+    return successor
   }
 }
