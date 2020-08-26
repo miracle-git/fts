@@ -1,5 +1,5 @@
 // webpack-dev-server
-import BinarySearchTree from "./tree";
+import BinarySearchTree from './bst'
 
 const bst = new BinarySearchTree()
 
