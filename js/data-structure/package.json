@@ -8,8 +8,7 @@
   ],
   "author": "Miracle He",
   "license": "ISC",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",

@@ -47,7 +47,7 @@ export default class BinarySearchTree {
         return res
       },
       searchNode: (node, key) => {
-        if (!node) return false
+        if (!node) return null
         if (key < node.key) {
           // 如果传入的key比当前节点的key小，从左子树找
           return this[_bst_i].searchNode(node.left, key)
@@ -56,7 +56,7 @@ export default class BinarySearchTree {
           return this[_bst_i].searchNode(node.right, key)
         } else {
           // 在此已经找到key了
-          return true
+          return node
         }
       },
       // 获取节点的前驱
@@ -190,6 +190,9 @@ export default class BinarySearchTree {
       node = node.right
     }
     return node.key || ''
+  }
+  contains(key) {
+    return !!this[_bst_i].searchNode(this.root, key)
   }
   // 搜索节点
   search(key) {
