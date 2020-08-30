@@ -1,89 +1,117 @@
 import BinarySearchTree from './bst'
 
 // 私有标记Symbol
-const _rbt_i = Symbol('rbt instance methods')
+const _rbt_s = Symbol('rbt static members')
+const _rbt_i = Symbol('rbt instance members')
 // 红黑树节点
 class TreeNode {
-  constructor(key) {
+  constructor(key, val) {
     this.key = key
+    this.val = val
     this.left = null
     this.right = null
-    this.color = 'red'
+    this.color = RedBlackTree[_rbt_s].colors.red
   }
 }
-// 二叉搜索树(BST)
+// 红黑树(RBT)
 export default class RedBlackTree extends BinarySearchTree {
   constructor() {
     super()
-    this.root = null // 根节点
+    this.size = 0
     // 私有实例成员
     this[_rbt_i] = {
+      insertNode: (node, key, val) => {
+        if (!node) {
+          this.size++
+          return new TreeNode(key, val)
+        }
+        if (key < node.key) {
+          node.left = this[_rbt_i].insertNode(node.left, key, val)
+        } else if (key > node.key) {
+          node.right = this[_rbt_i].insertNode(node.right, key, val)
+        } else {
+          node.val = val
+        }
+        if (this[_rbt_i].isRed(node.right) && !this[_rbt_i].isRed((node.left))) {
+          node = this[_rbt_i].rotateLeft(node)
+        }
+        if (this[_rbt_i].isRed(node.left) && this[_rbt_i].isRed((node.left.left))) {
+          node = this[_rbt_i].rotateRight(node)
+        }
+        if (this[_rbt_i].isRed(node.left) && this[_rbt_i].isRed(node.right)) {
+          this[_rbt_i].flipColor(node)
+        }
+        return node
+      },
+      isRed: (node) => {
+        return !node ? false : node.color === RedBlackTree[_rbt_s].colors.red
+      },
+      // 颜色翻转
+      flipColor: (node) => {
+        node.color = RedBlackTree[_rbt_s].colors.red
+        node.left && (node.left.color = RedBlackTree[_rbt_s].colors.black)
+        node.right && (node.right.color = RedBlackTree[_rbt_s].colors.black)
+      },
+      // 左旋转，右红左黑
+      rotateLeft: (node) => {
+        const current = node.right
+        node.right = current.left
+        current.left = node
+        current.color = node.color
+        node.color = RedBlackTree[_rbt_s].colors.red
+        return current
+      },
+      // 右旋转，左红左子红
+      rotateRight: (node) => {
+        const current = node.left
+        node.left = current.right
+        current.right = node
+        current.color = node.color
+        node.color = RedBlackTree[_rbt_s].colors.red
+        return current
+      },
+      traverseNode: (node, order, handler) => {
+        if (node) {
+          order === 'pre' && handler(node)
+          this[_rbt_i].traverseNode(node.left, order, handler)
+          order === 'mid' && handler(node)
+          this[_rbt_i].traverseNode(node.right, order, handler)
+          order === 'post' && handler(node)
+        }
+      },
+      traverseOrder: (order) => {
+        let res = ''
+        this[_rbt_i].traverseNode(this.root, order, node => res += res ? `->(${node.key},${node.color})`: `(${node.key},${node.color})`)
+        return res
+      }
+    }
+  }
+  // 私有静态成员
+  static [_rbt_s] = {
+    colors: {
+      red: 'red',
+      black: 'black'
     }
   }
   // 插入节点
-  insert(key) {
-    // 初始化新节点
-    const newNode = new TreeNode(key)
-    // 判断根节点是否存在
-    if (!this.root) {
-      this.root = newNode
-    } else {
-      this[_rbt_i].insertNode(this.root, newNode)
-    }
+  insert(key, val) {
+    this.root = this[_rbt_i].insertNode(this.root, key, val)
+    // 根节点永远都是黑色
+    this.root.color = RedBlackTree[_rbt_s].colors.black
   }
   // 删除节点
   remove(key) {
-    let current = this.root
-    let parent = null // 当前节点的父节点
-    let isLeft = true // 是否向左查找
-    // 寻找删除的节点
-    while (current && current.key !== key) {
-      parent = current
-      if (key < current.key) {
-        // 向左子树查找
-        isLeft = true
-        current = current.left
-      } else {
-        // 向右子树查找
-        isLeft = false
-        current = current.right
-      }
-    }
-    // 如果未查找到节点直接返回false
-    if (!current) return false
-    // 如果当前删除的节点为叶子节点
-    if (!current.left && !current.right) {
-      // 如果当前删除节点是根节点
-      if (current === this.root) {
-        this.root = null
-      } else {
-        isLeft ? parent.left = null : parent.right = null
-      }
-    } else if (!current.left) {
-      // 如果当前删除的节点只有一右子节点
-      if (current === this.root) {
-        this.root = current.right
-      } else {
-        isLeft ? parent.left = current.right : parent.right = current.right
-      }
-    } else if (!current.right) {
-      // 如果当前删除的节点只有一左子节点
-      if (current === this.root) {
-        this.root = current.left
-      } else {
-        isLeft ? parent.left = current.left : parent.right = current.left
-      }
-    } else {
-      // 如果当前删除的节点有两个子节点
-      const successor = this.successor(current)
-      // 如果当前删除节点是根节点
-      if (current === this.root) {
-        this.root = successor
-      } else {
-        isLeft ? parent.left = successor : parent.right = successor
-      }
-      // 将后继节点的左子树指向原来删除节点的左子树
-      successor.left = current.left
-    }
+  }
+  // 先序遍历
+  preorder() {
+    return this[_rbt_i].traverseOrder('pre')
+  }
+  // 中序遍历
+  midorder() {
+    return this[_rbt_i].traverseOrder('mid')
+  }
+  // 后序遍历
+  postorder() {
+    return this[_rbt_i].traverseOrder('post')
   }
 }

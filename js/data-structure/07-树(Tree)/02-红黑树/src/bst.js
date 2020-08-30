@@ -1,5 +1,5 @@
 // 私有标记Symbol
-const _bst_i = Symbol('bst instance methods')
+const _bst_i = Symbol('bst instance members')
 // 二叉搜索树节点
 class TreeNode {
   constructor(key) {
@@ -58,6 +58,42 @@ export default class BinarySearchTree {
           // 在此已经找到key了
           return true
         }
+      },
+      // 获取节点的前驱
+      predecessor: (node) => {
+        let predecessor = node
+        let parent = node
+        // 在左子树中找到最大的节点(前驱)
+        let current = predecessor.left
+        while (current) {
+          parent = predecessor
+          predecessor = current
+          current = current.right
+        }
+        // 判断前驱节点不是当前删除节点的直接左子树的节点
+        if (predecessor !== node.left) {
+          parent.right = predecessor.left
+          predecessor.left = node.left
+        }
+        return predecessor
+      },
+      // 获取节点的后继
+      successor: (node) => {
+        let successor = node
+        let parent = node
+        // 在右子树中找到最小的节点(后继)
+        let current = successor.right
+        while (current) {
+          parent = successor
+          successor = current
+          current = current.left
+        }
+        // 判断后继节点不是当前删除节点的直接右子树的节点
+        if (successor !== node.right) {
+          parent.left = successor.right
+          successor.right = node.right
+        }
+        return successor
       }
     }
   }
@@ -116,7 +152,7 @@ export default class BinarySearchTree {
       }
     } else {
       // 如果当前删除的节点有两个子节点
-      const successor = this.successor(current)
+      const successor = this[_bst_i].successor(current)
       // 如果当前删除节点是根节点
       if (current === this.root) {
         this.root = successor
@@ -158,41 +194,5 @@ export default class BinarySearchTree {
   // 搜索节点
   search(key) {
     return this[_bst_i].searchNode(this.root, key)
-  }
-  // 获取节点的前驱
-  predecessor(node) {
-    let predecessor = node
-    let parent = node
-    // 在左子树中找到最大的节点(前驱)
-    let current = predecessor.left
-    while (current) {
-      parent = predecessor
-      predecessor = current
-      current = current.right
-    }
-    // 判断前驱节点不是当前删除节点的直接左子树的节点
-    if (predecessor !== node.left) {
-      parent.right = predecessor.left
-      predecessor.left = node.left
-    }
-    return predecessor
-  }
-  // 获取节点的后继
-  successor(node) {
-    let successor = node
-    let parent = node
-    // 在右子树中找到最小的节点(后继)
-    let current = successor.right
-    while (current) {
-      parent = successor
-      successor = current
-      current = current.left
-    }
-    // 判断后继节点不是当前删除节点的直接右子树的节点
-    if (successor !== node.right) {
-      parent.left = successor.right
-      successor.right = node.right
-    }
-    return successor
   }
 }
