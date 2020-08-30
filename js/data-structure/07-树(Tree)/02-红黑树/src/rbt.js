@@ -17,14 +17,10 @@ class TreeNode {
 export default class RedBlackTree extends BinarySearchTree {
   constructor() {
     super()
-    this.size = 0
     // 私有实例成员
     this[_rbt_i] = {
       insertNode: (node, key, val) => {
-        if (!node) {
-          this.size++
-          return new TreeNode(key, val)
-        }
+        if (!node) return new TreeNode(key, val)
         if (key < node.key) {
           node.left = this[_rbt_i].insertNode(node.left, key, val)
         } else if (key > node.key) {
