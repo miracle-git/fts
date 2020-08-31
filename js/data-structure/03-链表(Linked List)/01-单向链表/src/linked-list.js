@@ -99,6 +99,7 @@ export default class LinkedList {
     // 判断删除的位置是否为第一个节点
     let res = null
     if (pos === 0) {
+      res = this.head
       this.head = this.head.next
     } else {
       // 从头开始找到指定位置pos的节点
@@ -111,11 +112,11 @@ export default class LinkedList {
       }
       // 将当前节点的上一个节点指向下一个节点
       prev.next = current.next
-      res = current.data
+      res = current
     }
     // 将长度减1
     this.length--
-    return res
+    return res.data
   }
   // 删除指定元素
   remove(data) {
