@@ -150,7 +150,7 @@ export default class LinkedList {
       // 从尾开始找到指定位置pos的节点
       index = this.length - 1
       current = this.tail
-      while (index++ < pos) {
+      while (index-- > pos) {
         current = current.prev
       }
     }
