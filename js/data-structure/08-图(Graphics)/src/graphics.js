@@ -2,7 +2,7 @@ import Dictionary from './dictionary'
 import Queue from './queue'
 
 // 私有标记Symbol
-const _g_i = Symbol('graphics static members')
+const _g_i = Symbol('graphics instance members')
 // 顶点颜色
 const Colors = {
   white: 'WHITE',
