@@ -1,4 +1,4 @@
-> [前端数据结构集锦](https://github.com/miracle-git/fts/tree/master/js/data-algorithm)。
+> [前端算法集锦](https://github.com/miracle-git/fts/tree/master/js/data-algorithm)。
 
 ## 运行步骤
 - 打开data-algorithm项目安装依赖包
