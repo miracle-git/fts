@@ -5,7 +5,7 @@
 ```bash
 npm install
 ```
-- 打开每一个数据结构示例
+- 打开每一个前端算法示例
 ```bash
 webpack              // 打包示例
 webpack-dev-server   // 本地运行
