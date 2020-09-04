@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>选择排序</title>
+  <link href="./favicon.ico" rel="shortcut icon">
+</head>
+<body>
+  <ul>
+    <li>对未排序的数组，保存一个存放最大值或最小值的索引index(默认为0)，可按升序或降序进行排序</li>
+    <li>对升序而言，从index+1位置开始之后某个位置n的元素，如果发现比index的位置还小，则将index更新为n</li>
+    <li>对降序而言，从index+1位置开始之后某个位置n的元素，如果发现比index的位置还大，则将index更新为n</li>
+    <li>此时已经筛选出最大值或最小值的索引index，将之于第0个元组进行交换，此时仅仅是完成了"一轮"排序</li>
+    <li>此时第一个位置已存放最大值(或最小值)，开始从第二个位置开始继续开始"下一轮"排序，直到寻找到第length-1个位置为止</li>
+    <li>比较次数：(n-1)+(n-2)+...+1=n*(n-1)/2，因此时间复杂度为O(n^2)</li>
+    <li>交换次数: 每次选择完毕之后才发生交换(共n-1次)，因此时间复杂度为O(n)</li>
+    <li>从比较次数和交换次数的时间复杂度来说，选择排序相对于冒泡排序来说，性能更高</li>
+  </ul>
+</body>
+</html>
