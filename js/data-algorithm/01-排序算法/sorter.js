@@ -61,4 +61,39 @@ export default class Sorter {
     }
     return this.items
   }
+  // 希尔排序
+  shellSort(direction = 'asc') {
+    const len = this.items.length
+    return this.items
+  }
+  // 快速排序
+  quickSort(direction = 'asc') {
+    const len = this.items.length
+    return this.items
+  }
+  // 归并排序
+  mergeSort(direction = 'asc') {
+    const len = this.items.length
+    return this.items
+  }
+  // 堆排序
+  heapSort(direction = 'asc') {
+    const len = this.items.length
+    return this.items
+  }
+  // 桶排序
+  bucketSort(direction = 'asc') {
+    const len = this.items.length
+    return this.items
+  }
+  // 计数排序
+  countingSort(direction = 'asc') {
+    const len = this.items.length
+    return this.items
+  }
+  // 基数排序
+  radixSort(direction = 'asc') {
+    const len = this.items.length
+    return this.items
+  }
 }
