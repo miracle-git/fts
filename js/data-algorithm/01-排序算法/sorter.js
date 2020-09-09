@@ -64,6 +64,18 @@ export default class Sorter {
   // 希尔排序
   shellSort(direction = 'asc') {
     const len = this.items.length
+    let delta = Math.floor(len / 2)
+    while (delta >= 1) {
+      for (let i = delta; i < len; i++) {
+        let temp = this.items[i], j = i
+        while (this[_st_i].compare(this.items[j - delta], temp, { direction, mode: 'value' }) && j > delta - 1) {
+          this.items[j] = this.items[j - delta]
+          j -= delta
+        }
+        this.items[j] = temp
+      }
+      delta = Math.floor(delta / 2)
+    }
     return this.items
   }
   // 快速排序
