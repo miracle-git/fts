@@ -7,6 +7,7 @@ export default class Sorter {
     // 私有实例成员
     this[_st_i] = {
       swap: (a, b) => {
+        if (a === b) return
         const temp = this.items[a]
         this.items[a] = this.items[b]
         this.items[b] = temp
