@@ -90,17 +90,17 @@ export default class Sorter {
     return this.items
   }
   // 插入排序
-  insertionSort(direction = 'asc') {
-    const len = this.items.length
+  insertionSort(direction = 'asc', arr = this.items) {
+    const len = arr.length
     for (let i = 1; i < len; i++) {
-      let temp = this.items[i], j = i
-      while (this[_st_i].compare(this.items[j - 1], temp, { direction, mode: 'value' }) && j > 0) {
-        this.items[j] = this.items[j - 1]
+      let temp = arr[i], j = i
+      while (this[_st_i].compare(arr[j - 1], temp, { direction, mode: 'value' }) && j > 0) {
+        arr[j] = arr[j - 1]
         j--
       }
-      this.items[j] = temp
+      arr[j] = temp
     }
-    return this.items
+    return arr
   }
   // 希尔排序
   shellSort(direction = 'asc') {
