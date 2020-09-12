@@ -35,7 +35,7 @@ export default class Sorter {
     return arr
   }
   // 桶排序
-  bucketSort(direction= 'asc', bucketSize= 5) {
+  bucketSort(direction = 'asc', bucketSize = 5) {
     const len = this.items.length
     if (len <= 1) return this.items
     // 寻找最大值和最小值
