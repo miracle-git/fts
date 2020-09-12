@@ -197,11 +197,82 @@ export default class Sorter {
   // 计数排序
   countingSort(direction = 'asc') {
     const len = this.items.length
+    if (len <= 1) return this.items
+    const asc = direction.toLowerCase() === 'asc'
+    let max = this.items[0], index = asc ? 0 : len - 1
+    // 寻找最大值
+    for (let i = 0; i < len; i++) {
+      const item = this.items[i]
+      if (item > max) {
+        max = item
+      }
+    }
+    // 初始化桶
+    const bucketCount = max + 1
+    const buckets = new Array(bucketCount)
+    // 开始计数
+    for (let i = 0; i < len; i++) {
+      const item = this.items[i]
+      if (!buckets[item]) {
+        buckets[item] = 0
+      }
+      buckets[item]++
+    }
+    // 反向填充
+    for (let i = 0; i < bucketCount; i++) {
+      while (buckets[i] > 0) {
+        const current = asc ? index++ : index--
+        this.items[current] = i
+        buckets[i]--
+      }
+    }
     return this.items
   }
   // 基数排序
   radixSort(direction = 'asc') {
     const len = this.items.length
+    if (len <= 1) return this.items
+    let max = this.items[0], digit = 0
+    // 寻找最大值
+    for (let i = 0; i < len; i++) {
+      const item = this.items[i]
+      if (item > max) {
+        max = item
+      }
+    }
+    // 获取最大值的位数
+    digit = max.toString().length
+    let buckets = [], div = 1, mod = 10
+    for (let i = 0; i < digit; i++, div *= 10, mod *= 10) {
+      // 初始化桶
+      for (let j = 0; j < len; j++) {
+        const item = this.items[j]
+        const index = parseInt((item % mod) / div)
+        if(buckets[index] == null) {
+          buckets[index] = []
+        }
+        buckets[index].push(item)
+      }
+      if (direction.toLowerCase() === 'asc') {
+        for (let j = 0, pos = 0; j < buckets.length; j++) {
+          const item = buckets[j]
+          if (item == null) continue
+          let val
+          while (!!(val = item.shift())) {
+            this.items[pos++] = val
+          }
+        }
+      } else {
+        for (let j = 0, pos = len - 1; j < buckets.length; j++) {
+          const item = buckets[j]
+          if (item == null) continue
+          let val
+          while (!!(val = item.pop())) {
+            this.items[pos--] = val
+          }
+        }
+      }
+    }
     return this.items
   }
 }
