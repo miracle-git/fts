@@ -156,8 +156,42 @@ export default class Sorter {
     return this.items
   }
   // 桶排序
-  bucketSort(direction = 'asc') {
+  bucketSort(direction= 'asc', bucketSize= 5) {
     const len = this.items.length
+    if (len <= 1) return this.items
+    // 寻找最大值和最小值
+    let min = this.items[0], max = this.items[0]
+    for (let i = 1; i < len; i++) {
+      const item = this.items[i]
+      if (item < min) {
+        min = item
+      } else if (item > max) {
+        max = item
+      }
+    }
+    // 初始化桶
+    const bucketCount = Math.floor((max - min) / bucketSize) + 1
+    const buckets = new Array(bucketCount)
+    for (let i = 0; i < bucketCount; i++) {
+      buckets[i] = []
+    }
+    // 利用映射函数将数据分配到各个桶中
+    for (let i = 0; i < len; i++) {
+      const item = this.items[i]
+      const delta = direction.toLowerCase() === 'asc' ? item - min : max - item
+      const index = Math.floor(delta / bucketSize)
+      buckets[index].push(item)
+    }
+    // 清空数组
+    this.items = []
+    // 对每个桶进行插入排序
+    for (let i = 0; i < bucketCount; i++) {
+      const bucket = buckets[i]
+      this.insertionSort(direction, bucket)
+      for (let j = 0; j < bucket.length; j++) {
+        this.items.push(bucket[j])
+      }
+    }
     return this.items
   }
   // 计数排序
