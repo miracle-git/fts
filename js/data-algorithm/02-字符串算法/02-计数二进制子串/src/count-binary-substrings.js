@@ -48,5 +48,5 @@ export const countBinarySubstrings = (str) => {
       res.push(item)
     }
   }
-  return res
+  return res.length
 }

@@ -11,7 +11,7 @@ test('测试：反转字符串中的单词', () => {
 })
 
 test('测试：计数二进制子串', () => {
-  expect(countBinarySubstrings('00110011')).toEqual(['0011', '01', '1100', '10', '0011', '01'])
-  expect(countBinarySubstrings('10101')).toEqual(['10', '01', '10', '01'])
-  expect(countBinarySubstrings('00000')).toEqual([])
+  expect(countBinarySubstrings('00110011')).toBe(6)
+  expect(countBinarySubstrings('10101')).toBe(4)
+  expect(countBinarySubstrings('00000')).toBe(0)
 })
