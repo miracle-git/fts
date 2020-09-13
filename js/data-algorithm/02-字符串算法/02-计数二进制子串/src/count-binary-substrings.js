@@ -63,10 +63,10 @@ const checkIsValid = (str, maxLength) => {
  * @returns 返回具有相同数量0和1的非空(连续)子字符串的数量
  */
 export const countBinarySubstrings = (str, maxLength = 50000) => {
-  // 1. 容错检查
+  // 1. 容错检查：如果输入的字符串不满足条件则直接返回0
   if (!checkIsValid(str, maxLength)) return 0
   const res = []
-  // 2. 每次将字符串像后移动1位作为输入
+  // 2. 每次将字符串向后移动1位作为输入
   for (let i = 0, len = str.length; i < len - 1; i++) {
     // 3. 检查当前子字符串是否存在满足条件的匹配
     const item = match(str.slice(i))
