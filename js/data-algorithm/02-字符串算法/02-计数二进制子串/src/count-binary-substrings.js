@@ -20,6 +20,27 @@
  * s.length 在1到50,000之间。
  * s 只包含“0”或“1”字符。
  */
+const match = (str) => {
+  const res = []
+  const arr = str.split('')
+  const counter = { '0': 0, '1': 0 }
+  for (let i = 0; i < arr.length;i++) {
+    const item = arr[i]
+    res.push(item)
+    counter[item]++
+    if (counter['0'] === counter['1']) break
+  }
+  if (counter['0'] !== counter['1']) return ''
+  return res.join('')
+}
+
 export const countBinarySubstrings = (str) => {
-  // todo...
+  const res = []
+  for (let i = 0; i < str.length - 1; i++) {
+    const item = match(str.slice(i))
+    if (item) {
+      res.push(item)
+    }
+  }
+  return res
 }
