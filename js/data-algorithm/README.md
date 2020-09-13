@@ -16,7 +16,8 @@ webpack-dev-server --config webpack.demo.config.js
 ```
 - 如果需要运行单元测试，请在根目录下运行
 ```bash
-npm run test
+npm run test        // 单元测试
+npm run test:watch  // 单元测试(本地运行)
 ```
 - 查看测试报告，可在运行单元测试后，打开根目录下的test-report.html
 
