@@ -14,4 +14,10 @@ webpack-dev-server   // 本地运行
 ```bash
 webpack-dev-server --config webpack.demo.config.js
 ```
+- 如果需要运行单元测试，请在根目录下运行
+```bash
+npm run test
+```
+- 查看测试报告，可在运行单元测试后，打开根目录下的test-report.html
+
 - 接下来，就开始学习前端算法把!
