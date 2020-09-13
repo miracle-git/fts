@@ -43,13 +43,31 @@ const match = (str) => {
   // 2.5 如果到循环结束，则直接返回空字符串
   return ''
 }
-
-export const countBinarySubstrings = (str) => {
-  // 1. 容错检查：如果输入的字符串全为0或全为1则直接返回0
-  if (!(/[^0]/.test(str)) || !(/[^1]/.test(str))) return 0
+/**
+ * @params {string} 检测指定的字符串是否合法
+ * @maxLength {number} 最大长度(默认：50000)
+ * @returns 如果是二进制字符串则返回true,否则返回false
+ */
+const checkIsValid = (str, maxLength) => {
+  // 如果输入的字符串包含0或1之外的字符则直接返回0
+  if (!(/^[0-1]+$/g.test(str))) return false
+  // 如果输入的字符串全为0或全为1则直接返回0
+  if (!(/[^0]/.test(str)) || !(/[^1]/.test(str))) return false
+  // 如果输入的字符串超出最大长度则直接返回false
+  if (str.length > maxLength) return false
+  return true
+}
+/**
+ * @params {string} 指定需要计数的二进制字符串
+ * @maxLength {number} 最大长度(默认：50000)
+ * @returns 返回具有相同数量0和1的非空(连续)子字符串的数量
+ */
+export const countBinarySubstrings = (str, maxLength = 50000) => {
+  // 1. 容错检查
+  if (!checkIsValid(str, maxLength)) return 0
   const res = []
   // 2. 每次将字符串像后移动1位作为输入
-  for (let i = 0; i < str.length - 1; i++) {
+  for (let i = 0, len = str.length; i < len - 1; i++) {
     // 3. 检查当前子字符串是否存在满足条件的匹配
     const item = match(str.slice(i))
     // 4. 如果存在匹配，则将匹配加入到结果数组
