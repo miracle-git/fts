@@ -30,20 +30,29 @@ const match = (str) => {
     // 2.2 循环数组中的每一项，首先加入到匹配结果数组再将对应的计数器加1
     res.push(item)
     counter[item]++
-    // 2.3 如果发现0和1和计数器已相等，提前结束循环并返回结果
+    // 2.3 如果结果数组长度超过2且已包含0和1, 则检查第1位和最后1位是否相等，相等则直接返回空字符串
+    const len = res.length
+    if (len > 2) {
+      if (counter['0'] && counter['1']) {
+        if (res[len - 1] === res[0]) return ''
+      }
+    }
+    // 2.4 如果发现0和1和计数器已相等，提前结束循环并返回结果
     if (counter['0'] === counter['1']) return res.join('')
   }
-  // 2.4 如果到循环结束，则直接返回空字符串
+  // 2.5 如果到循环结束，则直接返回空字符串
   return ''
 }
 
 export const countBinarySubstrings = (str) => {
+  // 1. 容错检查：如果输入的字符串全为0或全为1则直接返回0
+  if (!(/[^0]/.test(str)) || !(/[^1]/.test(str))) return 0
   const res = []
-  // 1. 每次将字符串像后移动1位作为输入
+  // 2. 每次将字符串像后移动1位作为输入
   for (let i = 0; i < str.length - 1; i++) {
-    // 2. 检查当前子字符串是否存在满足条件的匹配
+    // 3. 检查当前子字符串是否存在满足条件的匹配
     const item = match(str.slice(i))
-    // 3. 如果存在匹配，则将匹配加入到结果数组
+    // 4. 如果存在匹配，则将匹配加入到结果数组
     if (item) {
       res.push(item)
     }
