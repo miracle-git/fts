@@ -9,7 +9,8 @@
   "author": "Miracle He",
   "license": "ISC",
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
