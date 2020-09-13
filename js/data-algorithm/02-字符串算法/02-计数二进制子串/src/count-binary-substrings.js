@@ -49,7 +49,7 @@ const match = (str) => {
  * @returns 如果是二进制字符串则返回true,否则返回false
  */
 const checkIsValid = (str, maxLength) => {
-  // 如果输入的字符串包含0或1之外的字符则直接返回0
+  // 如果输入的字符串包含0或1之外的字符则直接返回false
   if (!(/^[0-1]+$/g.test(str))) return false
   // 如果输入的字符串全为0或全为1则直接返回0
   if (!(/[^0]/.test(str)) || !(/[^1]/.test(str))) return false
