@@ -25,16 +25,16 @@ const match = (str) => {
   // 2.1 如何检查匹配：将当前的字符串拆分转化为数组，并给0和1分别生成计数器(默认为0)
   const arr = str.split('')
   const counter = { '0': 0, '1': 0 }
-  for (let i = 0; i < arr.length;i++) {
+  for (let i = 0, len = arr.length; i < len;i++) {
     const item = arr[i]
     // 2.2 循环数组中的每一项，首先加入到匹配结果数组再将对应的计数器加1
     res.push(item)
     counter[item]++
     // 2.3 如果结果数组长度超过2且已包含0和1, 则检查第1位和最后1位是否相等，相等则直接返回空字符串
-    const len = res.length
-    if (len > 2) {
+    const { length } = res
+    if (length > 2) {
       if (counter['0'] && counter['1']) {
-        if (res[len - 1] === res[0]) return ''
+        if (res[length - 1] === res[0]) return ''
       }
     }
     // 2.4 如果发现0和1和计数器已相等，提前结束循环并返回结果
