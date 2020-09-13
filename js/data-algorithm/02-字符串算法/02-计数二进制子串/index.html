@@ -11,9 +11,10 @@
 <body>
   <ul>
     <li><a href="https://leetcode-cn.com/problems/count-binary-substrings/" target="_blank">链接</a></li>
-    <li>1. 每次将字符串像后移动1位作为输入</li>
-    <li>2. 检查当前子字符串是否存在满足条件的匹配</li>
-    <li>3. 如果存在匹配，则将匹配加入到结果数组</li>
+    <li>1. 容错检查：如果输入的字符串不满足条件则直接返回0</li>
+    <li>2. 每次将字符串向后移动1位作为输入</li>
+    <li>3. 检查当前子字符串是否存在满足条件的匹配</li>
+    <li>4. 如果存在匹配，则将匹配加入到结果数组</li>
   </ul>
 </body>
 </html>
