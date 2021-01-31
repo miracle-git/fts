@@ -1,3 +1,0 @@
-function show() {
-  user = 'Miracle'
-}
