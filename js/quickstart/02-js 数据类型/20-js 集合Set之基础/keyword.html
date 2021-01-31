@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js集合Set之基础示例</title>
+  <style>
+    input[name=keyword] {
+      width: 400px;
+      height: 36px;
+      box-sizing: border-box;
+    }
+    .list {
+      width: 400px;
+      list-style: none;
+      padding: 0;
+    }
+    .list li {
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+    .list li:nth-child(odd) {
+      color: #fff;
+      background-color: #16a085;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" name="keyword">
+  <ul class="list"></ul>
+  <script>
+    const obj = {
+      data: new Set(),
+      set keyword(val) {
+        this.data.add(val)
+      },
+      show() {
+        const list = document.querySelector('.list')
+        list.innerHTML = ''
+        this.data.forEach(item => list.innerHTML += `<li>${item}</li>`)
+      }
+    }
+    const keyword = document.querySelector('[name=keyword]')
+    keyword.addEventListener('blur', e => {
+      const val = e.target.value.trim()
+      if (val) {
+        obj.keyword = val
+        obj.show()
+      }
+    })
+  </script>
+</body>
+</html>

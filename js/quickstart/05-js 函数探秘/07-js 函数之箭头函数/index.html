@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之箭头函数</title>
+</head>
+<body>
+  <ul>
+    <li>使用箭头函数可极大简化代码编写，去掉之前的function关键字，格式:()=>{}</li>
+    <li>当箭头函数只有一个参数时，可去掉(); 当箭头函数体只有一句话时，可去掉{}</li>
+    <li>箭头函数也不能万能的，如无法解决递归，构造函数，事件处理等场景</li>
+  </ul>
+  <script>
+    // const sum = function(...args) {
+    //   return args.reduce(function(a, b) {
+    //     return a + b
+    //   })
+    // }
+    // const sum = (...args) => {
+    //   return args.reduce((a, b) => {
+    //     return a + b
+    //   })
+    // }
+    const sum = (...args) => args.reduce((a, b) => a + b)
+    console.log(sum(1, 2, 3, 4, 5))
+  </script>
+</body>
+</html>

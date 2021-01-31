@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js正则表达式之原子组全局匹配</title>
+</head>
+<body>
+  <ul>
+    <li>全局匹配，即匹配完整的原子组，可利用字符串的matchAll方法来获取正则表达式迭代器(RegExpStringIterator,新版本浏览器才支持)</li>
+    <li>由于matchAll是最新的浏览器标准，所以为兼顾老浏览器可实现String.prototype.matchAll</li>
+    <li>利用正则表达式的exec方法也可实现全局匹配，必须结合g修正符一起使用(lastIndex才会连续匹配)</li>
+  </ul>
+  <div name="content">
+    <h1>https://github.com/miracle-git</h1>
+    <h2>http://www.baidu.com</h2>
+    <h3>https://www.google.com</h3>
+  </div>
+  <script>
+    // 获取标题的内容(不含h1,h2,h3,...)
+    const content = document.querySelector('[name="content"]')
+    const reg1 = /<(h[1-6])>([\s\S]+?)<\/\1>/gi
+    console.log(content.innerHTML.match(reg1))   // ["<h1>https://github.com/miracle-git</h1>", "<h2>http://www.baidu.com</h2>", "<h3>https://www.google.com</h3>"]
+    const urls1 = []
+    const matches1 = content.innerHTML.matchAll(reg1)
+    for (const item of matches1) {
+      urls1.push(item[2])
+    }
+    console.log(urls1)                           // ["https://github.com/miracle-git", "http://www.baidu.com", "https://www.google.com"]
+    // 兼容老浏览器
+    String.prototype.matchAll = function (reg) {
+      const res = this.match(reg)
+      if (res) {
+        const str = this.replace(res[0], '^'.repeat(res[0].length))
+        const match = str.matchAll(reg) || []
+        return [res, ...match]
+      }
+    }
+    const reg2 = /<(h[1-6])>([\s\S]+?)<\/\1>/i
+    const urls2 = []
+    const matches2 = content.innerHTML.matchAll(reg2)
+    for (const item of matches2) {
+      urls2.push(item[2])
+    }
+    console.log(urls2)                           // ["https://github.com/miracle-git", "http://www.baidu.com", "https://www.google.com"]
+    // 利用exec进行全局匹配
+    function search(str, reg) {
+      let res = [], item
+      while ((item = reg.exec(str))) {
+        res.push(item)
+      }
+      return res
+    }
+    const reg3 = /<(h[1-6])>([\s\S]+?)<\/\1>/gi
+    const matches3 = search(content.innerHTML, reg1)
+    const urls3 = []
+    for (const item of matches3) {
+      urls3.push(item[2])
+    }
+    console.log(urls3)                           // ["https://github.com/miracle-git", "http://www.baidu.com", "https://www.google.com"]
+  </script>
+</body>
+</html>

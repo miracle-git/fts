@@ -1,0 +1,97 @@
+@import "./base";
+.prefix(@name, @value) {
+  -webkit-@{name}: @value;
+  @{name}: @value;
+}
+@media screen and (min-width: 750px) {
+  html { font-size: 200px !important; }
+}
+@media screen and (min-width: 320px) and (max-width: 360px) {
+  .search-box .keyword { transform: translateY(-3px); }
+}
+body {
+  min-width: 320px;
+  max-width: 750px;
+  width: 3.75rem;
+  line-height: 1.5;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f2f2;
+}
+//搜索栏 search-bar
+.search-bar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  .prefix(transform, translateX(-50%));
+  width: 3.75rem;
+  height: .44rem;
+  background: #ffc001;
+  .left {
+    width: .22rem;
+    height: .35rem;
+    margin: .05rem .125rem .03rem;
+    background: url("../images/cate.png") no-repeat;
+    background-size: cover;
+    order: 1;
+  }
+  .right {
+    width: .375rem;
+    height: .35rem;
+    line-height: .35rem;
+    margin: .05rem;
+    font-size: .125rem;
+    text-align: center;
+    color: #fff;
+    order: 3;
+  }
+  .search-box {
+    flex: 1;
+    order: 2;
+    .keyword {
+      width: 100%;
+      height: .32rem;
+      margin: .06rem 0;
+      padding: 0 .12rem;
+      font-size: .125rem;
+      .prefix(border-radius, .16rem);
+      border: none;
+      background: #fff2cc;
+    }
+  }
+}
+.main-container {
+  //轮播图 banner
+  .banner {
+    width: 3.75rem;
+    height: 1.8rem;
+  }
+  //广告栏 ads
+  .ads {
+    display: flex;
+    .ad-item {
+      flex: 1;
+    }
+  }
+  //导航栏 nav
+  .nav {
+    width: 3.75rem;
+    margin: .075rem 0;
+    .nav-item {
+      float: left;
+      width: .75rem;
+      height: .7rem;
+      margin-top: .05rem;
+      font-size: .125rem;
+      text-align: center;
+      color: #333;
+      img {
+        display: block;
+        width: .41rem;
+        height: .41rem;
+        margin: .05rem auto .025rem;
+      }
+    }
+  }
+}

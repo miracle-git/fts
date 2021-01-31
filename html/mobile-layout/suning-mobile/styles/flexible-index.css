@@ -1,0 +1,141 @@
+* {
+  box-sizing: border-box;
+  /*点击元素清除默认高亮*/
+  -webkit-tap-highlight-color: transparent;
+}
+a {
+  color: #666;
+  text-decoration: none;
+}
+img {
+  width: 100%;
+  border: none;
+  vertical-align: middle;
+}
+a,
+img {
+  /*清除默认链接，图片长按的下拉菜单*/
+  -webkit-touch-callout: none;
+}
+input,
+textarea {
+  outline: none;
+  /*清除默认在ios上的文本框外观*/
+  -webkit-appearance: none;
+}
+textarea {
+  resize: none;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: table;
+}
+.clearfix::after {
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+@media screen and (min-width: 750px) {
+  html {
+    font-size: 200px !important;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 360px) {
+  .search-box .keyword {
+    transform: translateY(-3px);
+  }
+}
+body {
+  min-width: 320px;
+  max-width: 750px;
+  width: 3.75rem;
+  line-height: 1.5;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f2f2;
+}
+.search-bar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 3.75rem;
+  height: 0.44rem;
+  background: #ffc001;
+}
+.search-bar .left {
+  width: 0.22rem;
+  height: 0.35rem;
+  margin: 0.05rem 0.125rem 0.03rem;
+  background: url("../images/cate.png") no-repeat;
+  background-size: cover;
+  order: 1;
+}
+.search-bar .right {
+  width: 0.375rem;
+  height: 0.35rem;
+  line-height: 0.35rem;
+  margin: 0.05rem;
+  font-size: 0.125rem;
+  text-align: center;
+  color: #fff;
+  order: 3;
+}
+.search-bar .search-box {
+  flex: 1;
+  order: 2;
+}
+.search-bar .search-box .keyword {
+  width: 100%;
+  height: 0.32rem;
+  margin: 0.06rem 0;
+  padding: 0 0.12rem;
+  font-size: 0.125rem;
+  -webkit-border-radius: 0.16rem;
+  border-radius: 0.16rem;
+  border: none;
+  background: #fff2cc;
+}
+.main-container .banner {
+  width: 3.75rem;
+  height: 1.8rem;
+}
+.main-container .ads {
+  display: flex;
+}
+.main-container .ads .ad-item {
+  flex: 1;
+}
+.main-container .nav {
+  width: 3.75rem;
+  margin: 0.075rem 0;
+}
+.main-container .nav .nav-item {
+  float: left;
+  width: 0.75rem;
+  height: 0.7rem;
+  margin-top: 0.05rem;
+  font-size: 0.125rem;
+  text-align: center;
+  color: #333;
+}
+.main-container .nav .nav-item img {
+  display: block;
+  width: 0.41rem;
+  height: 0.41rem;
+  margin: 0.05rem auto 0.025rem;
+}

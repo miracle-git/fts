@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js正则表达式之方法总结</title>
+  <style>
+    span[name=message].ok {
+      color: green;
+    }
+    span[name=message].error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>可利用字符串的search方法搜索满足指定正则表达式条件的索引位(第一次出现),未找到返回-1(类似indexOf)</li>
+    <li>可利用字符串的match方法匹配满足指定正则表达式条件的结果集</li>
+    <li>可利用字符串的matchAll方法匹配满足指定正则表达式条件的迭代器(RegExpStringIterator),可循环遍历获取所有结果集</li>
+    <li>可利用字符串的split方法拆分满足指定正则表达式条件的子字符串</li>
+    <li>可利用字符串的replace方法替换满足指定正则表达式条件的子字符串(默认只能替换第一个，使用g修正符替换所有)</li>
+    <li>可利用正则表达式的test方法判断是否满足指定正则表达式条件(常用于表单验证，一般使用^//$包裹)</li>
+    <li>可利用正则表达式的exec方法获取匹配的详情(与match类似),但在g修正符模式下，match返回匹配结果，exec会根据lastIndex继续匹配并获取详情</li>
+  </ul>
+  <div name="content">
+    <h1>https://github.com/miracle-git</h1>
+    <h2>http://www.baidu.com</h2>
+    <h3>https://www.google.com</h3>
+  </div>
+  <button name="button">将所有标题变成链接</button>
+  <br>
+  <input type="text" name="email" placeholder="请输入邮箱地址">
+  <span name="message"></span>
+  <script>
+    console.log('Miracle He'.search(/e/i))       // 6
+    const content = document.querySelector('[name="content"]')
+    const reg1 = /https?:\/\/(?:\w+\.)?(?:\w+\.)+(?:com|org|net|cn)(?:\/[\w-]+)?/gi
+    console.log(content.innerHTML.match(reg1))   // ["https://github.com/miracle-git", "http://www.baidu.com", "https://www.google.com"]
+    const matches = content.innerHTML.matchAll(reg1)
+    for (const item of matches) {
+      console.log(item)
+    }
+    console.log('2020-06-06'.split(/[-\/]/))      // ["2020", "06", "06"]
+    console.log('2020/06/06'.split(/[-\/]/))      // ["2020", "06", "06"]
+    console.log('Miracle He'.replace(/e/gi, '@')) // Miracl@ H@
+    // $在replace函数中的妙用
+    const tels = '(010)66668888 (028)88888888'
+    const name = '#%Miracle&*'
+    const reg = /https?:\/\/(?:\w+\.)?(?:\w+\.)+(?:com|org|net|cn)(?:\/[\w-]+)?/gi
+    console.log(tels.replace(/\((\d{3,4})\)(\d{7,8})/g, '$1-$2')) // 010-66668888 028-88888888
+    console.log(name.replace(/Miracle/i, '$&'))   // #%Miracle&*
+    console.log(name.replace(/Miracle/i, '$`'))   // #%#%&*
+    console.log(name.replace(/Miracle/i, '$\''))  // #%&*&*
+    const button = document.querySelector('[name="button"]')
+    button.addEventListener('click', function () {
+      content.innerHTML = content.innerHTML.replace(reg, `<a href=$& target="_blank">$&</a>`)
+      // content.innerHTML = content.innerHTML.replace(reg, val => `<a href="${val}" target="_blank">${val}</a>`)
+    })
+    // 利用test进行邮箱验证
+    const email = document.querySelector('[name="email"]')
+    const message = document.querySelector('[name="message"]')
+    const reg2 = /^[\w-]+@(\w+\.)+(com|org|net|cn)$/i
+    email.addEventListener('keyup', function () {
+      const res = reg2.test(this.value)
+      message.innerHTML = res ? '正确' : '格式错误'
+      message.classList.remove('ok', 'error')
+      message.classList.add(res ? 'ok' : 'error')
+    })
+    // 利用exec获取字符串出现次数
+    function getItemCount(str, reg) {
+      let res = 0, item
+      while ((item = reg.exec(str))) {
+        res++
+      }
+      return res
+    }
+    console.log(getItemCount('Miracle He', /e/gi))  // 2
+  </script>
+</body>
+</html>

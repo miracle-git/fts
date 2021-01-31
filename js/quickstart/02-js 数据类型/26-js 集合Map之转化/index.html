@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js集合Map之转化</title>
+</head>
+<body>
+  <ul>
+    <li>可使用...语法将Map转化为二维数组，Map可借助数组的方法完成相应的操作</li>
+    <li>可使用[...new Map(arr)]将数组转化为Map，可用于过滤满足指定条件的数据</li>
+  </ul>
+  <script>
+    const map = new Map([['name', 'miracle'], ['age', 35]])
+    console.log([...map])              // [['name', 'miracle'], ['age', 35]]
+    console.log([...map.keys()])       // ["name", "age"]
+    console.log([...map.values()])     // ["miracle", 35]
+    console.log([...map.entries()])    // [['name', 'miracle'], ['age', 35]]
+    const filterMap = new Map([...map].filter(([key, val]) => val === 'miracle'))
+    console.log(filterMap)             // Map(1) {"name" => "miracle"}
+    console.log(filterMap.get('name')) // miracle
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>基数排序</title>
+  <link href="./favicon.ico" rel="shortcut icon">
+</head>
+<body>
+  <ul>
+    <li>基数排序是按照低位先排序再收集，再按高位排序再收集直到最高位</li>
+    <li>获取无序数组中的最大值并取得位数，从最低位开始取每个位组成radix数组</li>
+    <li>对每个radix数组进行计数排序(利用计数排序适合小范围数据的特性)</li>
+    <li>基数排序按位组分别排序，分别收集，所以相对稳定，但性能比桶排序略差</li>
+    <li>基数排序时间复杂度为O(n+k)，其中k为桶的数量，一般来说n>>k，所以基本可以达到O(n)</li>
+  </ul>
+</body>
+</html>

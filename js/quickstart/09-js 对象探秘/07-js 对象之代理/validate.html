@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js对象之代理实现表单验证</title>
+  <style>
+    input {
+      outline: none;
+      height: 30px;
+    }
+    .error {
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>可通过Proxy实现根据指定验证规则表单数据验证</li>
+  </ul>
+  <input type="text" validate rule="min:3,max:6" placeholder="请输入用户名(3~6位)">
+  <input type="text" validate rule="max:3,number" placeholder="请输入年龄">
+  <script>
+    'use strict'
+    class Validator {
+      max(val, len) {
+        return val.length <= len
+      }
+      min(val, len) {
+        return val.length >= len
+      }
+      number(val) {
+        return /^\d+$/.test(val)
+      }
+    }
+    function ProxyFactory(target) {
+      return new Proxy(target, {
+        get(target, key) {
+          return target[key]
+        },
+        set(target, key, el) {
+          const rules = el.getAttribute('rule')
+          const validator = new Validator()
+          const res = rules.split(',').every(item => {
+            const rule = item.split(':')
+            return validator[rule[0]](el.value, rule[1])
+          })
+          el.classList[res ? 'remove' : 'add']('error')
+          return true
+        }
+      })
+    }
+    const proxy = new ProxyFactory(document.querySelectorAll('[validate]'))
+    proxy.forEach((item, index) => {
+      item.addEventListener('keyup', () => proxy[index] = item)
+    })
+  </script>
+</body>
+</html>

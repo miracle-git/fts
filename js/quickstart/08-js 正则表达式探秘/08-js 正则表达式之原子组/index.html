@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js表达式之原子组</title>
+  <style>
+    span[name=message].ok {
+      color: green;
+    }
+    span[name=message].error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>原子组，即使用小括号()来匹配其中的任意字符，可在正则中配置多个原子组，编号为1开始(依次是1,2,3...)</li>
+    <li>原子组可利用字符串的match获取详情，其中包含[0,1,2...,index,groups,input]等信息，0代表匹配结果,1,2...代表原子组,index代表匹配的索引位，groups可为原子组配置别名，input为原字符串</li>
+    <li>原子组可用来验证表单数据(如电话，邮箱，用户名等)</li>
+    <li>原子组可用来替换满足条件的字符串(使用$1,$2获取原子组的内容)</li>
+    <li>原子组可使用(?:)不记录分组，即忽略该分组的内容，保证match不再正则详情中出现, 也不能使用之前的$1获取分组信息或替换操作</li>
+    <li>原子组可使用(?<>)为原子组起别名(<>内部为名称)，以代替自动编号的$1,$2,$3,...而使用$<>，同时可在正则详情中获取groups组别名信息</li>
+  </ul>
+  <div name="content">
+    <h1>https://github.com/miracle-git</h1>
+    <H2>http://www.baidu.com</H2>
+    <h3>https://www.google.com</h3>
+  </div>
+  <button name="button">将h标签替换为p标签</button>
+  <button name="button-alias">将h标签替换为p标签(使用组别名)</button>
+  <div name="links">
+    <a href="https://github.com/miracle-git" target="_blank">Miracle's Git</a>
+    <a href="http://baidu.com" target="_blank">Baidu</a>
+    <a href="https://www.google.com" target="_blank">Google</a>
+  </div>
+  <button name="button-links">获取所有的链接的内容和url</button>
+  <br>
+  <input type="text" name="email" placeholder="请输入邮箱地址">
+  <span name="message"></span>
+  <script>
+    // 匹配所有的标题
+    const content = document.querySelector('[name="content"]')
+    const reg1 = /<(h[1-6])>([\s\S]*)<\/\1>/i
+    console.log(content.innerHTML.match(reg1))
+    // 利用原子组进行邮箱验证
+    const email = document.querySelector('[name="email"]')
+    const message = document.querySelector('[name="message"]')
+    const reg2 = /^[\w-]+@(\w+\.)+(com|org|net|cn)$/i
+    email.addEventListener('keyup', function () {
+      const res = this.value.match(reg2)
+      message.innerHTML = res ? '正确' : '格式错误'
+      message.classList.remove('ok', 'error')
+      message.classList.add(res ? 'ok' : 'error')
+    })
+    // 利用原子组将h标签替换为p标签
+    const btn1 = document.querySelector('[name="button"]')
+    const btn2 = document.querySelector('[name="button-alias"]')
+    btn1.addEventListener('click', function () {
+      const reg = /<(h[1-6])>([\s\S]*)<\/\1>/gi
+      content.innerHTML = content.innerHTML.replace(reg, `<p>$2</p>`)
+      // content.innerHTML = content.innerHTML.replace(reg3, (p0, p1, p2) => `<p>${p2}</p>`)
+    })
+    btn2.addEventListener('click', function () {
+      const reg = /<(h[1-6])>(?<link>[\s\S]*)<\/\1>/gi
+      content.innerHTML = content.innerHTML.replace(reg, `<p>$<link></p>`)
+    })
+    // 不记录分组(只获取域名部分)
+    const reg3 = /https?:\/\/((?:\w+\.)?\w+\.(?:com|org|net|cn))/gi
+    const urls = []
+    let res
+    while ((res = reg3.exec(content.innerHTML))) {
+      urls.push(res[1])
+    }
+    console.log(urls)        // ["github.com", "www.baidu.com", "www.google.com"]
+    // 原子组别名
+    const links = document.querySelector('[name="links"]')
+    const btn3 = document.querySelector('[name="button-links"]')
+    btn3.addEventListener('click', function () {
+      const reg = /<a.*?href=(['"])(?<link>.*?)\1>(?<title>.*?)<\/a>/gi
+      const res = []
+      const matches = links.innerHTML.matchAll(reg)
+      for (const item of matches) {
+        // console.log(item.groups)
+        res.push(item.groups)
+      }
+      console.log(res)
+    })
+  </script>
+</body>
+</html>

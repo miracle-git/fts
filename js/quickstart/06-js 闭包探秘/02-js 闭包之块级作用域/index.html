@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js闭包之块级作用域</title>
+</head>
+<body>
+  <ul>
+    <li>块级作用域，类似函数作用域，let和const是有块级作用域的，var没有块级作用域</li>
+    <li>每个块级作用域内的成员彼此独立的，因此多个块作用域可定义同名成员</li>
+    <li>var虽然没有块级作用域，但有函数作用域，因此也能达到"伪块级作用域"的效果</li>
+  </ul>
+  <script>
+    // 在for循环外部，使用var定义的循环变量仍然有效，使用let定义的循环变量则无法访问
+    for(var i = 1;i <= 5;i++) {
+      setTimeout(() => {
+        console.log('var: ' + i) // 6 6 6 6 6
+      }, 1000)
+    }
+    console.log(window.i)  // 6
+    for(let j = 1;j <= 5;j++) {
+      setTimeout(() => {
+        console.log('let: ' + j) // 1 2 3 4 5
+      }, 1000)
+    }
+    // console.log(j)  // 报错
+    // 伪块级作用域
+    for(var i = 1;i <= 5;i++) {
+      (function (i) {
+        setTimeout(() => {
+          console.log('var block: ' + i) // 1 2 3 4 5
+        }, 1000)
+      })(i)
+    }
+  </script>
+</body>
+</html>

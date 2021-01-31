@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数值之基础</title>
+</head>
+<body>
+  <p>数值之基础</p>
+  <ul>
+    <li>数值可采用new Number()来定义, 使用valueOf来取值(不推荐)，而推荐使用简写：const age = 30</li>
+  </ul>
+  <script>
+    // 正规写法(不推荐)
+    // const age = new Number(30)
+    // console.log(typeof age)            // object
+    // console.log(age.valueOf() + 5)     // 35
+    // 推荐写法
+    const age = 30, score = 90.136
+    console.log(typeof age)               // number
+    console.log(age.valueOf() + 5)        // 35
+    console.log(typeof age.toString())    // string
+    // 使用方法
+    console.log(Number.isInteger(age))    // true
+    console.log(Number.isInteger(score))  // false
+    console.log(score.toFixed(2))         // 90.14(四舍五入)
+  </script>
+</body>
+</html>

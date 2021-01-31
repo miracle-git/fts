@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>对象冻结</title>
+</head>
+<body>
+  <p>对象冻结</p>
+  <ul>
+    <li>如果不希望引用类型常量(对象)的成员不被外界篡改，可使用"对象冻结"(Object Freeze)技术</li>
+    <li>启用严格模式('use strict')可在提示具体错误信息</li>
+  </ul>
+  <script>
+    'use strict';
+    const host1 = {
+      url: 'https://github.com/miracle-git'
+    };
+    host1.url = 'https://www.baidu.com'; // 虽然host1是常量，但内部成员url仍然是是可改变的
+    const host2 = Object.freeze({
+      url: 'https://github.com/miracle-git'
+    });
+    host2.url = 'https://www.baidu.com'; // 报错
+  </script>
+</body>
+</html>

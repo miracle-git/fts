@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js正则表达式之基础</title>
+  <style>
+    .keyword {
+      width: 300px;
+      height: 32px;
+      line-height: 32px;
+      padding: 0 5px;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>可使用字面量(双斜杠)或RegExp来定义正则表达式,前者一般不支持变量(可使用eval支持),后者支持变量</li>
+    <li>可使用test检测字符串是否匹配，使用match获取匹配的结果</li>
+  </ul>
+  <div class="content">Miracle1984He08</div>
+  <input class="keyword" type="text" placeholder="请输入要检测的内容(支持正则,不加双斜杠)">
+  <script>
+    const str = 'Miracle1984He08'           // 取出所有的数字
+    // 传统方法
+    const nums = [...str].filter(item => !Number.isNaN(parseInt(item)))
+    console.log(nums.join(''))              // 198408
+    // 正则表达式
+    console.log(str.match(/\d/g).join(''))  // 198408
+    // 使用字面量创建
+    const char = '@'
+    console.log(/e/.test(str))              // true
+    console.log(/\d/.test(str))             // true
+    console.log(eval(`/${char}/`).test(str))// false
+    // 使用RegExp创建
+    const reg = new RegExp(char, 'g')
+    console.log(reg.test(str))              // false
+    // 示例(将用户输入的文字高亮)
+    const content = document.querySelector('.content')
+    const keyword = document.querySelector('.keyword')
+    keyword.addEventListener('focus', function() {
+      content.innerHTML = str
+    })
+    keyword.addEventListener('blur', function() {
+      const reg = new RegExp(this.value.trim(), 'g')
+      content.innerHTML = content.innerHTML.replace(reg, res => `<span style="color:red">${res}</span>`)
+    })
+  </script>
+</body>
+</html>

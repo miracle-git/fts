@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js闭包之函数作用域</title>
+</head>
+<body>
+  <ul>
+    <li>简单来说，闭包即在多级函数嵌套环境下，内部函数可以调用外部函数成员的一种代码组织形式，但外部却无法访问内部成员</li>
+    <li>认识闭包，首先认识作用域概念，内外函数都有自身存在的作用域范围，以便各自成员是否被其他函数调用或访问</li>
+    <li>函数作用域中的成员，只对当前函数及子函数有效，在作用域外部无法访问</li>
+    <li>每次函数调用都会重新开辟一块内存空间，彼此之间不相关，存储当前函数成员</li>
+  </ul>
+  <script>
+    // 全局作用域
+    const name = 'Miracle'
+    function show() {
+      // 函数作用域中的成员，只对当前show函数及子函数有效，在作用域外部无法访问
+      const url = 'https://github.com/miracle-git'
+      function web() {
+        const js = 'https://github.com/miracle-git/fts/tree/master/js/'
+        console.log(`web:${url}`)    // web:https://github.com/miracle-git
+        console.log(`web:${js}`)     // web:https://github.com/miracle-git/fts/tree/master/js/
+      }
+      web()
+      console.log(`show:${url}`)     // show:https://github.com/miracle-git
+      // console.log(`show:${js}`)   // 报错
+    }
+    // 全局作用域环境下，只有name有效
+    console.log(`global:${name}`)     // global:Miracle
+    // console.log(`global:${url}`)   // 报错
+    // console.log(`global:${js}`)    // 报错
+    // 每次函数调用都会重新开辟一块内存空间，彼此之间不相关，存储当前函数成员
+    show()
+    show()
+  </script>
+</body>
+</html>

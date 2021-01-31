@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之立即执行函数</title>
+  <script src="vendor.js"></script>
+  <script src="app.js"></script>
+</head>
+<body>
+  <ul>
+    <li>立即执行函数不需要外部调用，只需引入即可执行, 格式：(function() {})()</li>
+    <li>立即执行函数常用于构建第三方插件库</li>
+    <li>立即执行函数解决第三方库与业务库之间的命名冲突问题，当然也可以使用模块化来解决</li>
+  </ul>
+  <script>
+    // 立即执行函数
+    (function() {
+      console.log('Miracle')  // Miracle
+    })()
+    // 两者并不会存在冲突
+    vendor.getName()          // vendor: Miracle
+    app.getName()             // app: Miracle
+  </script>
+</body>
+</html>

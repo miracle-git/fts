@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>插入排序</title>
+  <link href="./favicon.ico" rel="shortcut icon">
+</head>
+<body>
+  <ul>
+    <li>对未排序的数组，假定数组中某一部分是有序存放(即：局部有序)，可按升序或降序进行排序</li>
+    <li>首先第1个元素(索引为0)认为是局部有序(只有一个元素的局部有序)</li>
+    <li>对升序而言，从第2个元素位置开始取出这个元素，如果发现比之前位置的元素还小，则将之前的元素依次后移一位，否则停止向前寻找</li>
+    <li>对降序而言，从第2个元素位置开始取出这个元素，如果发现比之前位置的元素还大，则将之前的元素依次后移一位，否则停止向前寻找</li>
+    <li>此时已寻找到当前取出元素的正确索引位置，并执行在此位置插入当前取出元素，此时仅仅是完成了"一轮"排序</li>
+    <li>继续取出下一个元素开始继续"下一轮"排序，直到取出第length-1个位置为止</li>
+    <li>比较次数：1 + 2 + ... + (n-1)=n*(n-1)/2，这是每轮排序最多的比较次数，那平均需要n*(n-1)/4，因此时间复杂度为O(n^2)</li>
+    <li>复制次数: 1 + 2 + ... + (n-1)=n*(n-1)/2，这是每轮复制最多的比较次数，那平均需要n*(n-1)/4，因此时间复杂度为O(n^2)</li>
+    <li>比较次数和复制次数加起来才跟前两种算法差不多，然后却没有交换次数，因此时间复杂度来说，相对于冒泡排序和选择排序来说，性能更高</li>
+  </ul>
+</body>
+</html>

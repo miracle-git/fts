@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js表达式之原子表</title>
+  <style>
+    input[name=username] {
+      width:240px;
+    }
+    span[name=message].ok {
+      color: green;
+    }
+    span[name=message].error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>原子表，即使用中括号([])来匹配其中的任意字符</li>
+    <li>原子表可利用如[0-9],[a-z]进行区间匹配，但不可逆序书写，如[9-0],[z-a]</li>
+    <li>原子表可利用[^]进行排序匹配，即匹配不包含其中任意字符剩下的结果</li>
+    <li>原子表可利用[\d\D]+,[\s\S]+,[\w\W]+匹配所有的字符</li>
+    <li>原子表内部的字符为普通字符，不具备正则含义，如.-都只是普通的小数点，中横线</li>
+    <li>原子表可操作DOM内容,以满足某些特定的需求</li>
+  </ul>
+  <input type="text" name="username" placeholder="请输入5到10位的用户名，以字母开头">
+  <span name="message"></span>
+  <div name="content">
+    <h1>大标题</h1>
+    <H2>副标题</H2>
+    <h3>
+      小标题
+    </h3>
+    <h4></h4>
+    <p>去除所有的标题，只留我下哦</p>
+  </div>
+  <button name="button">删除所有的标题</button>
+  <script>
+    const str1 = 'Miracle He'
+    console.log(str1.match(/[ae]/gi))          // ["a", "e", "e"]
+    // 匹配满足YYYY-MM-DD或YYYY/MM/DD格式的日期
+    const reg1 = /^\d{4}([-\/])\d{2}\1\d{2}$/
+    console.log('2020-06-06'.match(reg1))      // ["2020-06-06", "-", index: 0, input: "2020-06-06", groups: undefined]
+    console.log('2020/06/06'.match(reg1))      // ["2020/06/06", "/", index: 0, input: "2020/06/06", groups: undefined]
+    // 匹配用户名以字母开头的5-10位字符串
+    const username = document.querySelector('[name="username"]')
+    const message = document.querySelector('[name="message"]')
+    username.addEventListener('keyup', function () {
+      const res = this.value.match(/^[a-z]\w{4,9}$/i)
+      message.innerHTML = res ? '正确' : '格式错误'
+      message.classList.remove('ok', 'error')
+      message.classList.add(res ? 'ok' : 'error')
+    })
+    // 匹配其中所有的姓名
+    const str2 = 'Miracle:010-66666666,Miracle He:028-88888888'
+    console.log(str2.match(/[^:,\-\d]+/g))    // ["Miracle", "Miracle He"]
+    // 使用[\d\D]+,[\s\S]+,[\w\W]+匹配所有的字符
+    const str3 = `
+      <span>
+        $Miracle$
+        Miracle_He@
+      </span>
+    `
+    console.log(str3.match(/<span>[\d\D]+<\/span>/g))          // ["<span>↵        $Miracle$↵        Miracle_He@↵      </span>"]
+    console.log(str3.match(/<span>[\s\S]+<\/span>/g))          // ["<span>↵        $Miracle$↵        Miracle_He@↵      </span>"]
+    console.log(str3.match(/<span>[\w\W]+<\/span>/g))          // ["<span>↵        $Miracle$↵        Miracle_He@↵      </span>"]
+    // 原子表内部的字符为普通字符，不具备正则含义
+    const str4 = '(Miracle).+He'
+    console.log(str4.match(/[().+]/g))                         // ["(", ")", ".", "+"]
+    // 原子表可操作DOM内容
+    const content = document.querySelector('[name="content"]')
+    const button = document.querySelector('[name="button"]')
+    const reg2 = /<(h[1-6])>[\s\S]*<\/\1>/gi
+    button.addEventListener('click', function () {
+      console.log('去除前：', content.innerHTML)
+      content.innerHTML = content.innerHTML.replace(reg2, '')
+      console.log('去除后：', content.innerHTML)
+    })
+  </script>
+</body>
+</html>

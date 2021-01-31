@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js闭包之应用场景示例(移动动画)</title>
+  <style>
+    button { position: absolute; }
+  </style>
+</head>
+<body>
+  <button>点击开始移动</button>
+  <script>
+    const buttons = document.querySelectorAll('button')
+    buttons.forEach(function(item) {
+      // 每次点击都会产生一个函数环境(包含left, setInterval)
+      let left = 0 // 解决"抖动",但按钮会"加速"
+      let interval = false // 解决"加速"
+      item.addEventListener('click', function() {
+        if (!interval) {
+          // let left = 0 // 多次点击发生"抖动"
+          interval = setInterval(function () {
+            item.style.left = `${++left}px`
+          }, 100)
+        }
+      })
+    })
+  </script>
+</body>
+</html>

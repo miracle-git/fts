@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js集合Map之基础</title>
+</head>
+<body>
+  <ul>
+    <li name="create">可使用new Map()传入二维数组创建Map，但与数组或对象不同的是，Map中只能存放不重复的键值(任意类型)，但遵循类型严格约束(即1和"1"是不同的键值)</li>
+    <li name="search">可使用has()判断是否存在指定项，使用set()向Map中新增项，使用get()获取指定键对应的值，使用delete()删除指定项，使用clear()删除Map所有项，使用size获取Map的数据项个数</li>
+    <li name="dom">可使用Map来管理DOM节点，并保存相应节点对应的数据</li>
+  </ul>
+  <script>
+    const map = new Map([[1, 'miracle'], ['1', 'jack']])
+    map.set(function () {}, 'function')
+    map.set([], 'array')
+    map.set({}, 'object')
+    map.set('1', 'tom')            // 添加重复的键值将覆盖
+    console.log(map.has('1'))      // true
+    console.log(map)               // Map(5) {1 => "miracle", "1" => "tom", ƒ => "function", Array(0) => "array", {…} => "object"}
+    console.log(map.size)          // 5
+    console.log(map.get('1'))      // tom
+    console.log(map.delete('1'))   // true
+    console.log(map)               // Map(4) {1 => "miracle", ƒ => "function", Array(0) => "array", {…} => "object"}
+    console.log(map.size)          // 4
+    map.clear()                    // undefined
+    console.log(map)               // Map(0) {}
+    console.log(map.size)          // 0
+    // 保存DOM节点
+    {
+      const map = new Map()
+      const lis = document.querySelectorAll('li')
+      lis.forEach(item => {
+        map.set(item, {
+          name: item.getAttribute('name')
+        })
+      })
+      map.forEach((config, elem) => {
+        elem.addEventListener('click', () => alert(config.name))
+      })
+    }
+  </script>
+</body>
+</html>
+
+

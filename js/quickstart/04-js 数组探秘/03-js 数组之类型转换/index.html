@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之类型转换</title>
+</head>
+<body>
+  <ul>
+    <li>可使用Array.isArray()来检测元素是否为数组</li>
+    <li>可使用toString(), String(), join()将数组转换为字符串</li>
+    <li>可使用split(), Array.from()将字符串转换为数组</li>
+    <li>Array.from()可转换具备length属性的元素，常用与DOM元素的转换, 第二个参数可依次操作每个元素</li>
+  </ul>
+  <script>
+    console.log(Array.isArray('Miracle'))     // false
+    console.log(Array.isArray([1, 2, 3, 4]))  // true
+    console.log([1, 2, 3, 4].toString())      // 1,2,3,4
+    console.log(String([1, 2, 3, 4]))         // 1,2,3,4
+    console.log([1, 2, 3, 4].join(','))       // 1,2,3,4
+    // 可用于查询字符串传参(https://github.com/miracle-git?id=1-2-3-4)
+    console.log('https://github.com/miracle-git?id=' + [1, 2, 3, 4].join('-'))
+    console.log('Miracle'.split(''))          // ["M", "i", "r", "a", "c", "l", "e"]
+    console.log('Miracle,Miracle He'.split(','))   // ["Miracle", "Miracle He"]
+    console.log(Array.from('Miracle'))        // ["M", "i", "r", "a", "c", "l", "e"]
+    const lis = document.querySelectorAll('li')
+    console.log(Array.from(lis))              // [li, li, li, li]
+    Array.from(lis, function (li, index) {
+      // console.log(li, index)
+      li.style.height = '30px'
+      li.style.lineHeight = '30px'
+      li.style.color = 'white'
+      li.style.padding = '5px'
+      li.style.backgroundColor = index % 2 ? 'red' : 'blue'
+      return li
+    })
+  </script>
+</body>
+</html>

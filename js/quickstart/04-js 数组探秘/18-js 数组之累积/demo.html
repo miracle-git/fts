@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之累积示例</title>
+</head>
+<body>
+  <script>
+    const cart = [
+      { name: 'iphone', price: 8000 },
+      { name: 'imac', price: 12000 },
+      { name: 'ipad', price: 3688 },
+      { name: 'imac', price: 12000 },
+    ]
+    // 获取价格超过8000的商品名称
+    const names = cart.reduce((pre, cur) => {
+      if (cur.price >= 8000) {
+        pre.push(cur)
+      }
+      return pre
+    }, []).map(item => item.name)
+    console.log(names)         // ["iphone", "imac"]
+    // 获取价格最高的商品
+    const maxPriceItem = cart.reduce((pre, cur) => {
+      return pre.price > cur.price ? pre :cur
+    })
+    console.log(maxPriceItem)  // {name: "imac", price: 12000}
+    // 去除重复的商品
+    const filterItems = cart.reduce((pre, cur) => {
+      const find = pre.find(item => item.name === cur.name)
+      if (!find) {
+        pre.push(cur)
+      }
+      return pre
+    }, [])
+    console.table(filterItems)
+  </script>
+</body>
+</html>

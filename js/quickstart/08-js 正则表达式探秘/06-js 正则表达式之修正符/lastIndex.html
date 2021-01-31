@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js正则表达式之g修正符</title>
+</head>
+<body>
+  <ul>
+    <li>使用g结合exec可连续匹配满足指定条件的正则详情，lastIndex会记录每次搜索到的索引，搜索完毕lastIndex会重新归0，exec返回null</li>
+  </ul>
+  <script>
+    const str = 'Miracle He'
+    const reg = /e/g
+    console.log(reg.lastIndex)  // 0
+    console.log(reg.exec(str))  // ["e", index: 6, input: "Miracle He", groups: undefined]
+    console.log(reg.lastIndex)  // 7
+    console.log(reg.exec(str))  // ["e", index: 9, input: "Miracle He", groups: undefined]
+    console.log(reg.lastIndex)  // 10
+    console.log(reg.exec(str))  // null
+    let res
+    while ((res = reg.exec(str))) {
+      console.log(reg.lastIndex, res)
+    }
+    // 7 ["e", index: 6, input: "Miracle He", groups: undefined]
+    // 10 ["e", index: 9, input: "Miracle He", groups: undefined]
+  </script>
+</body>
+</html>

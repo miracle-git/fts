@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js原型链之对象原型</title>
+</head>
+<body>
+  <ul>
+    <li>可使用Object.getPrototypeOf查看对象的原型, 使用Object.setPrototypeOf修改对象的原型</li>
+    <li>对象的原型默认指向Object, 但使用setPrototypeOf修改原型后，实现了类似"继承"的特性，因此形成"原型链"</li>
+    <li>可根据已有对象创建新的对象，达到类似"拷贝"的效果</li>
+    <li>this本身和原型是没关联的，只会指向调用函数本身的对象</li>
+  </ul>
+  <script>
+    const child = { name: 'child' }
+    const parent = {
+      name: 'parent',
+      show() {
+        console.log(`parent method: ${this.name}`)
+      }
+    }
+    console.log(child.__proto__ === Object.prototype)
+    console.log('修改前')
+    console.dir(Object.getPrototypeOf(child))
+    // 修改原型
+    Object.setPrototypeOf(child, parent)
+    console.log('修改后')
+    console.dir(Object.getPrototypeOf(child))
+    child.show()   // parent method: child 调用原型方法
+    parent.show()  // parent method: parent 调用自身方法
+    // 定义工厂
+    function User(name) {
+      this.name = name
+    }
+    User.prototype = {
+      constructor: User,
+      show() {
+        console.log(`I'm ${this.name}`)
+      }
+    }
+    function createByObject(obj, ...args) {
+      const constructor = Object.getPrototypeOf(obj).constructor
+      return new constructor(...args)
+    }
+    const user = new User('Miracle')
+    const newUser = createByObject(user, 'Miracle He')
+    user.show()
+    newUser.show()
+    // this与原型无关联
+    const a = { name: 'Miracle' }
+    const b = {
+      name: 'Miracle He',
+      show() {
+        console.log(this.name)
+      }
+    }
+    Object.setPrototypeOf(a, b)
+    a.show()  // Miracle
+  </script>
+</body>
+</html>

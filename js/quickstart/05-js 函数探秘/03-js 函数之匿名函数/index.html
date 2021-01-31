@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之匿名函数</title>
+</head>
+<body>
+  <ul>
+    <li>使用var func=function() {}定义匿名函数，同时函数是引用类型</li>
+    <li>函数表达式function func() {}与匿名函数var func=function() {}的区别：前者存在函数提升，后者不存在</li>
+  </ul>
+  <script>
+    getName()   // 由于函数提升，输出 'Miracle'
+    function getName() {
+      console.log('Miracle')
+    }
+    var getName = function () {
+      console.log('Miracle He')
+    }
+    getName()   // 匿名函数覆盖，输出'Miracle He'
+    // 使用场景
+    const sum = function(...args) {
+      console.log(args)
+      return args.reduce(function(a, b) {
+        return a + b
+      })
+    }
+    console.log(sum(1, 2, 3, 4, 5))
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js正则表达式之边界控制</title>
+  <style>
+    input[name=username] {
+      width: 200px;
+      height: 32px;
+      line-height: 32px;
+      padding: 0 5px;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>可使用尖号(^)检测字符串是否以某字符串开始，使用美元($)检测字符串是否以某字符串结束</li>
+    <li>可使用{a,b}检测字符串长度是否在(a,b)之间</li>
+  </ul>
+  <input type="text" name="username" placeholder="请输入用户名(3到6位)">
+  <span style="color:red" name="message"></span>
+  <script>
+    console.log(/^\d/.test('1984Miracle'))    // true
+    console.log(/\d$/.test('Miracle1984'))    // true
+    console.log(/^\d$/.test('1984Miracle08')) // true
+    // 表单验证(用户名3到6位)
+    const username = document.querySelector('[name="username"]')
+    const message = document.querySelector('[name="message"]')
+    username.addEventListener('keyup', function () {
+      const matched = this.value.trim().match(/^[a-z]{3,6}$/)
+      message.innerHTML = matched ? '' : '用户名长度必须为3到6位！'
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之call,apply示例</title>
+  <style>
+    dl {
+      width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    dl > dt {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      background-color: #9b59b6;
+      border-bottom: 1px solid #ddd;
+      color: #fff;
+      cursor: pointer;
+    }
+    dl > dd {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+      background-color: #ddd;
+      margin: 0;
+      font-size: 36px;
+      font-weight: bold;
+    }
+    dl > dd[hidden] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <dl>
+    <dt>Vue</dt>
+    <dd>1</dd>
+    <dt>React</dt>
+    <dd hidden="hidden">2</dd>
+    <dt>Angular</dt>
+    <dd hidden="hidden">3</dd>
+  </dl>
+  <script>
+    const dts = document.querySelectorAll('dt')
+    const dds = document.querySelectorAll('dd')
+    const showPanel = (index) => {
+      dds.forEach(dd => dd.setAttribute('hidden', 'hidden'))
+      dds[index].removeAttribute('hidden', 'hidden')
+    }
+    dts.forEach((dt, i) => dt.addEventListener('click', () => showPanel.call(null, i)))
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js原型链之对象工厂继承</title>
+</head>
+<body>
+  <script>
+    function create(sup, ...args) {
+      const instance = Object.create(sup.prototype)
+      sup.call(instance, ...args)
+      return instance
+    }
+    // User
+    function User(name, age) {
+      this.name = name
+      this.age = age
+    }
+    User.prototype.show = function() {
+      console.log(`I'm ${this.name}, ${this.age} years old.`)
+    }
+    // admin
+    function createAdmin(name, age) {
+      return create(User, name, age)
+    }
+    // member
+    function createMember(name, age) {
+      return create(User, name, age)
+    }
+    // 实例化
+    const admin = createAdmin('Miracle', 35)
+    const member = createMember('Jack', 25)
+    admin.show()  // I'm Miracle, 35 years old.
+    member.show() // I'm Jack, 25 years old.
+  </script>
+</body>
+</html>

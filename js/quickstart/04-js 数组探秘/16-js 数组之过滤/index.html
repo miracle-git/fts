@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之过滤</title>
+</head>
+<body>
+  <ul>
+    <li>可利用filter()过滤满足指定条件的数组，返回结果仍然是数组</li>
+  </ul>
+  <script>
+    const blogs = [
+      { url: 'https://github.com/miracle-git/vue', title: 'Vue学习' },
+      { url: 'https://github.com/miracle-git/react', title: 'React学习' },
+      { url: 'https://github.com/miracle-git/angular', title: 'Angular学习' }
+    ]
+    const filterBlogs = blogs.filter(item => item.title.includes('Vue'))
+    console.log(filterBlogs)
+    // 自定义filter
+    function filter(arr, func) {
+      const filterItems = []
+      for (const item of arr) {
+        if (func(item)) {
+          filterItems.push(item)
+        }
+      }
+      return filterItems
+    }
+    console.log(filter(blogs, item => item.title.includes('Vue')))
+  </script>
+</body>
+</html>

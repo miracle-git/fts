@@ -1,0 +1,57 @@
+@pieces: 15;
+@base: 50px;
+@width: 750px;
+.px2rem(@name, @px) {
+  @{name}: @px / @base * 1rem;
+}
+.px2rem(@name, @tpx, @rpx) {
+  @{name}: @tpx / @base * 1rem @rpx / @base * 1rem;
+}
+.px2rem(@name, @tpx, @rpx, @bpx) {
+  @{name}: @tpx / @base * 1rem @rpx / @base * 1rem @bpx / @base * 1rem;
+}
+.px2rem(@name, @tpx, @rpx, @bpx, @lpx) {
+  @{name}: @tpx / @base * 1rem @rpx / @base * 1rem @bpx / @base * 1rem @lpx / @base * 1rem;
+}
+.prefix(@name, @value, @rem:false) when (isnumber(@value)) and (@rem = true) {
+  -webkit-@{name}: @value / @base * 1rem;
+  @{name}: @value / @base * 1rem;
+}
+.prefix(@name, @value, @rem:false) when not ((isnumber(@value)) and (@rem = true)) {
+  -webkit-@{name}: @value;
+  @{name}: @value;
+}
+html { font-size: @base; }
+@media screen and (min-width: 320px) {
+  html { font-size: 320px / @pieces; }
+}
+@media screen and (min-width: 360px) {
+  html { font-size: 360px / @pieces; }
+}
+@media screen and (min-width: 375px) {
+  html { font-size: 375px / @pieces; }
+}
+@media screen and (min-width: 384px) {
+  html { font-size: 384px / @pieces; }
+}
+@media screen and (min-width: 400px) {
+  html { font-size: 400px / @pieces; }
+}
+@media screen and (min-width: 414px) {
+  html { font-size: 414px / @pieces; }
+}
+@media screen and (min-width: 424px) {
+  html { font-size: 424px / @pieces; }
+}
+@media screen and (min-width: 480px) {
+  html { font-size: 480px / @pieces; }
+}
+@media screen and (min-width: 540px) {
+  html { font-size: 540px / @pieces; }
+}
+@media screen and (min-width: 720px) {
+  html { font-size: 720px / @pieces; }
+}
+@media screen and (min-width: 750px) {
+  html { font-size: 750px / @pieces; }
+}

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js原型链之原型多继承</title>
+</head>
+<body>
+  <script>
+    function extend(sub, sup, ...mixins) {
+      sub.prototype = Object.create(sup.prototype)
+      Object.defineProperty(sub.prototype, 'constructor', {
+        value: sub,
+        enumerable: false
+      })
+      if (mixins.length) {
+        Object.assign(sub.prototype, ...mixins)
+      }
+    }
+    // mixins
+    const Address = {
+      getAddress() {
+        console.log('get address')
+      }
+    }
+    const Request = {
+      ajax() {
+        console.log('request data')
+      }
+    }
+    const Credit = {
+      __proto__: Request,
+      total() {
+        // this.__proto__.ajax()
+        super.ajax()
+        console.log('point total')
+      }
+    }
+    // User
+    function User(name, age) {
+      this.name = name
+      this.age = age
+    }
+    User.prototype.show = function() {
+      console.log(`I'm ${this.name}, ${this.age} years old.`)
+    }
+    // Admin
+    function Admin(name, age) {
+      User.call(this, name, age)
+    }
+    extend(Admin, User, Request, Credit)
+    // Member
+    function Member(name, age) {
+      User.call(this, name, age)
+    }
+    extend(Member, User, Address)
+    // 实例化
+    const admin = new Admin('Miracle', 35)
+    admin.show()        // I'm Miracle, 35 years old.
+    // admin.ajax()     // request data
+    admin.total()       // point total
+    const member = new Member('Jack', 25)
+    member.show()       // I'm Jack, 25 years old.
+    member.getAddress() // get address
+  </script>
+</body>
+</html>

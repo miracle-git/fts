@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js原型链之原型constructor</title>
+</head>
+<body>
+  <ul>
+    <li>对于函数原型而言，除拥有__proto__之外(默认指向Object), 还存在constructor属性指向函数本身</li>
+    <li>如果需要实例原型方法，可直接扩展prototype即可，如直接赋值需回填constructor属性</li>
+    <li>可使用new Xxx.prototype.constructor生成新的实例，与new Xxx达到一样的效果</li>
+  </ul>
+  <script>
+    function User(name) {
+      this.name = name
+    }
+    console.log(User.prototype.__proto__ === Object.prototype)  // true
+    console.log(User.prototype.constructor === User)            // true
+    // User.prototype.show = function() {
+    //   console.log(`I'm ${this.name}`)
+    // }
+    User.prototype = {
+      constructor: User, // 注意回填
+      show() {
+        console.log(`I'm ${this.name}`)
+      }
+    }
+    console.dir(User)
+    const user = new User('Miracle')
+    user.show()    // I'm Miracle
+    const newUser = new User.prototype.constructor('Miracle He')
+    newUser.show() // I'm Miracle He
+  </script>
+</body>
+</html>

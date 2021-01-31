@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js字符串之模板字面量</title>
+  <style>
+    #template li {
+      padding:10px;
+      list-style: none;
+    }
+    #template li:nth-child(odd) {
+      background-color: #16a085;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <p>字符串之模板字面量</p>
+  <ul>
+    <li>多个字符串采用'+'进行拼接(不推荐)，而推荐采用`(模板字符串)来输出</li>
+    <li>模板字符串内部不仅可为变量，还可为表达式或函数，甚至还支持嵌套</li>
+    <li>使用\t输出制表符，使用\n输出回车符，使用&amp;nbsp;在html中输出空白符</li>
+  </ul>
+  <div id="template"></div>
+  <script>
+    // 字符串连接
+    const name = 'Miracle'
+    const book = 'Javascript'
+    // 不推荐
+    // const todo = name + ' is learning ' + book
+    const todo = `${name} is learning ${book}`
+    console.log(todo)
+    // 支持函数和表达式
+    const showFullName = () => `${name} He`
+    const age = 30
+    const desc = `${showFullName()} is ${age + 5} years old`
+    console.log(desc)
+    // 支持多行和嵌套
+    const skills = ['ts', 'js', 'es', 'vue', 'react']
+    const html = `
+      <ul>
+        ${skills.map(item =>
+          `<li>${item}</li>`
+        ).join('')}
+      <ul>
+    `
+    document.getElementById('template').innerHTML = html
+  </script>
+</body>
+</html>

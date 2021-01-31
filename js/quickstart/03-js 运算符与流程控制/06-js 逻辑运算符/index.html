@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js逻辑运算符</title>
+  <style>
+    span.error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <input type="password" name="password">
+  <input type="password" name="confirm_password">
+  <hr>
+  <span name="error" class="error"></span>
+  <script>
+    function query(name) {
+      return document.querySelector(`[name="${name}"]`)
+    }
+    const inputs = document.querySelectorAll('[name="password"],[name="confirm_password"]')
+    const error = query('error')
+    Array.from(inputs).map(item => {
+      item.addEventListener('keyup', function () {
+        const password = query('password').value.trim(),
+            confirmPassword = query('confirm_password').value.trim()
+        if (password !== confirmPassword || password.length < 5) {
+          error.innerHTML = '两次密码不一致或密码长度不能少于5位！'
+        } else {
+          error.innerHTML = ''
+        }
+      })
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+  /*点击元素清除默认高亮*/
+  -webkit-tap-highlight-color: transparent;
+}
+a {
+  color: #666;
+  text-decoration: none;
+}
+img {
+  width: 100%;
+  border: none;
+  vertical-align: middle;
+}
+a,
+img {
+  /*清除默认链接，图片长按的下拉菜单*/
+  -webkit-touch-callout: none;
+}
+input,
+textarea {
+  outline: none;
+  /*清除默认在ios上的文本框外观*/
+  -webkit-appearance: none;
+}
+textarea {
+  resize: none;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: table;
+}
+.clearfix::after {
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

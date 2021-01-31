@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>解决Promise类then函数链式操作</title>
+  <script src="./promise.js"></script>
+</head>
+<body>
+  <ul>
+    <li>首先then函数返回新的Promise，每个Promise维持独立的状态并将当前状态传递到下一then函数因而成为链式</li>
+    <li>但注意当前Promise即使是rejected状态如已作处理，下一then函数仍然执行成功回调</li>
+    <li>此时新返回的Promise仍然可能出现异常，可由reject回调来承接</li>
+    <li>此时then()不做任何处理，但需要完成穿透传递，继续下一then处理</li>
+    <li>此时then函数除了返回单值，还可以继续返回Promise未下一then函数提供输入但需要处理(未解决)</li>
+  </ul>
+  <script>
+    const promise = new MyPromise((resolve, reject) => {
+      setTimeout(() => {
+        // resolve('success')
+        reject('fail')
+      }, 1000)
+    }).then() // 穿透传递
+      .then(res => console.log(res), err => {
+        console.log(err)
+        // console.log(a) // 异常
+        return 'handled'
+      })
+      .then(res => console.log('success', res), err => console.log(err))
+    console.log(promise)
+  </script>
+</body>
+</html>

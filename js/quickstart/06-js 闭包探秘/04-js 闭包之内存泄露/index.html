@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js闭包之内存泄露</title>
+</head>
+<body>
+  <button name="button1">按钮1</button>
+  <button name="button2">按钮2</button>
+  <button name="button3">按钮3</button>
+  <button name="button4">按钮4</button>
+  <button name="button5">按钮5</button>
+  <script>
+    const buttons = document.querySelectorAll('button')
+    buttons.forEach(function(item) {
+      const name = item.getAttribute('name')
+      item.addEventListener('click', function() {
+        // console.log(item.getAttribute('name'))
+        console.log(name)
+      })
+      item = null // 解决内存泄露
+    })
+  </script>
+</body>
+</html>

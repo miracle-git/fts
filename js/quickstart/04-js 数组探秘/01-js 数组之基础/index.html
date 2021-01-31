@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之基础</title>
+</head>
+<body>
+  <ul>
+    <li>数组可采用new Array()来定义(不推荐)，而推荐使用简写：const nums = [1,2,3,4]</li>
+    <li>使用typeof检测数组的类型是object, 使用instanceof检测数组的真实类型(Array)</li>
+    <li>数组项的索引从0开始，索引范围为[0,nums.length-1]</li>
+    <li>可使用for,for..in,for..of来遍历数组，使用length获取数组的长度</li>
+    <li>数组是引用类型，多个变量赋值将其中某一个成员发生变化其他变量将一起变化</li>
+    <li>使用const定义数组，本身不可重新赋值，但数组成员依然可以重新赋值</li>
+  </ul>
+  <script>
+    // const nums = new Array(1, 2, 3, 4)
+    // console.log(nums)
+    // console.log(nums.join(','))
+    const nums = [1, 2, 3, 4]
+    console.log(nums)                   // [1, 2, 3, 4]
+    console.log(typeof nums)            // object
+    console.log(nums instanceof Array)  // true
+    console.log(nums.join(','))         // 1,2,3,4
+    const users = nums
+    nums[1] = 'Miracle'
+    console.log(nums)                   // [1, 'Miracle', 3, 4]
+    console.table(users)                // [1, 'Miracle', 3, 4]
+  </script>
+</body>
+</html>

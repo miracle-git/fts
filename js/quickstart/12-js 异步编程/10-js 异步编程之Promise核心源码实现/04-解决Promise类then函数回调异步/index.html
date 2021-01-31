@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>解决Promise类then函数回调异步</title>
+  <script src="./promise.js"></script>
+</head>
+<body>
+  <ul>
+    <li>通过将then函数回调onResolved或onRejected放到宏任务setTimeout中实现异步</li>
+    <li>但如果将resolve或reject延迟执行，会发现onResolved或onRejected将不会被执行，因为此时处于pending状态then函数未做任何处理(未解决)</li>
+  </ul>
+  <script>
+    // main -> success
+    const promise = new MyPromise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('success')
+        // reject('fail')
+      }, 1000)
+    }).then(res => console.log(res), err => console.log(err))
+    console.log('main')
+  </script>
+</body>
+</html>

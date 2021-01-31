@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js字符串之查找操作</title>
+</head>
+<body>
+  <p>字符串之查找操作</p>
+  <ul>
+    <li>字符串索引查找可使用：indexOf,lastIndexOf</li>
+    <li>字符串起始位查找可使用：startsWith, endsWith</li>
+    <li>字符串包含查找可使用：includes</li>
+    <li>indexOf默认从其实位置开始查找，lastIndexOf默认从结束位置开始查找，均可指定从指定索引位置查找</li>
+  </ul>
+  <script>
+    const name = 'Miracle He'
+    console.log(name.length)                   // 10
+    console.log(name.charAt(2))                // r
+    console.log(name[2])                       // r
+    console.log(name.indexOf('e'))             // 6
+    console.log(name.indexOf('e', 8))          // 9
+    console.log(name.lastIndexOf('e'))         // 9
+    console.log(name.lastIndexOf('e', 8))      // 6
+    console.log(name.startsWith('Miracle'))    // true
+    console.log(name.startsWith('Miracle', 2)) // false
+    console.log(name.endsWith('He'))           // true
+    console.log(name.endsWith('He', 2))        // false
+    const search = 'js'
+    if (name.indexOf(search) === -1) {
+      console.log(`${name}不包含字符串${search}`)
+    }
+    // includes
+    const lastName = 'He'
+    if (name.includes(lastName)) {
+      console.log(`${name}包含字符串${lastName}`)
+    }
+  </script>
+</body>
+</html>

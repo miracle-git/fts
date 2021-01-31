@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js集合之WeakSet示例</title>
+  <style>
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      position: relative;
+      width: 150px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 2px solid #e74c3c;
+      transition: all .3s;
+    }
+    ul li.remove {
+      border: 2px solid #ddd;
+      background-color: #eee;
+      color: #ddd;
+    }
+    ul li:last-child {
+      margin-bottom: 0;
+    }
+    ul li a {
+      display: inline-block;
+      position: absolute;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      background-color: #16a085;
+      color: #fff;
+      font-size: 12px;
+      text-decoration: none;
+      text-align: center;
+      vertical-align: middle;
+    }
+    ul li.remove a {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>Vue  <a href="javascript:void(0)">x</a></li>
+    <li>React  <a href="javascript:void(0)">x</a></li>
+    <li>Angular  <a href="javascript:void(0)">x</a></li>
+  </ul>
+  <script>
+    class TodoList {
+      constructor() {
+        this.items = document.querySelectorAll('li')
+        this.list = new WeakSet()
+        this.items.forEach(item => this.list.add(item))
+      }
+      run() {
+        this.items.forEach(item => {
+          item.querySelector('a').addEventListener('click', () => {
+            if (this.list.has(item)) {
+              item.classList.add('remove')
+              this.list.delete(item)
+            } else {
+              item.classList.remove('remove')
+              this.list.add(item)
+            }
+          })
+        })
+      }
+    }
+    new TodoList().run()
+  </script>
+</body>
+</html>

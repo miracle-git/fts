@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之迭代器</title>
+</head>
+<body>
+  <ul>
+    <li>可利用keys(),values(),entries()为数组生成迭代器</li>
+    <li>keys()迭代器可生成数据项的索引，values迭代器可生成数据项的值，entries迭代器可生成索引和值</li>
+    <li>迭代器可通过next()判断当前成员是否迭代结束(done)和当前项的值(value)</li>
+    <li>迭代器可通过for..of执行遍历，当然也可通过for/while等遍历</li>
+  </ul>
+  <script>
+    const blogs = [
+      { url: 'https://github.com/miracle-git/vue', title: 'Vue学习' },
+      { url: 'https://github.com/miracle-git/react', title: 'React学习' },
+      { url: 'https://github.com/miracle-git/angular', title: 'Angular学习' }
+    ]
+    const keyIterator = blogs.keys()
+    for (const key of keyIterator) {
+      console.log(key)
+    }
+    const valueIterator = blogs.values()
+    for (const val of valueIterator) {
+      console.log(val)
+    }
+    const iterator1 = blogs.entries()
+    for (const [key, val] of iterator1) {
+      console.log(key, val)
+    }
+    // 使用while遍历
+    const iterator2 = blogs.entries()
+    while (({ done, value } = iterator2.next()) && !done) {
+      const [key, val] = value
+      console.log(done, key, val)
+    }
+  </script>
+</body>
+</html>

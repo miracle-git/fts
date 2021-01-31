@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>希尔排序</title>
+  <link href="./favicon.ico" rel="shortcut icon">
+</head>
+<body>
+  <ul>
+    <li>希尔排序是插入排序的改进版，当对无序数组进行插入排序时，如果极值(最小或最大值)在数组的最右侧，此时将移动很多次之前的元素而造成性能影响</li>
+    <li>希尔排序将无序数组进行按指定增量索引的技术来对元素进行分组，分别进行插入排序，并不断缩小增量将极值尽可能散落到最前面</li>
+    <li>当增量缩减为1时，此时进行数据移动的概率比较小，从而提高排序的性能，此时进行一次插入排序即可完成整体排序</li>
+    <li>希尔排序的推荐增量为"数组长度/2"取整后依次递减到1进行多轮插入排序</li>
+    <li>希尔排序的效率跟增量有关(但不是很好证明)，即便使用原始增量，最坏情况下时间复杂度为O(n^2)，但大多数情况下都好于O(n^2)</li>
+  </ul>
+</body>
+</html>

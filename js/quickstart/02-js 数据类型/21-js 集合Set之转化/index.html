@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js集合Set之转化</title>
+</head>
+<body>
+  <ul>
+    <li>可使用Array.from()或...语法将Set转化为数组，Set可借助数组的方法完成相应的操作</li>
+    <li>可使用[...new Set(arr)]将数组转化为Set，可用于对数据元素去重处理</li>
+    <li>可使用Set转化为数组特性，完成集合的并集，差集，交集</li>
+  </ul>
+  <script>
+    const set = new Set(['miracle', 'jack'])
+    console.log(Array.from(set))         // ["miracle", "jack"]
+    console.log([...set])                // ["miracle", "jack"]
+    const filterSet = new Set([...set].filter(item => item === 'miracle'))
+    console.log(filterSet)               // Set(1) {"miracle"}
+    const arr = [1, 2, 3, 5, 2, 1, 4]
+    console.log([...new Set(arr)])       // [1, 2, 3, 5, 4]
+    const a = new Set([1, 2, 3, 4, 5])
+    const b = new Set([3, 4, 6, 7, 8])
+    console.log(new Set([...a, ...b]))   // Set(8) {1, 2, 3, 4, 5, 6, 7, 8}
+    console.log(new Set([...a].filter(item => ![...b].includes(item))))  // Set(3) {1, 2, 5}
+    console.log(new Set([...a].filter(item => [...b].includes(item))))   // Set(3) {3, 4}
+  </script>
+</body>
+</html>

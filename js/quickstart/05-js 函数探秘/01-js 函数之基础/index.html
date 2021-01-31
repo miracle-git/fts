@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之基础</title>
+</head>
+<body>
+  <ul>
+    <li>函数可采用new Function()来定义(不推荐)，而推荐使用简写：function func() {}或var func=function() {}</li>
+    <li>经常使用对象来封装具有某一特定功能的函数集合, 内部函数可简写为func() {}</li>
+  </ul>
+  <script>
+    // var getName = new Function('name', 'console.log(name)')
+    // function getName(name) {
+    //   console.log(name)
+    // }
+    var getName = function(name) {
+      console.log(name)
+    }
+    getName('Miracle')
+    const user = {
+      name: null,
+      getName() {
+        return this.name
+      },
+      setName(name) {
+        this.name = name
+      }
+    }
+    user.setName('Miracle')
+    console.log(user.getName())
+  </script>
+</body>
+</html>

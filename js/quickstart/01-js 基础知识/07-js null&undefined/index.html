@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>null&undefined</title>
+</head>
+<body>
+  <p>null&undefined</p>
+  <ul>
+    <li>当变量声明而未赋值时，引用类型的初始默认值为null, 基础类型的初始默认值为undefined</li>
+    <li>对已声明未赋值或未声明的变量执行类型检查(typeof)，基础类型结果为undefined，引用类型为object</li>
+  </ul>
+  <script>
+    let user = null, name = undefined;
+    console.log(typeof user); // object
+    console.log(typeof name); // undefined
+    console.log(typeof web); // undefined
+    function star(num) {
+      // if (num === undefined) num = 5;
+      // num = num || 5
+      for (let i = 0; i < num; i++){
+        document.write('*');
+      }
+    }
+    star(10);
+  </script>
+</body>
+</html>

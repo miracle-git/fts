@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js字符串之类型转换</title>
+</head>
+<body>
+  <p>字符串之类型转换</p>
+  <ul>
+    <li>字符串转化为数字: 当转化前确定当前字符串一定为数字时，可使用*1,Number()来转化，当不确定时使用parseInt()或parseFloat()</li>
+    <li>数字转化为字符串：可使用+'',String(),toString()来转化</li>
+    <li>字符串转化为数组：可使用split()来转化</li>
+    <li>数组转化为字符串：可使用join()或toString()来转化</li>
+    <li>字符串字面量隐式转化String对象，则可使用属于String中的所有方法，如substr,slice,split等</li>
+  </ul>
+  <script>
+    // 字符串转化为数字
+    const age = '30'
+    console.log(typeof age)        // string
+    console.log(age * 1 + 5)       // 35
+    console.log(Number(age) + 5)   // 35
+    // parseInt, parseFloat
+    console.log(parseInt('35Miracle'))        // 35
+    console.log(parseFloat('35.10Miracle'))   // 35.1
+    console.log(parseInt('Miracle35He'))      // NaN
+    console.log(parseFloat('Miracle35.10He')) // NaN
+    // 数字转化为字符串
+    const num = 30
+    console.log(typeof num)        // number
+    console.log(num + '')          // '30'
+    console.log(String(num))       // '30'
+    console.log(num.toString())    // '30'
+    // 字符串转化为数组
+    const name = 'Miracle'
+    console.log(name.split(''))               // ["M", "i", "r", "a", "c", "l", "e"]
+    // 数组转化为字符串
+    const names = ['Miracle', 'He']
+    console.log(names.join(' '))              // Miracle He
+    console.log(names.toString())             // Miracle,He
+    // 隐式转化之字符串字面量与String
+    const fullName = 'Miracle He'
+    console.log(typeof fullName)              // string
+    console.log(fullName.substr(0, 7))        // Miracle (隐式转化为String)
+    const fullNameString = new String('Miracle He')
+    console.log(typeof fullNameString)        // object
+    console.log(fullNameString.substr(0, 7))  // Miracle
+  </script>
+</body>
+</html>

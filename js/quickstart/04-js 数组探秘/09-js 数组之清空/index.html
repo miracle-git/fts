@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js数组之清空</title>
+</head>
+<body>
+  <ul>
+    <li>可利用以下几种方式清空数组: 直接赋空值，改变数组长度为0，splice(0), 循环pop/shift</li>
+    <li>直接赋空值与改变数组长度为0区别：前者只清空当前数组，与之赋值之前的数组不会被清空，而后者都会被清空</li>
+  </ul>
+  <script>
+    let nums = [1, 2, 3, 4]
+    let arr = nums
+    // nums = []
+    nums.length = 0
+    // nums.splice(0)
+    // while (nums.pop()) {}
+    // while (nums.shift()) {}
+    console.log(nums)
+    console.log(arr)
+  </script>
+</body>
+</html>

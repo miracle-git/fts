@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js模块化之实现</title>
+</head>
+<body>
+  <ul>
+    <li>在ES6出现之前，存在很多模块化规范：AMD(按需加载，RequireJS),CMD(就近加载，SeaJS)，CommonJS(服务于后端NodeJS)，UMD(同时支持AMD,CMD)</li>
+    <li>实现一个模块，其实就是一个立即执行函数，包含模块容器，定义模块，添加模块，处理模块依赖</li>
+    <li>模块的功能是向外部暴露一些接口，以提供给其他模块依赖于该模块的场景使用</li>
+    <li>模块的初始化只执行一次，之后其他模块可多次使用该模块的接口</li>
+  </ul>
+  <script>
+    // 实现模块
+    const module = (function() {
+      // 模块容器
+      const moduleList = {}
+      // 定义模块
+      function define(name, deps, action) {
+        deps.map((item, index) => deps[index] = moduleList[item])
+        moduleList[name] = action.apply(null, deps)
+      }
+      return {
+        define
+      }
+    })()
+    module.define('data', [], function() {
+      return {
+        first(arr) {
+          return arr[0]
+        },
+        max(arr, key = '') {
+          const compare = (a, b) => key ? b[key] - a[key] : b - a
+          return arr.sort(compare)[0]
+        }
+      }
+    })
+    module.define('user', ['data'], function(data) {
+      const blogs = [
+        { url: 'https://github.com/miracle-git/vue', title: 'Vue学习', price: 1600 },
+        { url: 'https://github.com/miracle-git/react', title: 'React学习', price: 2400 },
+        { url: 'https://github.com/miracle-git/angular', title: 'Angular学习', price: 1800 }
+      ]
+      console.log(data.first(blogs))         // {url: "https://github.com/miracle-git/vue", title: "Vue学习", price: 1600}
+      console.log(data.max(blogs, 'price'))  // {url: "https://github.com/miracle-git/react", title: "React学习", price: 2400}
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js原型链之函数原型</title>
+</head>
+<body>
+  <ul>
+    <li>对于函数而言，除之前拥有__proto__属性之外，还存在prototype属性</li>
+    <li>函数的本质其实也是对象，__proto__和prototype也都是对象</li>
+    <li>通常利用函数来定义JS"类"，利用new运算符来生成多个类的实例，实例不仅可访问类中的成员，也能访问原型上的成员</li>
+    <li>通常将实例方法定义在prototype上，实例的__proto__指向类的类型prototype</li>
+    <li>可在__proto__定义"类方法"(不推荐)，适用于将函数当对象使用时的场景</li>
+  </ul>
+  <script>
+    function User(name) {
+      this.name = name
+    }
+    // 定义实例原型方法
+    User.prototype.show = function() {
+      console.log(`I'm ${this.name} in prototype`)
+    }
+    // 定义"类"原型方法
+    User.__proto__.detail = function() {
+      console.log(`I'm ${this.name} in __proto__`)
+    }
+    // 实例化
+    const user = new User('Miracle')
+    console.dir(User)  // 可查看prototype和__proto__
+    console.log(user.__proto__ == User.prototype)  // true
+    user.show()        // I'm Miracle in prototype
+    User.detail()      // I'm User in __proto__
+  </script>
+</body>
+</html>

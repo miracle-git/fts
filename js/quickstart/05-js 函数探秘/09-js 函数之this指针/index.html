@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js函数之this指针</title>
+</head>
+<body>
+  <ul>
+    <li>一般函数定义在类或对象的内部，称之为方法</li>
+    <li>在方法内部可使用this获取对象中的所有成员，包含方法本身</li>
+    <li>在方法内部再定义函数，函数内部的this则是window, 而不是对象本身</li>
+    <li>如果想在方法内部函数中获取当前对象，可使用常量或箭头函数来改变this指针</li>
+  </ul>
+  <script>
+    // 在对象中的方法
+    const user = {
+      name: 'Miracle',
+      getName() {
+        console.log(this)      // {name: "Miracle", getName: ƒ}
+        function show() {
+          console.log(this)    // window
+        }
+        show()
+        return this.name
+      }
+    }
+    console.log(user.getName()) // Miracle
+    // 使用常量改变this指针
+    const blogs1 = {
+      author: 'Miracle',
+      list: [
+        { url: 'https://github.com/miracle-git/vue', title: 'Vue学习' },
+        { url: 'https://github.com/miracle-git/react', title: 'React学习' },
+        { url: 'https://github.com/miracle-git/angular', title: 'Angular学习' }
+      ],
+      show() {
+        const _this = this
+        return this.list.map(function(item) {
+          // console.log(this)     // window
+          // console.log(_this)    // {author: "Miracle", list: Array(3), show: ƒ}
+          return `${_this.author}-${item.title}`
+        })
+        // 此处也可使用map的第二个参数为this
+        // return this.list.map(function(item) {
+        //   return `${this.author}-${item.title}`
+        // }, this)
+      }
+    }
+    console.table(blogs1.show())
+    // 使用箭头函数改变this指针
+    const blogs2 = {
+      author: 'Miracle',
+      list: [
+        { url: 'https://github.com/miracle-git/vue', title: 'Vue学习' },
+        { url: 'https://github.com/miracle-git/react', title: 'React学习' },
+        { url: 'https://github.com/miracle-git/angular', title: 'Angular学习' }
+      ],
+      show() {
+        return this.list.map(item => `${this.author}-${item.title}`)
+      }
+    }
+    console.table(blogs2.show())
+  </script>
+</body>
+</html>

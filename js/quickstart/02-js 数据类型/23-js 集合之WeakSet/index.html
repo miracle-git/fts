@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js集合之WeakSet</title>
+</head>
+<body>
+  <ul>
+    <li>与Set不同的是，WeakSet只能存放引用类型的数据项(如数组，对象，DOM节点等)，不能存放基础类型</li>
+    <li>WeakSet与Set一样都具备has,add,delete等方法,但由于WeakSet的弱引用特性导致不具备size,clear,key(),values(),entries(),遍历等操作</li>
+  </ul>
+  <script>
+    const arr = [1, 2, 3, 4, 5]
+    const obj = { name: 'miracle' }
+    const dom = document.querySelector('ul')
+    const set = new WeakSet()
+    // set.add(1)
+    set.add(arr)
+    set.add(obj)
+    set.add(dom)
+    console.log(set)               // WeakSet {ul, Array(5), {…}}
+    console.log(set.has(obj))      // true
+    console.log(set.size)          // undefined
+    console.log(set.delete(obj))   // true
+    console.log(set)               // WeakSet {ul, Array(5)}
+  </script>
+</body>
+</html>
