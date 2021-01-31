@@ -8,7 +8,7 @@ const result = {
 
 test('测试：冒泡排序', () => {
   expect(sorter.bubbleSort()).toEqual(result.asc)
-  expect(sorter.bucketSort('desc')).toEqual(result.desc)
+  expect(sorter.bubbleSort('desc')).toEqual(result.desc)
 })
 
 test('测试：选择排序', () => {
