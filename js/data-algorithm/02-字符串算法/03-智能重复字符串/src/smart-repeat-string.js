@@ -7,6 +7,7 @@
  * 2[a3[b]]是错误的，应该补一个1，即2[1[a]3[b]]
  * [abc]是错误的，应该补一个1，即1[abc]
  */
+// 1.使用递归实现
 export const smartRepeatStringV1 = (str) => {
   let res = ''
   return (function replace(str) {
@@ -17,6 +18,7 @@ export const smartRepeatStringV1 = (str) => {
     return replace(res)
   })(str)
 }
+// 2.使用栈实现
 export const smartRepeatStringV2 = (str) => {
   // 定义指针index, 当前匹配项，返回结果
   let index = 0, current = '', res = ''
