@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>循环和双向绑定TodoList示例</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    button { margin-left: 10px; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+<script>
+  Vue.createApp({
+    data() {
+      return {
+        todo: '',
+        todos: []
+      }
+    },
+    methods: {
+      handleAddItem() {
+        this.todos.push(this.todo)
+        this.todo = ''
+      }
+    },
+    template: `
+      <div>
+        <input v-model="todo"/>
+        <button v-on:click="handleAddItem">新增</button>
+        <ul>
+          <li v-for="(item, index) of todos" :key="index">{{index + 1}}: {{item}}</li>
+        </ul>
+      </div>
+    `
+  }).mount('#app')
+</script>
+</html>
