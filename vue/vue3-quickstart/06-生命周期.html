@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>生命周期</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+<script>
+  // 生命周期：在某一时刻自动执行的函数
+  const app = Vue.createApp({
+    data() {
+      return {
+        name: 'Miracle'
+      }
+    },
+    // 在vue实例生成之前自动执行
+    beforeCreate() {
+      console.log('beforeCreate')
+    },
+    // 在vue实例生成之后自动执行
+    created() {
+      console.log('created')
+    },
+    // 在组件渲染到页面之前自动执行
+    beforeMount() {
+      console.log('beforeMount', document.getElementById('app').innerHTML)
+    },
+    // 在组件渲染到页面之后自动执行
+    mounted() {
+      console.log('mounted', document.getElementById('app').innerHTML)
+    },
+    // 在数据发生改变之前自动执行
+    beforeUpdate() {
+      console.log('beforeUpdate', document.getElementById('app').innerHTML)
+    },
+    // 在数据发生改变之后且页面完成更新后自动执行
+    updated() {
+      console.log('updated', document.getElementById('app').innerHTML)
+    },
+    // 当应用被销毁(失效)时自动执行
+    beforeUnmount() {
+      console.log('beforeUnmount', document.getElementById('app').innerHTML)
+    },
+    // 当应用被销毁(失效)且DOM被完全销毁后自动执行
+    unmounted() {
+      console.log('unmounted', document.getElementById('app').innerHTML)
+    },
+    template: '<div>Hello World, {{name}}!</div>'
+  }).mount('#app')
+</script>
+</html>
