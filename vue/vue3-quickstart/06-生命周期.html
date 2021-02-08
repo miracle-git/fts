@@ -10,6 +10,10 @@
 </head>
 <body>
   <div id="app"></div>
+  <ul>
+    <li>在浏览器端执行：vm.$data.name = 'Miracle He'，测试beforeUpdate/updated;</li>
+    <li>在浏览器端执行：app.unmount()，测试beforeUnmount/unmounted;</li>
+  </ul>
 </body>
 <script>
   // 生命周期：在某一时刻自动执行的函数
@@ -52,6 +56,7 @@
       console.log('unmounted', document.getElementById('app').innerHTML)
     },
     template: '<div>Hello World, {{name}}!</div>'
-  }).mount('#app')
+  })
+  const vm = app.mount('#app')
 </script>
 </html>
