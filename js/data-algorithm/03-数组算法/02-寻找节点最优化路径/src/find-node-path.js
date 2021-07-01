@@ -42,10 +42,10 @@
 export const findNodePath1 = (data, id) => {
   let arr = [], exist = false;
 
-  (function find($data, $id) {
+  (function find($data) {
     for (let item of $data) {
       if (exist) return arr
-      exist = item.id === $id
+      exist = item.id === id
       if (exist) return arr.push(item.id)
 
       if (Array.isArray(item.sub)) {
@@ -54,7 +54,7 @@ export const findNodePath1 = (data, id) => {
         !exist && arr.pop()
       }
     }
-  })(data, id)
+  })(data)
 
   return arr
 }
@@ -62,7 +62,7 @@ export const findNodePath1 = (data, id) => {
 export const findNodePath2 = (data, id) => {
   let arr = [];
 
-  (function find($data, $id, $path) {
+  (function find($data, $path) {
     if (!Array.isArray($data)) return []
     if (!Array.isArray($path)) $path = []
 
@@ -73,9 +73,9 @@ export const findNodePath2 = (data, id) => {
         return arr
       }
 
-      find(item.sub, id, [...$path, item.id])
+      find(item.sub, [...$path, item.id])
     }
-  })(data, id)
+  })(data)
 
   return arr
 }
