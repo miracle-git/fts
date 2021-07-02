@@ -79,3 +79,19 @@ export const findNodePath2 = (data, id) => {
 
   return arr
 }
+
+export const findNodePath3 = (data, id) => {
+  if (!Array.isArray(data)) return []
+
+  for (let item of data) {
+    if (item.id === id) {
+      return [item.id]
+    } else if (Array.isArray(item.sub)) {
+      const arr = findNodePath3(item.sub, id)
+      arr.unshift(item.id)
+      return arr
+    }
+  }
+
+  return []
+}
