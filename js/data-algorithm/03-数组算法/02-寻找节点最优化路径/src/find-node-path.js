@@ -50,7 +50,7 @@ export const findNodePath1 = (data, id) => {
 
       if (Array.isArray(item.sub)) {
         arr.push(item.id)
-        find(item.sub, id)
+        find(item.sub)
         !exist && arr.pop()
       }
     }
