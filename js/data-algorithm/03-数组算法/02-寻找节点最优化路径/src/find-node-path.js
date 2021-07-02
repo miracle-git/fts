@@ -88,8 +88,10 @@ export const findNodePath3 = (data, id) => {
       return [item.id]
     } else if (Array.isArray(item.sub)) {
       const arr = findNodePath3(item.sub, id)
-      arr.unshift(item.id)
-      return arr
+      if (arr && arr.length > 0) {
+        arr.unshift(item.id)
+        return arr
+      }
     }
   }
 
