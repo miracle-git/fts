@@ -18,62 +18,62 @@
   </style>
 </head>
 <body>
-<div id="app"></div>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script>
-  const app = new Vue({
-    el: '#app',
-    data() {
-      return {
-        title: 'Hello Vue!',
-        desc: 'Learning Vue Template!',
-        items: [
-          { value: 10 },
-          { value: 20 },
-          { value: 50, active: true },
-          { value: 100 },
-          { value: 200 }
-        ]
+  <div id="app"></div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          title: 'Hello Vue!',
+          desc: 'Learning Vue Template!',
+          items: [
+            { value: 10 },
+            { value: 20 },
+            { value: 50, active: true },
+            { value: 100 },
+            { value: 200 }
+          ]
+        }
+      },
+      render() {
+        // 通过app.$options.render生成
+        with (this) {
+          return _c('div', {attrs: {"id": "app"}}, [_c('h1', {attrs: {"title": desc}}, [_v(_s(title))]), _v(" "),
+            (!items.length) ? _c('p', [_v("There is no items")]) : _c('ul', _l((items), function (item, index) {
+            return _c('li', {
+              key: index,
+              class: ['item', item.active ? 'active' : ''],
+              style: ({fontWeight: item.active ? 'bold' : 'normal'})
+            }, [_v(_s(item.value))])
+          }), 0), _v(" "), _c('input', {
+            directives: [{
+              name: "model",
+              rawName: "v-model",
+              value: (title),
+              expression: "title"
+            }], attrs: {"type": "text"}, domProps: {"value": (title)}, on: {
+              "input": function ($event) {
+                if ($event.target.composing) return;
+                title = $event.target.value
+              }
+            }
+          }), _v(" "), _c('button', {
+            on: {
+              "click": function ($event) {
+                return items.push({value: 500})
+              }
+            }
+          }, [_v("Add")]), _v(" "), _c('button', {
+            on: {
+              "click": function ($event) {
+                items = []
+              }
+            }
+          }, [_v("Clear")])])
+        }
       }
-    },
-    render() {
-      // 通过app.$options.render生成
-      with (this) {
-        return _c('div', {attrs: {"id": "app"}}, [_c('h1', {attrs: {"title": desc}}, [_v(_s(title))]), _v(" "),
-          (!items.length) ? _c('p', [_v("There is no items")]) : _c('ul', _l((items), function (item, index) {
-          return _c('li', {
-            key: index,
-            class: ['item', item.active ? 'active' : ''],
-            style: ({fontWeight: item.active ? 'bold' : 'normal'})
-          }, [_v(_s(item.value))])
-        }), 0), _v(" "), _c('input', {
-          directives: [{
-            name: "model",
-            rawName: "v-model",
-            value: (title),
-            expression: "title"
-          }], attrs: {"type": "text"}, domProps: {"value": (title)}, on: {
-            "input": function ($event) {
-              if ($event.target.composing) return;
-              title = $event.target.value
-            }
-          }
-        }), _v(" "), _c('button', {
-          on: {
-            "click": function ($event) {
-              return items.push({value: 500})
-            }
-          }
-        }, [_v("Add")]), _v(" "), _c('button', {
-          on: {
-            "click": function ($event) {
-              items = []
-            }
-          }
-        }, [_v("Clear")])])
-      }
-    }
-  })
-</script>
+    })
+  </script>
 </body>
 </html>

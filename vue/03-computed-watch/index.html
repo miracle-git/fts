@@ -20,91 +20,91 @@
   </style>
 </head>
 <body>
-<div id="app">
-  <div>
-    <h2>Number List</h2>
-    <ul>
-      <li v-for="(item, index) in items" :key="index">
-        {{item}}
-      </li>
-    </ul>
-    <p>{{totalText}}</p>
-    <button @click="items.push(500)">Add</button>
-    <button @click="items=[]">Clear</button>
-    <button @click="items=restoreItems">Restore</button>
+  <div id="app">
+    <div>
+      <h2>Number List</h2>
+      <ul>
+        <li v-for="(item, index) in items" :key="index">
+          {{item}}
+        </li>
+      </ul>
+      <p>{{totalText}}</p>
+      <button @click="items.push(500)">Add</button>
+      <button @click="items=[]">Clear</button>
+      <button @click="items=restoreItems">Restore</button>
+    </div>
+    <div>
+      <h2>User List</h2>
+      <ul>
+        <li v-for="(item, index) in users" :key="item.id">
+          {{item.name}} <button @click="add(item)">Add</button>
+          <div v-if="item.children && item.children.length" class="list">
+            <a href="#" v-for="child in item.children" class="child">{{child.cname}}</a>
+          </div>
+        </li>
+      </ul>
+      <p>{{userText}}</p>
+    </div>
   </div>
-  <div>
-    <h2>User List</h2>
-    <ul>
-      <li v-for="(item, index) in users" :key="item.id">
-        {{item.name}} <button @click="add(item)">Add</button>
-        <div v-if="item.children && item.children.length" class="list">
-          <a href="#" v-for="child in item.children" class="child">{{child.cname}}</a>
-        </div>
-      </li>
-    </ul>
-    <p>{{userText}}</p>
-  </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script>
-  const app = new Vue({
-    el: '#app',
-    data() {
-      return {
-        items: [10, 20, 50, 100, 200],
-        users: [
-          { id: 1, name: 'miracle', children: [{ cid: 101, cname: 'miracle-101' }, { cid: 102, cname: 'miracle-102' }] },
-          { id: 2, name: 'jack', children: [{ cid: 201, cname: 'jack-201' }] },
-          { id: 3, name: 'tom' }
-        ],
-        restoreItems: [],
-        userText: ''
-      }
-    },
-    computed: {
-      totalText() {
-        const count = this.items.length
-        return count > 0 ? `There are ${count} items` : 'There is no items'
-      }
-    },
-    watch: {
-      items: {
-        handler(val) {
-          if (val.length > 0) {
-            this.restoreItems = val.slice(0)
-          }
-        },
-        immediate: true
-      },
-      users: {
-        handler(val) {
-          const childrenCount = val.reduce((r, s) => {
-            r += s.children ? s.children.length : 0
-            return r
-          }, 0)
-          this.userText = `There are ${childrenCount} children`
-        },
-        deep: true,
-        immediate: true
-      }
-    },
-    methods: {
-      add(user) {
-        let cid = 0
-        if (!user.children) {
-          this.$set(user, 'children', [])
-          cid = user.id * 100 + 1
-        } else {
-          cid = user.children.slice(-1)[0].cid + 1
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          items: [10, 20, 50, 100, 200],
+          users: [
+            { id: 1, name: 'miracle', children: [{ cid: 101, cname: 'miracle-101' }, { cid: 102, cname: 'miracle-102' }] },
+            { id: 2, name: 'jack', children: [{ cid: 201, cname: 'jack-201' }] },
+            { id: 3, name: 'tom' }
+          ],
+          restoreItems: [],
+          userText: ''
         }
-        user.children.push({
-          cid,
-          cname: `${user.name}-${cid}`
-        })
+      },
+      computed: {
+        totalText() {
+          const count = this.items.length
+          return count > 0 ? `There are ${count} items` : 'There is no items'
+        }
+      },
+      watch: {
+        items: {
+          handler(val) {
+            if (val.length > 0) {
+              this.restoreItems = val.slice(0)
+            }
+          },
+          immediate: true
+        },
+        users: {
+          handler(val) {
+            const childrenCount = val.reduce((r, s) => {
+              r += s.children ? s.children.length : 0
+              return r
+            }, 0)
+            this.userText = `There are ${childrenCount} children`
+          },
+          deep: true,
+          immediate: true
+        }
+      },
+      methods: {
+        add(user) {
+          let cid = 0
+          if (!user.children) {
+            this.$set(user, 'children', [])
+            cid = user.id * 100 + 1
+          } else {
+            cid = user.children.slice(-1)[0].cid + 1
+          }
+          user.children.push({
+            cid,
+            cname: `${user.name}-${cid}`
+          })
+        }
       }
-    }
-  })
-</script>
+    })
+  </script>
 </body>
 </html>
