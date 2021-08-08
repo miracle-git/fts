@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+  <link rel="icon" href="../favicon.ico">
+  <title>Template Syntax</title>
+  <style>
+    .item {
+      width: 100px;
+      font-size: 16px;
+    }
+    .active {
+      color: #fe00ff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1 :title="desc">{{ title }}</h1>
+    <p v-if="!items.length">There is no items</p>
+    <ul v-else>
+      <li v-for="(item, index) in items" :key="index"
+          :class="['item', item.active ? 'active' : '']"
+          :style="{fontWeight: item.active ? 'bold': 'normal'}">
+        {{item.value}}
+      </li>
+    </ul>
+    <label>
+      <input type="text" v-model="title"/>
+    </label>
+    <button @click="items.push({value: 500})">Add</button>
+    <button @click="items=[]">Clear</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          title: 'Hello Vue!',
+          desc: 'Learning Vue Template!',
+          items: [
+            { value: 10 },
+            { value: 20 },
+            { value: 50, active: true },
+            { value: 100 },
+            { value: 200 }
+          ]
+        }
+      }
+    })
+    console.log(app.$options.render)
+  </script>
+</body>
+</html>
