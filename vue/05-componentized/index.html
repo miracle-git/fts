@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+  <link rel="icon" href="../favicon.ico">
+  <title>Componentized</title>
+  <style>
+    .message-box {
+      position: relative;
+      width: 300px;
+      padding: 10px 20px;
+      background: #4fc08d;
+      border: 1px solid #42b983;
+      color: #fff;
+    }
+    .close-btn {
+      position: absolute;
+      float: right;
+      right: 8px;
+      top: 8px;
+    }
+    .title,
+    .active {
+      font-weight: bold;
+      color: #fe00ff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <message-box :show.sync="isShow">
+      <template v-slot:title="{params}">
+        <b class="title">{{params.name}}'s course</b>
+      </template>
+      <p>Add course successfully!</p>
+      <template v-slot:footer>
+        <p>Copyright &copy; by Miracle He</p>
+      </template>
+    </message-box>
+    <course-add v-model="course" @add="addCourse"></course-add>
+    <course-list :courses="courses"></course-list>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    // 课程列表
+    Vue.component('course-list', {
+      props: {
+        courses: {
+          type: Array,
+          default: () => []
+        }
+      },
+      data() {
+        return {
+          selected: ''
+        }
+      },
+      template: `
+        <div>
+          <p v-if="!courses.length">没有任何课程信息</p>
+          <ul>
+            <li v-for="item in courses" :class="{active:selected==item}" :key="item" @click="selected=item">{{item}}</li>
+          </ul>
+        </div>
+      `
+    })
+    // 新增课程
+    Vue.component('course-add', {
+      props: ['value'],
+      // 默认v-model将转换为value和@input, 如果需要改变则定义model选项
+      // model: {
+      //   prop: 'value',
+      //   event: 'change'
+      // },
+      template: `
+        <p>
+          <input type="text" :value="value" @input="handleInput" @keydown.enter="addCourse"/>
+          <button @click="addCourse">Add</button>
+        </p>
+      `,
+      methods: {
+        addCourse() {
+          this.$emit('add')
+        },
+        handleInput(e) {
+          this.$emit('input', e.target.value)
+        }
+      }
+    })
+    // 弹窗组件
+    Vue.component('message-box', {
+      props: {
+        show: {
+          type: Boolean,
+          default: false
+        }
+      },
+      template: `
+        <div class="message-box" v-show="show">
+          <slot name="title" :params="{name:'miracle'}"><b class="title">Message</b></slot>
+          <slot/>
+          <button class="close-btn" @click="$emit('update:show', false)">&times;</button>
+          <slot name="footer"/>
+        </div>
+      `
+    })
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          isShow: false,
+          course: '',
+          courses: ['vue', 'react', 'node']
+        }
+      },
+      methods: {
+        addCourse() {
+          this.courses.push(this.course)
+          this.course = ''
+          this.isShow = true
+        }
+      }
+    })
+  </script>
+</body>
+</html>
