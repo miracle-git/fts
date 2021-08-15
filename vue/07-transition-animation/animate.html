@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+  <link rel="icon" href="../favicon.ico">
+  <title>Animate CSS</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1"/>
+  <style>
+    .message-box {
+      position: relative;
+      width: 300px;
+      padding: 0 20px;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .success {
+      background: #4fc08d;
+      border: 1px solid #42b983;
+    }
+    .warning {
+      background: #d63200;
+      border: 1px solid #d63200;
+    }
+    .close-btn {
+      position: absolute;
+      float: right;
+      right: 8px;
+      top: 15px;
+    }
+    .active {
+      font-weight: bold;
+      color: #fe00ff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <message-box ref="success" class="success">
+      <p>Add course successfully!</p>
+    </message-box>
+    <message-box ref="warning" class="warning">
+      <p>Please enter course name!</p>
+    </message-box>
+    <course-add v-model="course" @add="addCourse"></course-add>
+    <course-list :courses="courses"></course-list>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    // 注册$bus
+    Vue.prototype.$bus = new Vue()
+    // 课程列表
+    Vue.component('course-list', {
+      props: {
+        courses: {
+          type: Array,
+          default: () => []
+        }
+      },
+      data() {
+        return {
+          selected: ''
+        }
+      },
+      template: `
+        <div>
+          <p v-if="!courses.length">没有任何课程信息</p>
+          <ul>
+            <li v-for="item in courses" :class="{active:selected==item}" :key="item" @click="selected=item">{{item}}</li>
+          </ul>
+        </div>
+      `
+    })
+    // 新增课程
+    Vue.component('course-add', {
+      props: ['value'],
+      // 默认v-model将转换为value和@input, 如果需要改变则定义model选项
+      // model: {
+      //   prop: 'value',
+      //   event: 'change'
+      // },
+      data() {
+        return {
+          label: 'Course'
+        }
+      },
+      template: `
+        <p>
+          <label ref="label" for="course">{{ label }}:</label>
+          <input ref="input" id="course" type="text" :value="value" @input="handleInput" @keydown.enter="addCourse"/>
+          <button @click="addCourse">Add</button>
+          <button @click="changeCourse">Change</button>
+        </p>
+      `,
+      mounted() {
+        this.$refs.input.focus()
+      },
+      methods: {
+        addCourse() {
+          this.$emit('add')
+        },
+        changeCourse() {
+          this.label = 'Course Name'
+          // 此时并未获取到改变之后的label值
+          console.log(this.$refs.label.innerHTML)
+          // 使用$nextTick可获取最新的label值
+          this.$nextTick(() => console.log(this.$refs.label.innerHTML))
+        },
+        handleInput(e) {
+          this.$emit('input', e.target.value)
+        }
+      }
+    })
+    // 弹窗组件
+    Vue.component('message-box', {
+      data() {
+        return {
+          showMsg: false
+        }
+      },
+      template: `
+        <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+          <div class="message-box" v-show="showMsg">
+            <slot/>
+            <button class="close-btn" @click="close">&times;</button>
+          </div>
+        </transition>
+      `,
+      methods: {
+        show() {
+          this.showMsg = true
+        },
+        close() {
+          this.showMsg = false
+        }
+      }
+    })
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          course: '',
+          courses: ['vue', 'react', 'node']
+        }
+      },
+      methods: {
+        addCourse() {
+          const { warning, success } = this.clearMessage()
+          if (!this.course) {
+            warning.show()
+          } else {
+            this.courses.push(this.course)
+            this.course = ''
+            success.show()
+          }
+        },
+        clearMessage() {
+          const $refs = {
+            warning: this.$refs.warning,
+            success: this.$refs.success,
+          }
+          Object.keys($refs).forEach(item => $refs[item].close())
+          return $refs
+        }
+      }
+    })
+  </script>
+</body>
+</html>
