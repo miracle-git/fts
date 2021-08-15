@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+  <link rel="icon" href="../favicon.ico">
+  <title>Functional Component</title>
+  <style>
+    .icon {
+      width: 1em;
+      height: 1em;
+      vertical-align: -.15em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <heading level="1" title="Learning Vue Render Function" icon="cart">Render Function</heading>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://at.alicdn.com/t/font_1699203_g5liwe8mt0t.js"></script>
+  <script>
+    // 定义heading
+    Vue.component('heading', {
+      functional: true,
+      props: {
+        level: {
+          type: [Number, String],
+          required: true
+        },
+        title: String,
+        icon: String
+      },
+      render(h, context) {
+        let children = []
+        const { icon, title, level } = context.props
+        if (icon) {
+          children.push(
+            h('svg',
+              { class: 'icon' },
+              [h('use', { attrs: { 'xlink:href': `#icon-${icon}` }})]
+            )
+          )
+        }
+        children = children.concat(context.children)
+        const vnode = h(`h${level}`, { attrs: { title } }, children)
+        return vnode
+      }
+    })
+    const app = new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+</html>
