@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+  <link rel="icon" href="../favicon.ico">
+  <title>Directive</title>
+</head>
+<body>
+  <div id="app">
+    <course-add></course-add>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const role = 'member'
+    // 新增课程
+    Vue.component('course-add', {
+      data() {
+        return {
+          course: '',
+          label: 'Course'
+        }
+      },
+      // directives: {
+      //   focus: {
+      //     inserted(el) {
+      //       el.focus()
+      //     }
+      //   },
+      //   permission: {
+      //     inserted(el, binding) {
+      //       if (role !== binding.value) {
+      //         el.parentElement.removeChild(el)
+      //       }
+      //     }
+      //   }
+      // },
+      template: `
+        <p>
+          <label ref="label" for="course">{{ label }}:</label>
+          <input id="course" type="text" v-model="course" v-focus @keydown.enter="addCourse"/>
+          <button @click="addCourse" v-permission="'member'">Add</button>
+          <button @click="changeCourse" v-permission="'admin'">Change</button>
+        </p>
+      `,
+      methods: {
+        addCourse() {
+          this.$emit('add')
+        },
+        changeCourse() {
+          this.label = 'Course Name'
+          // 此时并未获取到改变之后的label值
+          console.log(this.$refs.label.innerHTML)
+          // 使用$nextTick可获取最新的label值
+          this.$nextTick(() => console.log(this.$refs.label.innerHTML))
+        }
+      }
+    })
+    // 定义全局指令
+    Vue.directive('focus', {
+      inserted(el) {
+        el.focus()
+      }
+    })
+    Vue.directive('permission', {
+      inserted(el, binding) {
+        if (role !== binding.value) {
+          el.parentElement.removeChild(el)
+        }
+      }
+    })
+    const app = new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+</html>
