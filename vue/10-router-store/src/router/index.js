@@ -28,7 +28,8 @@ const routes = [
       }
     ],
     meta: {
-      auth: true
+      auth: true,
+      keepAlive: true
     }
     // 独享路由守卫
     // beforeEnter(to, from, next) {
