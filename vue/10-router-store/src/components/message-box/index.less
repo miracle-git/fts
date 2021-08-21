@@ -1,0 +1,30 @@
+.message-box {
+  position: relative;
+  width: 300px;
+  padding: 0 20px;
+  color: #fff;
+  margin-bottom: 10px;
+  &.success {
+    background: #4fc08d;
+    border: 1px solid #42b983;
+  }
+  &.warning {
+    background: #d63200;
+    border: 1px solid #d63200;
+  }
+  .close-btn {
+    position: absolute;
+    float: right;
+    right: 8px;
+    top: 15px;
+  }
+}
+// 动画相关
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s;
+}

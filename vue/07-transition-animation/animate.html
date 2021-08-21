@@ -68,7 +68,7 @@
         <div>
           <p v-if="!courses.length">没有任何课程信息</p>
           <ul>
-            <li v-for="item in courses" :class="{active:selected==item}" :key="item" @click="selected=item">{{item}}</li>
+            <li v-for="item in courses" :class="{active:selected===item}" :key="item" @click="selected=item">{{item}}</li>
           </ul>
         </div>
       `

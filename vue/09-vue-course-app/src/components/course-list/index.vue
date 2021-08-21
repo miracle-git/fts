@@ -2,7 +2,7 @@
   <div class="course-list">
     <p v-if="!courses.length">没有任何课程信息</p>
     <ul v-else>
-      <li v-for="item in courses" :class="{[$style.active]:selected==item}" :key="item.name" @click="selected=item">{{item.name}}</li>
+      <li v-for="item in courses" :class="{[$style.active]:selected===item}" :key="item.name" @click="selected=item">{{item.name}}</li>
     </ul>
   </div>
 </template>

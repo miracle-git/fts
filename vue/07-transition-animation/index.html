@@ -76,7 +76,7 @@
         <div>
           <p v-if="!courses.length">没有任何课程信息</p>
           <ul>
-            <li v-for="item in courses" :class="{active:selected==item}" :key="item" @click="selected=item">{{item}}</li>
+            <li v-for="item in courses" :class="{active:selected===item}" :key="item" @click="selected=item">{{item}}</li>
           </ul>
         </div>
       `
@@ -167,7 +167,7 @@
         clearMessage() {
           const $refs = {
             warning: this.$refs.warning,
-            success: this.$refs.success,
+            success: this.$refs.success
           }
           Object.keys($refs).forEach(item => $refs[item].close())
           return $refs
