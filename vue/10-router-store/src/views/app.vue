@@ -8,9 +8,7 @@
       <span>{{welcome}}</span>
       <button @click="logout">注销</button>
     </nav>
-    <keep-alive>
-      <router-view/>
-    </keep-alive>
+    <router-view/>
   </div>
 </template>
 

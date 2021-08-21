@@ -30,7 +30,7 @@
     // 嵌套路由此时只会执行一次，不会多次发送请求
     // created() {
     //   this.load(this.$route.params.name)
-    // }
+    // },
     watch: {
       $route: {
         handler(val) {

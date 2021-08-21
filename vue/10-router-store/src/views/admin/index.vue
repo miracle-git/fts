@@ -32,13 +32,6 @@
         courses: []
       }
     },
-    watch: {
-      $route: {
-        handler(val) {
-          console.log(val)
-        }
-      }
-    },
     methods: {
       addCourse() {
         const { message } = this.$refs
