@@ -32,6 +32,13 @@
         courses: []
       }
     },
+    watch: {
+      $route: {
+        handler(val) {
+          console.log(val)
+        }
+      }
+    },
     methods: {
       addCourse() {
         const { message } = this.$refs
@@ -43,14 +50,17 @@
           this.type = 'success'
         }
         message.show()
+      },
+      async load() {
+        const { data } = await this.request(getCourseList())
+        this.courses = data
       }
     },
-    async created() {
+    created() {
       console.log('获取数据...')
-      const { data } = await this.request(getCourseList())
-      this.courses = data
+      this.load()
     },
-    activated() {
+    async activated() {
       console.log('activated')
     },
     deactivated() {

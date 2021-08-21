@@ -5,10 +5,10 @@ export default {
     }
   },
   methods: {
-    async request(promise) {
-      if (!promise instanceof Promise) return
+    request(promise) {
+      if (!(promise instanceof Promise)) return
       this.loading = true
-      return await promise.finally(() => this.loading = false)
+      return promise.finally(() => this.loading = false)
     }
   }
 }

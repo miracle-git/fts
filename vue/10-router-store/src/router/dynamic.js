@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 import Home from '@/views/home'
 
 Vue.use(VueRouter)
@@ -34,7 +35,7 @@ router.beforeEach((to, from, next) => {
     next()
   } else {
     // 是否登录
-    if (window.isLogin) {
+    if (store.state.user.isLogin) {
       // 是否去登录页
       if (to.path === '/login') {
         next('/')
