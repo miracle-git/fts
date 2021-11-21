@@ -48,11 +48,11 @@ const match = (str) => {
  * @params maxLength {number} 最大长度(默认：50000)
  * @returns 如果是二进制字符串则返回true,否则返回false
  */
-const checkIsValid = (str, maxLength) => {
+const check = (str, maxLength) => {
   // 如果输入的字符串包含0或1之外的字符则直接返回false
   if (!(/^[0-1]+$/g.test(str))) return false
   // 如果输入的字符串全为0或全为1则直接返回false
-  if (!(/[^0]/.test(str)) || !(/[^1]/.test(str))) return false
+  if (!/[^0]/.test(str) || !/[^1]/.test(str)) return false
   // 如果输入的字符串超出最大长度则直接返回false
   if (str.length > maxLength) return false
   return true
@@ -64,7 +64,7 @@ const checkIsValid = (str, maxLength) => {
  */
 export const countBinarySubstrings = (str, maxLength = 50000) => {
   // 1. 容错检查：如果输入的字符串不满足条件则直接返回0
-  if (!checkIsValid(str, maxLength)) return 0
+  if (!check(str, maxLength)) return 0
   const res = []
   // 2. 每次将字符串向后移动1位作为输入
   for (let i = 0, len = str.length; i < len - 1; i++) {
