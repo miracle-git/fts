@@ -2,6 +2,7 @@ import $ from 'jquery'
 import ReactElement from '../react/element'
 import ReactUnit from '../react/unit'
 import createUnit from '../factory/create-unit'
+import { includeTypes } from '../utils/type'
 
 export default class ReactCompositeUnit extends ReactUnit {
   getMarkup(reactid) {
@@ -34,7 +35,7 @@ export default class ReactCompositeUnit extends ReactUnit {
   }
   compare(previousElement, nextElement) {
     if (previousElement != null && nextElement != null) {
-      if (['string', 'number'].includes(typeof previousElement) && ['string', 'number'].includes(typeof nextElement)) return true
+      if (includeTypes([previousElement, nextElement], 'string', 'number')) return true
       if (previousElement instanceof ReactElement && nextElement instanceof ReactElement) return previousElement.type === nextElement.type
     }
     return false
