@@ -20,35 +20,36 @@ import React from './react'
 class Counter extends React.Component {
   constructor(props) {
     super(props)
+    this.handleIncrement = this.handleIncrement.bind(this)
     this.state = {
       num: 0
     }
   }
   componentWillMount() {
+    console.log('Counter componentWillMount')
   }
   componentDidMount() {
+    console.log('Counter componentDidMount')
+  }
+  componentShouldUpdate(nextState, nextProps) {
+    console.log('Counter componentShouldUpdate')
+    return true
+  }
+  render() {
+    console.log('Counter render')
+    const p = React.createElement('p', { style: { color: 'red' } }, this.props.name, this.state.num)
+    const button = React.createElement('button', { onClick: this.handleIncrement }, 'Start')
+    return React.createElement('div', { id: 'counter' }, p, button)
+  }
+  componentDidUpdate() {
+    console.log('Counter componentDidUpdate')
+  }
+  handleIncrement() {
     setInterval(() => {
       this.setState({
         num: this.state.num + 1
       })
     }, 1000)
-  }
-  componentShouldUpdate(nextState, nextProps) {
-    return true
-  }
-  render() {
-    // console.log('Counter render', this)
-    // const p = React.createElement('p', { style: { color: 'red' } }, this.props.name, this.state.num)
-    // const button = React.createElement('button', { onClick: this.handleIncrement }, '+')
-    // return React.createElement('div', { id: 'counter' }, p, button)
-    return this.state.num
-  }
-  componentDidUpdate() {
-  }
-  handleIncrement() {
-    this.setState({
-      num: this.state.num + 1
-    })
   }
 }
 const element = React.createElement(Counter, { name: '计数器' }) // <Counter name="计数器">
