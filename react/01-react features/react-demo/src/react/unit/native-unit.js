@@ -1,24 +1,8 @@
 import $ from 'jquery'
-import { ReactElement } from './element'
+import ReactUnit from '../react/unit'
+import createUnit from '../factory/create-unit'
 
-class ReactUnit {
-  constructor(element) {
-    this.element = element
-  }
-  getMarkup(reactid) {
-    this.reactid = reactid
-    return ''
-  }
-}
-
-class ReactTextUnit extends ReactUnit {
-  getMarkup(reactid) {
-    super.getMarkup(reactid)
-    return `<span data-reactid=${this.reactid}>${this.element}</span>`
-  }
-}
-
-class ReactNativeUnit extends ReactUnit {
+export default class NativeUnit extends ReactUnit {
   getMarkup(reactid) {
     super.getMarkup(reactid)
     const { type, props } = this.element
@@ -49,31 +33,4 @@ class ReactNativeUnit extends ReactUnit {
     }
     return `${startTag}${childTag}${endTag}`
   }
-}
-
-class ReactCompositeUnit extends ReactUnit {
-  getMarkup(reactid) {
-    super.getMarkup(reactid)
-    const { type: Component, props } = this.element
-    const instance = new Component(props)
-    const element = instance.render()
-    const unit = createUnit(element)
-    return unit.getMarkup(reactid)
-  }
-}
-
-function createUnit(element) {
-  if (['string', 'number'].includes(typeof element)) {
-    return new ReactTextUnit(element)
-  }
-  if (element instanceof ReactElement && typeof element.type === 'string') {
-    return new ReactNativeUnit(element)
-  }
-  if (element instanceof ReactElement && typeof element.type === 'function') {
-    return new ReactCompositeUnit(element)
-  }
-}
-
-export {
-  createUnit
 }

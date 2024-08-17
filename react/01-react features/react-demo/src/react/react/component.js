@@ -1,9 +1,5 @@
-class Component {
+export default class ReactComponent {
   constructor(props) {
     this.props = props
   }
-}
-
-export {
-  Component
 }

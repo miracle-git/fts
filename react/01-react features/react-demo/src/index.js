@@ -24,7 +24,14 @@ class Counter extends React.Component {
       num: 0
     }
   }
+  componentWillMount() {
+    console.log('Counter componentWillMount')
+  }
+  componentDidMount() {
+    console.log('Counter componentDidMount')
+  }
   render() {
+    console.log('Counter render', this)
     const p = React.createElement('p', { style: { color: 'red' } }, this.props.name, this.state.num)
     const button = React.createElement('button', { onClick: this.handleIncrement }, '+')
     return React.createElement('div', { id: 'counter' }, p, button)
