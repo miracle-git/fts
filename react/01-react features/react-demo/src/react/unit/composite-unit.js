@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import ReactElement from '../react/element'
 import ReactUnit from '../react/unit'
 import createUnit from '../factory/create-unit'
 
@@ -13,5 +14,29 @@ export default class ReactCompositeUnit extends ReactUnit {
     this.componentUnit = createUnit(element)
     $(document).on('mounted', () => this.component.componentDidMount && this.component.componentDidMount())
     return this.componentUnit.getMarkup(reactid)
+  }
+  update(nextElement, partialState) {
+    this.currentElement = nextElement || this.currentElement || {}
+    const nextState = this.component.state = Object.assign(this.component.state, partialState)
+    const nextProps = this.currentElement.props
+    if (this.component.componentShouldUpdate && this.component.componentShouldUpdate(nextState, nextProps)) {
+      const prevRenderElement = this.componentUnit.currentElement
+      const nextRenderElement = this.component.render()
+      if (this.compare(prevRenderElement, nextRenderElement)) {
+        this.componentUnit.update(nextRenderElement)
+        this.component.componentDidUpdate && this.component.componentDidUpdate()
+      } else {
+        this.componentUnit = createUnit(nextRenderElement)
+        const markup = this.componentUnit.getMarkup(this.reactid)
+        $(`[data-reactid=${this.reactid}]`).replaceWith(markup)
+      }
+    }
+  }
+  compare(previousElement, nextElement) {
+    if (previousElement != null && nextElement != null) {
+      if (['string', 'number'].includes(typeof previousElement) && ['string', 'number'].includes(typeof nextElement)) return true
+      if (previousElement instanceof ReactElement && nextElement instanceof ReactElement) return previousElement.type === nextElement.type
+    }
+    return false
   }
 }
