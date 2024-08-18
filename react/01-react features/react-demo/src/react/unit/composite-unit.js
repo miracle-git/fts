@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import ReactUnit from '../react/unit'
 import createUnit from '../factory/create-unit'
-import { includeTypes, isReactElement } from '../utils/type'
 
 export default class ReactCompositeUnit extends ReactUnit {
   getMarkup(reactid) {
@@ -28,15 +27,8 @@ export default class ReactCompositeUnit extends ReactUnit {
       } else {
         this.componentUnit = createUnit(nextRenderElement)
         const markup = this.componentUnit.getMarkup(this.reactid)
-        $(`[data-reactid=${this.reactid}]`).replaceWith(markup)
+        this.$el.replaceWith(markup)
       }
     }
-  }
-  compare(previousElement, nextElement) {
-    if (previousElement != null && nextElement != null) {
-      if (includeTypes([previousElement, nextElement], 'string', 'number')) return true
-      if (isReactElement(previousElement, nextElement)) return previousElement.type === nextElement.type
-    }
-    return false
   }
 }

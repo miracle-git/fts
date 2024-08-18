@@ -9,7 +9,12 @@ function isReactElement(...elements) {
   return elements.every(item => item instanceof ReactElement)
 }
 
+function isEventType(name) {
+  return /^on[A-Z]/.test(name)
+}
+
 export {
   includeTypes,
-  isReactElement
+  isReactElement,
+  isEventType
 }

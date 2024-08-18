@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import ReactUnit from '../react/unit'
 
 export default class ReactTextUnit extends ReactUnit {
@@ -9,7 +8,7 @@ export default class ReactTextUnit extends ReactUnit {
   update(nextElement) {
     if (this.element !== nextElement) {
       this.element = nextElement
-      $(`[data-reactid=${this.reactid}]`).html(nextElement)
+      this.$el.html(nextElement)
     }
   }
 }
