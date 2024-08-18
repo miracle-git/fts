@@ -1,5 +1,6 @@
 import React from './react'
-
+import Counter from './components/counter'
+import List from './components/list'
 // 渲染普通文本
 // React.render('hello', document.getElementById('root'))
 
@@ -17,38 +18,7 @@ import React from './react'
 // React.render(element, document.getElementById('root'))
 
 // 渲染自定义组件
-class Counter extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      num: 0
-    }
-    console.log('Counter constructor')
-  }
-  componentWillMount() {
-    console.log('Counter componentWillMount')
-  }
-  componentDidMount() {
-    console.log('Counter componentDidMount')
-  }
-  componentShouldUpdate(nextState, nextProps) {
-    return true
-  }
-  render() {
-    console.log('Counter render')
-    const p = React.createElement('p', { style: { color: 'red' } }, this.props.name, this.state.num)
-    const button = React.createElement('button', { onClick: this.handleIncrement }, 'Start')
-    return React.createElement('div', { id: 'counter' }, p, button)
-    // return this.state.num
-  }
-  componentDidUpdate() {
-    console.log('Counter componentDidUpdate')
-  }
-  handleIncrement = () => {
-    this.setState({
-      num: this.state.num + 1
-    })
-  }
-}
-const element = React.createElement(Counter, { name: '计数器' }) // <Counter name="计数器">
+const counter = React.createElement(Counter, { name: '计数器' }) // <Counter name="计数器">
+const list = React.createElement(List, { name: '列表' }) // <List name="列表">
+const element = React.createElement('div', {}, counter, list)
 React.render(element, document.getElementById('root'))
