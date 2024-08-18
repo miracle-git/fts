@@ -12,9 +12,6 @@ export default class ReactUnit {
     this.reactid = reactid
     return ''
   }
-  getKey(element, index) {
-    return element.props && element.props.key ? element.props.key : index
-  }
   compare(prevElement, nextElement) {
     if (prevElement != null && nextElement != null) {
       if (includeTypes([prevElement, nextElement], 'string', 'number')) return true

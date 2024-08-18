@@ -1,14 +1,13 @@
-import ReactAction from '../react/action'
 import ReactUnit from '../react/unit'
 import createUnit from '../factory/create-unit'
 import { isEventType } from '../utils/type'
+import diff, { getKey } from '../utils/diff'
 
 export default class ReactNativeUnit extends ReactUnit {
   constructor(element) {
     super(element)
     this.childrenUnits = []
   }
-  static diffQueue = []
   getMarkup(reactid) {
     super.getMarkup(reactid)
     const { type, props } = this.element
@@ -69,65 +68,29 @@ export default class ReactNativeUnit extends ReactUnit {
     }
   }
   updateChildren(childrenElements) {
-    const prevChildrenUnitMap = this.getPrevChildrenUnit()
-    const { nextChildrenUnitMap, nextChildrenUnit } = this.getNextChildrenUnit(prevChildrenUnitMap, childrenElements)
-    let lastIndex = 0
-    for (let index in nextChildrenUnit) {
-      const nextUnit = nextChildrenUnit[index]
-      const prevUnit = prevChildrenUnitMap[this.getKey(nextUnit.element, index)]
-      if (prevUnit === nextUnit) {
-        if (prevUnit.$index < lastIndex) {
-          ReactNativeUnit.diffQueue.push({
-            parentId: this.reactid,
-            parentNode: this.$el,
-            type: ReactAction.move,
-            fromIndex: prevUnit.$index >> 0,
-            toIndex: index >> 0
-          })
-        }
-        lastIndex = Math.max(lastIndex, prevUnit.$index)
-      } else {
-        ReactNativeUnit.diffQueue.push({
-          parentId: this.reactid,
-          parentNode: this.$el,
-          type: ReactAction.insert,
-          toIndex: index >> 0,
-          markup: nextUnit.getMarkup(`${this.reactid}.${index}`)
-        })
-      }
-      nextUnit.$index = index
-    }
-    for (let key in prevChildrenUnitMap) {
-      if (!nextChildrenUnitMap.hasOwnProperty(key)) {
-        ReactNativeUnit.diffQueue.push({
-          parentId: this.reactid,
-          parentNode: this.$el,
-          type: ReactAction.remove,
-          fromIndex: prevChildrenUnitMap[key].$index >> 0
-        })
-      }
-    }
+    const prevUnitMap = this.getPrevUnitMap()
+    const nextUnitMap = this.getNextUnitMap(prevUnitMap, childrenElements)
+    diff(prevUnitMap, nextUnitMap, this)
   }
-  getPrevChildrenUnit() {
-    return this.childrenUnits.reduce((r, s, i) => (r = { ...r, [this.getKey(s.element, i)]: s }), {})
+  getPrevUnitMap() {
+    return this.childrenUnits.reduce((map, unit, index) => {
+      const key = getKey(unit.element, index)
+      map[key] = unit
+      return map
+    }, {})
   }
-  getNextChildrenUnit(childrenMap, childrenElements) {
-    const nextChildrenUnitMap = {}
-    const nextChildrenUnit = []
-    childrenElements.forEach((newElement, index) => {
-      const key = this.getKey(newElement, index)
+  getNextUnitMap(childrenMap, childrenElements) {
+    return childrenElements.reduce((map, newElement, index) => {
+      const key = getKey(newElement, index)
       const prevUnit = childrenMap[key]
       const prevElement = prevUnit && prevUnit.element
       if (this.compare(prevElement, newElement)) {
         prevUnit.update(newElement)
-        nextChildrenUnit.push(prevUnit)
-        nextChildrenUnitMap[key] = prevUnit
+        map[key] = prevUnit
       } else {
-        const nextUnit = createUnit(newElement)
-        nextChildrenUnit.push(nextUnit)
-        nextChildrenUnitMap[key] = nextUnit
+        map[key] = createUnit(newElement)
       }
-    })
-    return { nextChildrenUnitMap, nextChildrenUnit }
+      return map
+    }, {})
   }
 }
