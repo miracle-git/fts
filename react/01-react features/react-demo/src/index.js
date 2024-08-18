@@ -20,7 +20,6 @@ import React from './react'
 class Counter extends React.Component {
   constructor(props) {
     super(props)
-    this.handleIncrement = this.handleIncrement.bind(this)
     this.state = {
       num: 0
     }
@@ -30,16 +29,17 @@ class Counter extends React.Component {
   }
   componentDidMount() {
     console.log('Counter componentDidMount')
+    this.handleIncrement()
   }
   componentShouldUpdate(nextState, nextProps) {
-    console.log('Counter componentShouldUpdate')
     return true
   }
   render() {
     console.log('Counter render')
-    const p = React.createElement('p', { style: { color: 'red' } }, this.props.name, this.state.num)
-    const button = React.createElement('button', { onClick: this.handleIncrement }, 'Start')
-    return React.createElement('div', { id: 'counter' }, p, button)
+    // const p = React.createElement('p', { style: { color: 'red' } }, this.props.name, this.state.num)
+    // const button = React.createElement('button', { onClick: this.handleIncrement }, 'Start')
+    // return React.createElement('div', { id: 'counter' }, p, button)
+    return this.state.num
   }
   componentDidUpdate() {
     console.log('Counter componentDidUpdate')

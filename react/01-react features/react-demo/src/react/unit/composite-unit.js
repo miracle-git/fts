@@ -16,11 +16,11 @@ export default class ReactCompositeUnit extends ReactUnit {
     return this.componentUnit.getMarkup(reactid)
   }
   update(nextElement, partialState) {
-    this.currentElement = nextElement || this.currentElement || {}
+    this.element = nextElement || this.element
     const nextState = this.component.state = Object.assign(this.component.state, partialState)
-    const nextProps = this.currentElement.props
+    const nextProps = this.element.props
     if (this.component.componentShouldUpdate && this.component.componentShouldUpdate(nextState, nextProps)) {
-      const prevRenderElement = this.componentUnit.currentElement
+      const prevRenderElement = this.componentUnit.element
       const nextRenderElement = this.component.render()
       if (this.compare(prevRenderElement, nextRenderElement)) {
         this.componentUnit.update(nextRenderElement)

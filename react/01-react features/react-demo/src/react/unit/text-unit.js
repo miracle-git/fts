@@ -7,8 +7,8 @@ export default class ReactTextUnit extends ReactUnit {
     return `<span data-reactid=${this.reactid}>${this.element}</span>`
   }
   update(nextElement) {
-    if (this.currentElement !== nextElement) {
-      this.currentElement = nextElement
+    if (this.element !== nextElement) {
+      this.element = nextElement
       $(`[data-reactid=${this.reactid}]`).html(nextElement)
     }
   }
