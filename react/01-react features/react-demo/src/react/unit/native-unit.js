@@ -44,7 +44,6 @@ export default class ReactNativeUnit extends ReactUnit {
     const prevProps = this.element.props
     const nextProps = nextElement.props
     this.updateProps(prevProps, nextProps)
-    this.updateChildren(nextProps.children)
   }
   updateProps(prevProps, nextProps) {
     for (let name in prevProps) {
@@ -62,7 +61,9 @@ export default class ReactNativeUnit extends ReactUnit {
         Object.entries(nextProps[name]).map(([key, val]) => this.$el.css(key, val))
       } else if ('className' === name) {
         this.$el.attr('class', nextProps[name])
-      } else if ('children' !== name) {
+      } else if ('children' === name) {
+        this.updateChildren(nextProps[name])
+      } else {
         this.$el.prop(name, nextProps[name])
       }
     }
