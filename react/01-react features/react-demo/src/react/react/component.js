@@ -5,4 +5,7 @@ export default class ReactComponent {
   setState(partialState) {
     this.currentUnit.update(null, partialState)
   }
+  componentShouldUpdate(nextState, nextProps) {
+    return true
+  }
 }

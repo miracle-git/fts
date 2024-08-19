@@ -1,11 +1,9 @@
+import $ from 'jquery'
 import ReactAction from '../react/action'
+import { getKey, insertAt, undelegate } from './node'
 
-let queue = []
+let updateQueue = []
 let updateDepth = 0
-
-function getKey(element, index) {
-  return element.props && element.props.key ? element.props.key : index
-}
 
 function diff(prevUnitMap, nextUnitMap, currentUnit) {
   let lastIndex = 0
@@ -15,7 +13,7 @@ function diff(prevUnitMap, nextUnitMap, currentUnit) {
     const prevUnit = prevUnitMap[getKey(nextUnit.element, index)]
     if (prevUnit === nextUnit) {
       if (prevUnit.$index < lastIndex) {
-        queue.push({
+        updateQueue.push({
           parentId: currentUnit.reactid,
           parentNode: currentUnit.$el,
           type: ReactAction.move,
@@ -25,7 +23,17 @@ function diff(prevUnitMap, nextUnitMap, currentUnit) {
       }
       lastIndex = Math.max(lastIndex, prevUnit.$index)
     } else {
-      queue.push({
+      if (prevUnit) {
+        updateQueue.push({
+          parentId: currentUnit.reactid,
+          parentNode: currentUnit.$el,
+          type: ReactAction.remove,
+          fromIndex: prevUnit.$index
+        })
+        currentUnit.childrenUnits = currentUnit.childrenUnits.filter(item => item !== prevUnit)
+        undelegate(prevUnit.reactid)
+      }
+      updateQueue.push({
         parentId: currentUnit.reactid,
         parentNode: currentUnit.$el,
         type: ReactAction.insert,
@@ -37,20 +45,34 @@ function diff(prevUnitMap, nextUnitMap, currentUnit) {
   }
   for (let key in prevUnitMap) {
     if (!nextUnitMap.hasOwnProperty(key)) {
-      queue.push({
+      const prevUnit = prevUnitMap[key]
+      updateQueue.push({
         parentId: currentUnit.reactid,
         parentNode: currentUnit.$el,
         type: ReactAction.remove,
-        fromIndex: prevUnitMap[key].$index >> 0
+        fromIndex: prevUnit.$index >> 0
       })
+      currentUnit.childrenUnits = currentUnit.childrenUnits.filter(item => item !== prevUnit)
+      undelegate(prevUnit.reactid)
     }
   }
 }
 
 function patch() {
+  const patchMap = updateQueue.reduce((map, item) => {
+    if ([ReactAction.move, ReactAction.remove].includes(item.type)) {
+      const { parentId, parentNode, fromIndex } = item
+      map[`${parentId}.${fromIndex}`] = $(parentNode.children().get(fromIndex))
+    }
+    return map
+  }, {})
+  $.each(Object.values(patchMap), (_, item) => $(item).remove())
+  updateQueue.filter(item => item.type !== ReactAction.remove).forEach(item => {
+    const { parentId, parentNode, type, fromIndex, toIndex, markup } = item
+    insertAt(parentNode, toIndex, type === ReactAction.insert ? $(markup) : patchMap[`${parentId}.${fromIndex}`])
+  })
 }
 
-export { getKey }
 // eslint-disable-next-line
 export default (prevUnitMap, nextUnitMap, currentUnit) => {
   updateDepth++
@@ -58,6 +80,6 @@ export default (prevUnitMap, nextUnitMap, currentUnit) => {
   updateDepth--
   if (updateDepth === 0) {
     patch()
-    queue = []
+    updateQueue = []
   }
 }

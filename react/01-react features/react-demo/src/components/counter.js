@@ -14,9 +14,6 @@ export default class Counter extends React.Component {
   componentDidMount() {
     console.log('Counter componentDidMount')
   }
-  componentShouldUpdate(nextState, nextProps) {
-    return true
-  }
   render() {
     console.log('Counter render')
     const p = React.createElement('p', { style: { color: 'red' } }, this.props.name, this.state.num)

@@ -1,6 +1,7 @@
 import React from './react'
 import Counter from './components/counter'
 import List from './components/list'
+import Form from './components/form'
 // 渲染普通文本
 // React.render('hello', document.getElementById('root'))
 
@@ -20,5 +21,6 @@ import List from './components/list'
 // 渲染自定义组件
 const counter = React.createElement(Counter, { name: '计数器' }) // <Counter name="计数器">
 const list = React.createElement(List, { name: '列表' }) // <List name="列表">
-const element = React.createElement('div', {}, counter, list)
+const form = React.createElement(Form, { name: '表单' }) // <Form name="表单">
+const element = React.createElement('div', {}, counter, list, form)
 React.render(element, document.getElementById('root'))

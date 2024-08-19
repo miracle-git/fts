@@ -19,12 +19,6 @@ export default class ReactUnit {
     }
     return false
   }
-  delegate(name, handler) {
-    $(document).delegate(`[data-reactid='${this.reactid}']`, `${name}.${this.reactid}`, handler)
-  }
-  undelegate() {
-    $(document).undelegate(`.${this.reactid}`)
-  }
   update(nextElement) {
   }
 }

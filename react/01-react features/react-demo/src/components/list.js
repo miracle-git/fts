@@ -15,9 +15,6 @@ export default class List extends React.Component {
       })
     }, 1000)
   }
-  componentShouldUpdate(nextState, nextProps) {
-    return true
-  }
   render() {
     console.log('List render')
     if (this.state.change) {

@@ -1,7 +1,8 @@
 import ReactUnit from '../react/unit'
 import createUnit from '../factory/create-unit'
 import { isEventType } from '../utils/type'
-import diff, { getKey } from '../utils/diff'
+import { getKey, delegate, undelegate } from '../utils/node'
+import diff from '../utils/diff'
 
 export default class ReactNativeUnit extends ReactUnit {
   constructor(element) {
@@ -16,7 +17,7 @@ export default class ReactNativeUnit extends ReactUnit {
     let endTag = `</${type}>`
     for (let name in props) {
       if (isEventType(name)) {
-        this.delegate(name.slice(2).toLowerCase(), props[name])
+        delegate(name.slice(2).toLowerCase(), this.reactid, props[name])
       } else if ('style' === name) {
         const style = Object.entries(props[name]).map(([key, val]) =>
           `${key.replace(/[A-Z]/g, m => `-${m.toLowerCase()}`)}:${val}`).join(';')
@@ -50,12 +51,12 @@ export default class ReactNativeUnit extends ReactUnit {
         this.$el.removeAttr(name)
       }
       if (isEventType(name)) {
-        this.undelegate()
+        undelegate(this.reactid)
       }
     }
     for (let name in nextProps) {
       if (isEventType(name)) {
-        this.delegate(name.slice(2).toLowerCase(), nextProps[name])
+        delegate(name.slice(2).toLowerCase(), this.reactid, nextProps[name])
       } else if ('style' === name) {
         Object.entries(nextProps[name]).map(([key, val]) => this.$el.css(key, val))
       } else if ('className' === name) {
@@ -88,7 +89,9 @@ export default class ReactNativeUnit extends ReactUnit {
         prevUnit.update(newElement)
         map[key] = prevUnit
       } else {
-        map[key] = createUnit(newElement)
+        const nextUnit = createUnit(newElement)
+        map[key] = nextUnit
+        this.childrenUnits[index] = nextUnit
       }
       return map
     }, {})
